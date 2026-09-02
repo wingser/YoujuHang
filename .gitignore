@@ -1,0 +1,69 @@
+# ============================================================
+#  游聚挂机（YoujuHang）Git 忽略规则
+#
+#  原则：仓库只收录「源码 + 文档 + 分析脚本」，
+#        不收录二进制产物、抓包素材、日志与任何含隐私的数据。
+# ============================================================
+
+# ---------- 构建产物 ----------
+# 匹配任意层级的 dist/ 目录：
+#   server/dist/  约 41MB，含编译出的 exe 与**真实账号配置**，本地保留用于部署
+#   dist/         Skill 分发包（可由 .codebuddy/skills/ 源码重新打包）
+dist/
+*.exe
+*.dll
+*.so
+*.dylib
+
+# rsrc 每次构建自动生成（图标 + manifest 的二进制资源），无需入库
+server/cmd/youjuhang/rsrc.syso
+
+# ---------- 抓包素材 ----------
+# 逆向分析的原始证据：约 12.8GB / 306 个 pcapng。
+# 体积极大（远超 GitHub 单文件 100MB 硬限），且含真实会话数据，本地保留即可。
+# 文档中引用的文件名（如 captures/team_info_*.pcapng）仅作留档，不随库分发。
+captures/
+
+# ---------- 日志 ----------
+logs/
+*.log
+
+# ---------- 运行时状态文件（程序自动维护）----------
+run_state.json
+guard.lock
+guard.pid
+task_state.json
+task_state.json.bak
+contribute_state.json
+mall_state.json
+startup_error.txt
+rng_check.txt
+diagwin7.log
+*.bak
+
+# ---------- 账号配置（含明文密码，禁止提交）----------
+# 真实配置默认在 server/dist/accounts.yaml（已随 dist/ 整目录忽略）。
+# 这条兜底：在仓库其它位置运行程序时生成的 accounts.yaml 同样不入库。
+accounts.yaml
+
+# 例外：仅收录脱敏后的配置样例（其中的 name/password/mac 均为占位值）
+!server/configs/accounts.yaml
+
+# ---------- 含本机信息的配置 ----------
+# 含本机绝对路径与 Windows 用户名；脚本有硬编码回退，不影响使用。
+# 模板另见 tools/tool_paths.example.ini。
+tools/tool_paths.ini
+
+# ---------- Python ----------
+__pycache__/
+*.py[cod]
+*.pyo
+
+# ---------- 工具 / 编辑器 ----------
+.playwright-cli/
+.codebuddy/plans/
+.idea/
+.vscode/
+*.swp
+.DS_Store
+Thumbs.db

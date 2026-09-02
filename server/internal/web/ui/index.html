@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>游聚挂机控制台</title>
+<style>
+  body { font-family:"Microsoft YaHei","Segoe UI",Arial,sans-serif; margin:0; background:#eef1f5; color:#2b2f36; }
+  .wrap { max-width:1280px; margin:0 auto; padding:16px; }
+  h1 { font-size:19px; margin:6px 0 12px; color:#1a56db; }
+  h2 { font-size:16px; margin:18px 0 10px; border-left:4px solid #1a56db; padding-left:8px; color:#333; }
+  .toolbar { background:#fff; border:1px solid #dde3ea; border-radius:6px; padding:8px 12px; margin-bottom:12px; display:flex; align-items:center; gap:8px; }
+  button { background:#1a56db; color:#fff; border:none; border-radius:4px; padding:5px 14px; font-size:13px; cursor:pointer; }
+  button:hover { background:#1646b8; }
+  button.gray { background:#7a8699; }
+  button.gray:hover { background:#67738a; }
+  button.green { background:#1a9d4e; }
+  button.green:hover { background:#14803f; }
+  button.red { background:#d64545; }
+  button.red:hover { background:#b53a3a; }
+  button.sm { padding:3px 10px; font-size:12px; margin:2px; }
+  /* ===== 账号主表：单表 5 列，每账号一行 ===== */
+  table.acc {
+    width:100%; border-collapse:collapse; table-layout:fixed;
+    background:#fff; border:1px solid #dde3ea;
+  }
+  table.acc th {
+    background:#f7f9fc; color:#5a6675; font-weight:normal; font-size:12px;
+    padding:6px 10px; text-align:left; border-bottom:1px solid #dde3ea;
+    white-space:nowrap;
+  }
+  table.acc td {
+    padding:7px 10px; font-size:12px; vertical-align:top;
+    border-bottom:1px solid #f0f3f7;
+  }
+  table.acc tr.acc-row:hover td { background:#f7fafd; }
+  /* 列间竖线 */
+  .c-name, .c-info, .c-daily, .c-team { border-right:1px solid #f0f3f7; }
+
+  /* --- 第 1 列：账号名 + 状态 --- */
+  .acc-name { font-weight:bold; font-size:13.5px; color:#1a2332; display:block; }
+  .acc-status {
+    display:inline-flex; align-items:center; gap:3px; margin-top:3px;
+    padding:1px 8px; border-radius:10px; font-size:11px; font-weight:bold; white-space:nowrap;
+  }
+  .st-online { background:#e4f6ec; color:#0e7a3e; }
+  .st-offline, .st-stopped { background:#f4f5f7; color:#98a3b1; }
+  .st-relogin_wait { background:#fdf2df; color:#a86900; }
+  .st-login_fail { background:#fce8e8; color:#c0392b; }
+  .st-disabled { background:#c0392b; color:#fff; font-weight:bold; }
+  /* 当日获得经验：仅在该账号今日有经验进账时显示 */
+  .acc-today {
+    margin-top:3px; font-size:11px; font-weight:bold; color:#1a9d4e;
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+  }
+  /* 挂机到期日：显示在账号名下方，粒度到日期 */
+  .acc-expire {
+    margin-top:3px; font-size:11px; color:#7a869a;
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+  }
+  .acc-expire.soon { color:#e08a00; }   /* 3 天内到期 */
+  .acc-expire.over { color:#c0392b; font-weight:bold; } /* 已过期 */
+
+  /* --- 第 2 列：基础信息（紧凑，超长内容截断） --- */
+  .acc-meta { color:#5a6675; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .acc-meta b { color:#2b2f36; font-weight:600; }
+  .acc-sub { font-size:11px; color:#98a3b1; margin-top:1px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .acc-sub.warn { color:#e08a00; }
+  .dim { color:#b6bfcc; }
+  /* 升级进度条 */
+  .lvbar {
+    margin-top:4px; height:5px; background:#eef1f5; border-radius:3px;
+    overflow:hidden; max-width:150px;
+  }
+  .lvbar i { display:block; height:100%; background:linear-gradient(to right,#4facfe,#1a56db); }
+  .lvtxt { font-size:11px; color:#5a6675; }
+  .lvtxt b { color:#1a56db; }
+
+  /* --- 第 3/4 列：任务徽章 --- */
+  .tasks { display:flex; flex-wrap:wrap; gap:4px; }
+  .tchip { display:inline-flex; align-items:center; gap:3px; padding:1px 7px; border-radius:10px; font-size:11.5px; white-space:nowrap; line-height:1.6; }
+  .tchip .name { color:#3a4657; }
+  .tchip .st { color:#98a3b1; font-size:10.5px; }
+  .tc-done { background:#e4f6ec; border:1px solid #b8e6cd; }
+  .tc-done .name { color:#0e7a3e; font-weight:bold; }
+  .tc-claimable { background:#fdf2df; border:1px solid #f2d7a0; }
+  .tc-claimable .name { color:#a86900; font-weight:bold; }
+  .tc-doing, .tc-pending { background:#f4f6f9; border:1px solid #e0e6ee; }
+  .tc-doing .name, .tc-pending .name { color:#5a6675; }
+  .tc-not_due, .tc-disabled, .tc-unknown { background:#f7f8fa; border:1px dashed #dae0e8; }
+  .tc-not_due .name, .tc-disabled .name, .tc-unknown .name { color:#a4aebd; }
+  .col-empty { font-size:11.5px; color:#b6bfcc; }
+
+  /* --- 第 5 列：操作按钮（纵向排列，宽度撑满） --- */
+  .c-ops { text-align:center; }
+  .ops { display:flex; flex-direction:column; gap:4px; }
+  .ops button { display:block; width:100%; padding:3px 0; font-size:11.5px; border-radius:3px; }
+
+  /* ===== 面板 / 表单 / 提示（新增账号、功能说明） ===== */
+  .panel { background:#fff; border:1px solid #dde3ea; border-radius:6px; padding:12px 14px; margin-bottom:14px; }
+  .info { background:#f4f8ff; border:1px solid #c9dcff; }
+  .info ul { margin:6px 0 2px; padding-left:20px; }
+  .info li { font-size:13px; line-height:1.9; color:#3a4c66; }
+  .frow { margin:8px 0; }
+  .frow label { display:inline-block; width:110px; font-size:13px; color:#5a6675; text-align:right; margin-right:10px; }
+  .frow input[type=text], .frow input[type=password], .frow input[type=number] {
+    width:200px; padding:6px 8px; border:1px solid #c8d1dc; border-radius:4px; font-size:13px; }
+  .frow input[type=checkbox] { vertical-align:middle; }
+  .tip { font-size:12px; color:#98a3b1; margin-left:120px; }
+  .muted { color:#98a3b1; font-size:12px; }
+  #msg { margin:6px 0; font-size:13px; min-height:18px; }
+  .clock { margin-left:auto; color:#98a3b1; font-size:12px; }
+
+  .edit-form td { background:#fffbe8; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>游聚挂机控制台</h1>
+
+  <div class="panel info">
+    <b>挂机功能</b>
+    <ul>
+      <li>每日签到：登录后自动完成当日签到</li>
+      <li>在线时长保持：自动维持在线状态，持续累计在线时长与经验</li>
+      <li>任务奖励自动领取：在线时长、连续签到（7/14/21 天）、日常达标等奖励到达即可自动领取</li>
+      <li>月度礼包：每月 1-7 日自动领取微信绑定礼包</li>
+      <li>被踢自动重登：会话被其他设备顶下线后，自动检测账号离线状态并重新登录</li>
+      <li>多账号并行：一台电脑可同时挂多个账号，设备标识自动分配，无需手动配置</li>
+    </ul>
+  </div>
+
+  <div class="panel info">
+    <b>战队任务（自动挂机相关）</b>
+    <ul>
+      <li>战队任务仅对<b>已加入战队</b>的账号自动开启；未加入战队的账号默认不开启对应任务</li>
+      <li>战盟挂机：自动进入 8bit 音乐挂机区保持在线，累计战队在线任务时长（3 小时奖励达成后自动退出）</li>
+      <li>战队贡献捐献：每日自动捐献贡献度（默认目标 3000，贡献度余额低于 3000 时暂停捐献）</li>
+    </ul>
+  </div>
+
+  <div class="toolbar">
+    <button class="green" onclick="startAll()">全部启动</button>
+    <button class="red" onclick="stopAll()">全部停止</button>
+    <button class="gray" onclick="loadStatus()">刷新</button>
+    <span class="clock" id="clock"></span>
+  </div>
+
+  <div id="msg"></div>
+
+  <table class="acc">
+    <colgroup>
+      <col style="width:165px">  <!-- 1 账号名 + 状态 + 今日经验 -->
+      <col style="width:170px">  <!-- 2 基础信息 -->
+      <col style="width:31%">    <!-- 3 每日任务 -->
+      <col style="width:37%">    <!-- 4 战队任务（任务更多，给更宽） -->
+      <col style="width:110px">  <!-- 5 操作 -->
+    </colgroup>
+    <thead>
+      <tr>
+        <th>账号</th>
+        <th>基础信息</th>
+        <th>每日任务</th>
+        <th>战队任务</th>
+        <th style="text-align:center">操作</th>
+      </tr>
+    </thead>
+    <tbody id="accBody"></tbody>
+  </table>
+  <h2>新增账号</h2>
+  <div class="panel">
+    <div class="frow">
+      <label>账号名</label><input type="text" id="add_name" placeholder="登录名">
+    </div>
+    <div class="frow">
+      <label>密码</label><input type="password" id="add_pass" placeholder="登录密码">
+    </div>
+    <div class="frow">
+      <label>挂机天数</label>
+      <input type="number" id="add_days" min="0" step="1" style="width:90px" placeholder="留空=长期"
+             oninput="onAddDaysInput()" onkeyup="onAddDaysInput()">
+      <span class="tip" id="add_days_tip">从今天起的天数；留空或 0 = 长期挂机（永不过期）</span>
+    </div>
+    <div class="frow">
+      <label>&nbsp;</label><button class="green" onclick="addAccount()">添加账号</button>
+      <span class="tip">设备标识（MAC）自动生成，无需填写</span>
+    </div>
+  </div>
+
+  <p class="muted">功能开关（每日签到 / 自动领取任务 / 商城礼包 / 战盟房间挂机 / 战队贡献捐献）在配置文件 accounts.yaml 中设置，默认全部开启；战队任务（挂机/捐献）仅对已加入战队的账号生效。</p>
+</div>
+
+<script>
+"use strict";
+var autoRefresh = null;
+
+function $(id) { return document.getElementById(id); }
+
+function escapeHtml(s) {
+  if (s === null || s === undefined) s = "";
+  return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")
+                  .replace(/"/g,"&quot;").replace(/'/g,"&#39;");
+}
+
+function api(method, path, body, cb) {
+  var xhr = new XMLHttpRequest();
+  xhr.open(method, path, true);
+  xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState !== 4) return;
+    var resp = null;
+    try { resp = JSON.parse(xhr.responseText); } catch (e) { resp = null; }
+    if (xhr.status >= 200 && xhr.status < 300) {
+      if (cb) cb(null, resp);
+    } else {
+      var msg = "HTTP " + xhr.status;
+      if (resp && resp.error) msg = resp.error;
+      // 第三个参数回传原始响应体，供调用方读取业务标记（如 expired=true）。
+      // 老回调只声明前两个参数，多传不影响。
+      if (cb) cb(msg, null, resp);
+    }
+  };
+  xhr.send(body ? JSON.stringify(body) : null);
+}
+
+function setMsg(s, isErr) {
+  var el = $("msg");
+  el.textContent = s;
+  el.style.color = isErr ? "#d64545" : "#1a9d4e";
+}
+
+// 第一列空间有限，状态文案用短词
+var STATUS_MAP = {
+  "online":"● 在线", "offline":"○ 未运行", "stopped":"○ 已停止",
+  "relogin_wait":"⏸ 等待恢复", "login_fail":"✕ 登录失败",
+  "disabled":"⛔ 已禁用"
+};
+
+// loginRejectText 把"连续登录被服务器拒绝"的原始错误串翻成中文短句。
+//
+// 协议文档只确认了 ret=-2 ACCOUNT_NOT_FOUND，**密码错误对应的 errStr 尚无样本**，
+// 所以这里对已知值精确映射，未知值统一归为"密码错误或账号不存在"——
+// 不谎称一定是密码错误，但足以让用户知道该去核对凭据。
+// 完整原始串保留在 title 里，拿到新样本后可据此补充映射。
+function loginRejectText(err) {
+  var e = (err || "").toUpperCase();
+  if (e.indexOf("ACCOUNT_NOT_FOUND") >= 0) return "账号不存在，已自动禁用";
+  if (e.indexOf("PASSWORD") >= 0 || e.indexOf("PASSWD") >= 0) return "密码错误，已自动禁用";
+  if (e.indexOf("BAN") >= 0 || e.indexOf("FORBID") >= 0) return "账号被封禁，已自动禁用";
+  if (e.indexOf("FROZEN") >= 0 || e.indexOf("LOCK") >= 0) return "账号被冻结，已自动禁用";
+  return "密码错误或账号不存在，已自动禁用";
+}
+
+function fmtNum(n) {
+  if (n === null || n === undefined) return "-";
+  if (n >= 100000000) return (n/100000000).toFixed(2) + " 亿";
+  if (n >= 10000) return (n/10000).toFixed(1) + " 万";
+  return String(n);
+}
+
+// 任务名短别名：名称过长会挤爆任务列，这里做整体替换。
+// 键必须与后端 biz.go 的实际任务名完全一致，改名时需同步：
+//   每日签到 / 月度礼包          → buildTasks 硬编码
+//   使用小喇叭 / VIP·SVIP·SSVIP  → teamMissionName(2005-2008)
+//   战队捐献                     → buildTasks 末尾（ID 300000）
+// 注意 SVIP(2007) 与 SSVIP(2008) 是两个不同任务，一个 S 和两个 S 都要列。
+var TASK_ALIAS = {
+  "每日签到": "签到",
+  "月度礼包": "月礼包",
+  "使用小喇叭": "小喇叭",
+  "VIP免费领取活跃度": "VIP活跃",
+  "SVIP免费领取活跃度": "SVIP活跃",
+  "SSVIP免费领取活跃度": "SSVIP活跃",
+  "战队捐献": "捐献"
+};
+
+// shortTaskName 把后端下发的长任务名压缩为短标签。
+// 例："在任意游戏内玩或观战达到2小时" → "游戏2时"；"连续签到 7 天" → "连签7天"；
+//     "在线10分钟" → "在线10分"；"在线2小时" → "在线2时"。
+// 无法识别的名称原样返回，保证不会丢信息。
+function shortTaskName(name) {
+  if (!name) return "任务";
+  if (TASK_ALIAS[name]) return TASK_ALIAS[name];
+  var s = name;
+  // teamMissionName(2002-2004)："在任意游戏内玩或观战达到N小时"
+  if (s.indexOf("在任意游戏内玩或观战达到") === 0) {
+    s = "游戏" + s.slice("在任意游戏内玩或观战达到".length);
+  }
+  // buildTasks 连续签到：fmt.Sprintf("连续签到 %d 天", target)
+  s = s.replace(/^连续签到\s*(\d+)\s*天$/, "连签$1天");
+  s = s.replace(/(\d+)分钟$/, "$1分");
+  s = s.replace(/(\d+)小时$/, "$1时");
+  return s;
+}
+
+// shortDetail 把进度文本压缩为 "当前/目标" 形式，
+// 例："110分钟 / 2小时 (挂机107分)" → "107/120分"（括号内为游戏内实际挂机时长，优先采用）。
+function shortDetail(d) {
+  if (!d) return "";
+  var m = d.match(/(\d+)\s*分钟\s*\/\s*(\d+)\s*小时\s*\(\s*挂机\s*(\d+)\s*分\s*\)/);
+  if (m) return m[3] + "/" + (parseInt(m[2], 10) * 60) + "分";
+  m = d.match(/(\d+)\s*分钟\s*\/\s*(\d+)\s*小时/);
+  if (m) return m[1] + "/" + (parseInt(m[2], 10) * 60) + "分";
+  m = d.match(/(\d+)\s*分钟\s*\/\s*(\d+)\s*分钟/);
+  if (m) return m[1] + "/" + m[2] + "分";
+  return d;
+}
+
+// 任务徽章：短名称 + 精简状态文本（done 显示绿色 ✓）
+function taskChips(tasks, emptyText) {
+  if (!tasks || !tasks.length) {
+    return '<span class="col-empty">' + escapeHtml(emptyText || "暂无数据") + '</span>';
+  }
+  var html = '<div class="tasks">';
+  for (var i = 0; i < tasks.length; i++) {
+    var t = tasks[i];
+    var name = escapeHtml(shortTaskName(t.name));
+    var extra = "";
+    if (t.state === "done") name = "✓ " + name;
+    else if (t.state === "claimable") extra = "可领取";
+    else if (t.state === "doing" || t.state === "pending") {
+      extra = shortDetail(t.detail);
+    } else if (t.state === "not_due") extra = "未到期";
+    else if (t.state === "disabled") {
+      extra = shortDetail(t.detail) || "未启用";
+    }
+    html += '<span class="tchip tc-' + escapeHtml(t.state) + '"' +
+      ' title="' + escapeHtml((t.name || "任务") + (t.detail ? " · " + t.detail : "")) + '">' +
+      '<span class="name">' + name + '</span>' +
+      (extra ? '<span class="st">' + escapeHtml(extra) + '</span>' : "") + '</span>';
+  }
+  return html + '</div>';
+}
+
+// 渲染单行的操作按钮（第 5 列，纵向排列）
+function opsButtons(a) {
+  var n = escapeHtml(a.name);
+  var main;
+  if (a.running && a.status === "relogin_wait") {
+    // 被其他设备（用户客户端）顶下线：显示恢复按钮，立即重新登录挂机
+    main = '<button class="green" onclick="startAccount(\'' + n + '\')">恢复挂机</button>';
+  } else if (a.running) {
+    main = '<button class="red" onclick="stopAccount(\'' + n + '\')">停止</button>';
+  } else if (!a.enabled) {
+    // 已禁用（多半是连续登录被拒被自动禁用）：先启用才能启动。
+    // 没有这个按钮，用户改对密码后也无法恢复，只能手改 accounts.yaml。
+    main = '<button class="green" onclick="enableAccount(\'' + n + '\')">启用</button>';
+  } else {
+    main = '<button class="green" onclick="startAccount(\'' + n + '\')">启动</button>';
+  }
+  var extra = a.enabled
+    ? '<button class="gray" onclick="disableAccount(\'' + n + '\')">禁用</button>'
+    : "";
+  return '<div class="ops">' + main +
+    '<button class="gray" onclick="editAccount(\'' + n + '\')">编辑</button>' +
+    extra +
+    '<button class="red" onclick="removeAccount(\'' + n + '\')">删除</button></div>';
+}
+
+// 渲染升级进度（后端提供 level_exp / level_need；缺失时不展示）
+function levelProgress(a) {
+  if (!a.level_need || a.level_need <= 0) return "";
+  var cur = a.level_exp || 0;
+  var need = a.level_need;
+  var pct = Math.round(cur * 10000 / need) / 100; // 保留 2 位小数，区分 98.85% vs 98.89%
+  if (pct > 100) pct = 100;
+  var tip = "本等级已获 " + fmtNum(cur) + " / 升级需 " + fmtNum(need) + " 经验";
+  return '<div class="lvtxt" title="' + escapeHtml(tip) + '">升级 <b>' + pct + '%</b></div>' +
+         '<div class="lvbar"><i style="width:' + pct + '%"></i></div>';
+}
+
+// 计算从今天到目标日期还剩几天（按日期比较，忽略时刻）。
+// 手动拆分构造 Date，避免旧浏览器（IE11）对 "YYYY-MM-DD" 解析不一致。
+function daysUntil(dateStr) {
+  var p = String(dateStr).split("-");
+  if (p.length !== 3) { return 0; }
+  var tgt = new Date(parseInt(p[0], 10), parseInt(p[1], 10) - 1, parseInt(p[2], 10));
+  var now = new Date();
+  var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  return Math.round((tgt.getTime() - today.getTime()) / 86400000);
+}
+
+// 从今天起 N 天后的日期字符串（YYYY-MM-DD），与后端 config.CalcExpireDate 口径一致
+function dateAfterDays(days) {
+  var d = new Date();
+  d.setDate(d.getDate() + days);
+  var m = d.getMonth() + 1, dd = d.getDate();
+  return d.getFullYear() + "-" + (m < 10 ? "0" + m : m) + "-" + (dd < 10 ? "0" + dd : dd);
+}
+
+// 校验并读取"天数"输入框，返回 {ok:true, days:n} 或 {ok:false, msg:"..."}。
+// 只接受整数（可含负号），不接受小数——3.5 这类输入直接报错而不是静默截断。
+//   ""  → days 0（新增=长期挂机 / 编辑=保持不变）
+//   "3" → 3 ；allowNegative 时 "-7" → -7
+function readDaysInput(id, allowNegative) {
+  var el = $(id);
+  if (!el) { return { ok: true, days: 0 }; }
+  var raw = String(el.value).replace(/^\s+|\s+$/g, "");
+  if (raw === "") { return { ok: true, days: 0 }; }
+  if (!/^-?\d+$/.test(raw)) {
+    return { ok: false, msg: "天数必须是整数（如 30" + (allowNegative ? "、-7" : "") + "）" };
+  }
+  var v = parseInt(raw, 10);
+  if (!allowNegative && v < 0) {
+    return { ok: false, msg: "挂机天数不能为负数" };
+  }
+  return { ok: true, days: v };
+}
+
+// 实时预览用：宽松读取，非法输入返回 null（不报错，只是不显示预览）
+function peekDays(id, allowNegative) {
+  var el = $(id);
+  if (!el) { return null; }
+  var raw = String(el.value).replace(/^\s+|\s+$/g, "");
+  if (raw === "" || !/^-?\d+$/.test(raw)) { return null; }
+  var v = parseInt(raw, 10);
+  if (!allowNegative && v < 0) { return null; }
+  return v;
+}
+
+// 新增表单：输入天数时实时提示对应的到期日
+function onAddDaysInput() {
+  var el = $("add_days_tip");
+  if (!el) { return; }
+  var d = peekDays("add_days", false);
+  el.textContent = (d === null || d === 0)
+    ? "从今天起的天数；留空或 0 = 长期挂机（永不过期）"
+    : ("有效期至 " + dateAfterDays(d) + "（含今天共 " + (d + 1) + " 天，到期后自动停止）");
+}
+
+// 在日期字符串（YYYY-MM-DD）上叠加天数
+function addDaysToDate(dateStr, days) {
+  var p = String(dateStr).split("-");
+  if (p.length !== 3) { return dateAfterDays(days); }
+  var d = new Date(parseInt(p[0], 10), parseInt(p[1], 10) - 1, parseInt(p[2], 10));
+  d.setDate(d.getDate() + days);
+  var m = d.getMonth() + 1, dd = d.getDate();
+  return d.getFullYear() + "-" + (m < 10 ? "0" + m : m) + "-" + (dd < 10 ? "0" + dd : dd);
+}
+
+// 编辑行的"增加天数"实时提示。
+// 与后端 config.ExtendExpireDate 口径严格一致（2026-09-02 规则）：
+//   未过期（含到期日当天）→ 一律在原到期日上增减（正数延长、负数缩短、0 不变）
+//   已过期               → 正数以**今天**为基数（否则加完仍是过去日期，账号依旧不可用）
+//                          0 改为今天；负数仍以原到期日为基数向前减
+//   长期（空）           → 正数从今天起算；0 与负数保持长期不变
+var editingExpire = ""; // 当前编辑账号的到期日，空=长期
+function onEdDaysInput() {
+  var el = $("ed_days_tip");
+  if (!el) { return; }
+  var d = peekDays("ed_days", true); // 允许负数（缩短）
+  var cur = editingExpire ? ("当前 " + editingExpire) : "当前长期";
+
+  if (d === null) {
+    el.textContent = cur + "；填正数为延长、负数为缩短（必须是整数）";
+    return;
+  }
+
+  // 已过期判定与后端 IsExpired 一致：剩余天数 < 0 即已过期（到期日当天为 0，未过期）
+  var overdue = editingExpire ? (daysUntil(editingExpire) < 0) : false;
+
+  if (d === 0) {
+    // 已过期账号填 0 → 有效期拉回今天（今天仍可挂机，明天起过期）；其余保持不变
+    el.textContent = overdue
+      ? (cur + "（已过期）→ 有效期改为今天 " + dateAfterDays(0))
+      : (cur + "；留空或 0 = 保持不变（填正数为延长、负数为缩短）");
+    return;
+  }
+
+  if (!editingExpire) {
+    // 原为长期：正数从今天起算设定期限；负数无基数可减少
+    el.textContent = d > 0
+      ? (cur + " → 增加 " + d + " 天后 " + dateAfterDays(d))
+      : (cur + "；长期账号无法减少天数，将保持长期不变");
+    return;
+  }
+
+  if (overdue && d > 0) {
+    // 已过期 + 正数：以今天为基数，否则累加后仍是过去日期
+    el.textContent = cur + "（已过期）→ 从今天起 " + d + " 天后 " + dateAfterDays(d);
+    return;
+  }
+  // 其余（未过期的任意天数；已过期且为负数）→ 以原到期日为基数
+  var verb = d > 0 ? ("增加 " + d + " 天后 ") : ("减少 " + (-d) + " 天后 ");
+  el.textContent = cur + " → " + verb + addDaysToDate(editingExpire, d);
+}
+
+// 到期日提示（粒度到日期）：
+//   永久     → "长期挂机"
+//   已过期   → "已于 XXXX-XX-XX 到期"（红色加粗）
+//   剩余 ≤3 天 → 橙色提醒
+//   其余     → "有效期至 XXXX-XX-XX（剩 N 天）"
+function expireHtml(a) {
+  if (!a.expire_date) {
+    return '<div class="acc-expire" title="未设置有效期，长期挂机">长期挂机</div>';
+  }
+  var d = escapeHtml(a.expire_date);
+  if (a.expired) {
+    return '<div class="acc-expire over" title="挂机已于该日到期；编辑账号增加天数即可续期">' +
+           '已于 ' + d + ' 到期</div>';
+  }
+  var left = daysUntil(a.expire_date);
+  var cls = left <= 3 ? " soon" : "";
+  return '<div class="acc-expire' + cls + '" title="有效期至 ' + d + '，剩 ' + left + ' 天，到期后自动停止挂机">' +
+         d + ' · 剩 ' + left + ' 天</div>';
+}
+
+function renderStatus(list) {
+  var tbody = $("accBody");
+  var html = "";
+  // 刷新已知账号名，供新增时即时查重
+  knownNames = [];
+  for (var k = 0; k < list.length; k++) { knownNames.push(list[k].name); }
+  for (var i = 0; i < list.length; i++) {
+    var a = list[i];
+    var st = a.status || "offline";
+    var stClass = "st-" + st;
+    var stText = STATUS_MAP[st] || st;
+    if (a.running && (st === "offline" || st === "login_fail")) stText = "○ 登录中";
+    var errTip = a.err ? " title=\"" + escapeHtml(a.err) + "\"" : "";
+
+    html += '<tr class="acc-row" data-acc="' + escapeHtml(a.name) + '">';
+
+    // --- 列 1：账号名 + 状态 + 挂机到期日 + 当日经验 ---
+    html += '<td class="c-name">';
+    html += '<span class="acc-name">' + escapeHtml(a.name) + '</span>';
+    html += '<span class="acc-status ' + stClass + '"' + errTip + '>' + escapeHtml(stText) + '</span>';
+    html += expireHtml(a);
+    // 当日经验仅在今日确有进账时展示，避免未运行账号出现无意义的 +0
+    if (a.exp_today > 0) {
+      html += '<div class="acc-today" title="今日获得经验 ' + a.exp_today + '">' +
+              '今日 <b>+' + fmtNum(a.exp_today) + '</b></div>';
+    }
+    html += '</td>';
+
+    // --- 列 2：基础信息 ---
+    html += '<td class="c-info">';
+    if (a.nick || a.level) {
+      html += '<div class="acc-meta" title="' + escapeHtml(a.nick || "") + ' · Lv.' + (a.level || 0) + '">' +
+              '<b>' + escapeHtml(a.nick || "-") + '</b> · Lv.<b>' + (a.level || "-") + '</b></div>';
+      html += '<div class="acc-meta">经验 <b>' + fmtNum(a.exp) + '</b> · 币 <b>' + fmtNum(a.gold) + '</b></div>';
+    } else {
+      html += '<div class="acc-meta"><span class="dim">— · Lv.-</span></div>';
+      html += '<div class="acc-meta"><span class="dim">经验 - · 币 -</span></div>';
+    }
+    html += levelProgress(a);
+    if (st === "disabled") {
+      // 连续登录被拒而自动禁用：给中文原因，原始 errStr 放 title 供排查。
+      html += '<div class="acc-sub warn" title="服务器返回：' + escapeHtml(a.err || "") + '">' +
+              escapeHtml(loginRejectText(a.err)) + '</div>';
+    } else if (st === "login_fail" && a.err) {
+      html += '<div class="acc-sub warn" title="' + escapeHtml(a.err) + '">' + escapeHtml(a.err) + '</div>';
+    } else if (st === "relogin_wait") {
+      html += '<div class="acc-sub warn">被其他设备顶下线</div>';
+    } else if (a.last_active) {
+      html += '<div class="acc-sub">活跃 ' + escapeHtml(a.last_active.slice(5, 16)) + '</div>';
+    } else {
+      html += '<div class="acc-sub">尚未启动</div>';
+    }
+    html += '</td>';
+
+    // --- 列 3：每日任务 ---
+    html += '<td class="c-daily">' +
+            taskChips(a.tasks, "暂无数据，启动后自动获取") + '</td>';
+
+    // --- 列 4：战队任务（仅已加入战队的账号开启） ---
+    html += '<td class="c-team">' +
+            taskChips(a.team_tasks, "启动后自动检测战队状态") + '</td>';
+
+    // --- 列 5：操作 ---
+    html += '<td class="c-ops">' + opsButtons(a) + '</td>';
+
+    html += '</tr>';
+  }
+  if (list.length === 0) {
+    html = '<tr><td colspan="5" style="text-align:center;color:#98a3b1;padding:24px">暂无账号，请在下方添加</td></tr>';
+  }
+  tbody.innerHTML = html;
+}
+
+function loadStatus() {
+  api("GET", "/api/status", null, function (err, resp) {
+    if (err) { setMsg("状态获取失败: " + err, true); return; }
+    renderStatus(resp || []);
+  });
+}
+
+function startAll() {
+  api("POST", "/api/start-all", null, function (err, data) {
+    // 已过期的账号会被后端跳过，这里明确告知数量，避免用户误以为漏启动
+    var skipped = (data && data.skipped_expired) ? data.skipped_expired : 0;
+    if (err) {
+      setMsg("启动失败: " + err, true);
+    } else if (skipped > 0) {
+      setMsg("已启动全部账号（跳过 " + skipped + " 个已过期账号，续期后可启动）", false);
+    } else {
+      setMsg("已请求全部启动", false);
+    }
+    setTimeout(loadStatus, 800);
+  });
+}
+function stopAll() {
+  api("POST", "/api/stop-all", null, function (err) {
+    setMsg(err ? ("停止失败: " + err) : "已请求全部停止", !!err);
+    setTimeout(loadStatus, 800);
+  });
+}
+// startAccount 点击「启动」。已过期的账号会先弹确认，用户确认后才强制启动。
+function startAccount(name) {
+  startAccountOpt(name, false);
+}
+
+// startAccountOpt 启动账号；force=true 表示忽略过期（用户在确认框选择了继续）。
+function startAccountOpt(name, force) {
+  api("POST", "/api/accounts/" + encodeURIComponent(name) + "/start",
+      { force: !!force },
+      function (err, data, resp) {
+    if (err && resp && resp.expired) {
+      if (window.confirm("账号「" + name + "」" + err +
+                         "\n\n是否仍要启动挂机？\n（可先点「编辑」增加天数来续期）")) {
+        startAccountOpt(name, true);
+      } else {
+        setMsg("已取消启动 " + name, false);
+      }
+      return;
+    }
+    setMsg(err ? ("启动失败: " + err) : "已请求启动 " + name, !!err);
+    setTimeout(loadStatus, 1200);
+  });
+}
+function stopAccount(name) {
+  api("POST", "/api/accounts/" + encodeURIComponent(name) + "/stop", null, function (err) {
+    setMsg(err ? ("停止失败: " + err) : "已请求停止 " + name, !!err);
+    setTimeout(loadStatus, 1200);
+  });
+}
+
+// enableAccount 重新启用账号。
+// 账号若因连续登录被拒（密码错误/账号不存在）而被自动禁用，
+// 用户应先点"编辑"改对密码或 MAC，再点"启用"，最后"启动"。
+function enableAccount(name) {
+  api("POST", "/api/accounts/" + encodeURIComponent(name) + "/enable", null, function (err) {
+    setMsg(err ? ("启用失败: " + err)
+               : ("已启用 " + name + "，请确认密码正确后点「启动」"), !!err);
+    setTimeout(loadStatus, 800);
+  });
+}
+
+// disableAccount 手动禁用账号（批量启动时会被跳过）。
+// 账号正在挂机时先停止，避免状态不一致。
+function disableAccount(name) {
+  api("POST", "/api/accounts/" + encodeURIComponent(name) + "/stop", null, function () {
+    api("POST", "/api/accounts/" + encodeURIComponent(name) + "/disable", null, function (err) {
+      setMsg(err ? ("禁用失败: " + err) : ("已禁用 " + name + "，批量启动时将跳过"), !!err);
+      setTimeout(loadStatus, 1200);
+    });
+  });
+}
+
+// 当前列表中的账号名（renderStatus 时刷新），用于前端即时查重。
+// 只是提前给提示、省一次请求，权威校验仍在服务端 AddAccount。
+var knownNames = [];
+
+function addAccount() {
+  var name = $("add_name").value.replace(/^\s+|\s+$/g, "");
+  var pass = $("add_pass").value;
+  if (!name || !pass) { setMsg("请填写账号名和密码", true); return; }
+  // 即时查重（忽略大小写）：只差大小写也视为同一账号——
+  // 放行会让两个账号在服务端互相顶下线，必须拦住。
+  for (var i = 0; i < knownNames.length; i++) {
+    if (knownNames[i].toLowerCase() === name.toLowerCase()) {
+      setMsg("账号 " + knownNames[i] + " 已存在，不能重复添加", true);
+      return;
+    }
+  }
+  var got = readDaysInput("add_days", false); // 新增不接受负数
+  if (!got.ok) { setMsg(got.msg, true); return; }
+  var days = got.days;
+  api("POST", "/api/accounts", {
+    name: name, password: pass, days: days
+  }, function (err) {
+    // 服务端"已存在"是明确业务提示，去掉冗余的"添加失败:"前缀
+    if (err) { setMsg(/已存在/.test(err) ? err : ("添加失败: " + err), true); return; }
+    setMsg("账号 " + name + " 已添加" +
+           (days > 0 ? ("，有效期至 " + dateAfterDays(days)) : "（长期挂机，永不过期）"));
+    $("add_name").value = ""; $("add_pass").value = ""; $("add_days").value = "";
+    onAddDaysInput();
+    loadStatus();
+  });
+}
+
+function editAccount(name) {
+  api("GET", "/api/status", null, function (err, list) {
+    if (err) { setMsg(err, true); return; }
+    var a = null;
+    for (var i = 0; i < list.length; i++) if (list[i].name === name) a = list[i];
+    if (!a) { setMsg("账号不存在: " + name, true); return; }
+    // 记录当前到期日，供"增加天数"实时预览新到期日
+    editingExpire = a.expire_date || "";
+    var tbody = $("accBody");
+    var rows = tbody.getElementsByTagName("tr");
+    for (var r = 0; r < rows.length; r++) {
+      if (rows[r].getAttribute("data-edit") === name) {
+        rows[r].parentNode.removeChild(rows[r]);
+        return;
+      }
+    }
+    var html = "<tr class=\"edit-form\" data-edit=\"" + escapeHtml(name) + "\"><td colspan=\"5\">";
+    html += "账号 <b>" + escapeHtml(name) + "</b> 编辑：";
+    html += " 密码 <input type=\"password\" id=\"ed_pass\" value=\"\" placeholder=\"留空不修改\">";
+    html += " 增加天数 <input type=\"number\" id=\"ed_days\" value=\"\" step=\"1\" " +
+            "style=\"width:80px\" placeholder=\"留空不变\" oninput=\"onEdDaysInput()\" " +
+            "onkeyup=\"onEdDaysInput()\">";
+    html += " <span class=\"tip\" id=\"ed_days_tip\"></span>";
+    html += " <button class=\"sm green\" onclick=\"saveEdit('" + escapeHtml(name) + "')\">保存</button>";
+    html += " <button class=\"sm gray\" onclick=\"cancelEdit('" + escapeHtml(name) + "')\">取消</button>";
+    html += "</td></tr>";
+    // 插入到该账号第二行（任务行）之后，作为独立编辑行
+    for (var j = 0; j < rows.length; j++) {
+      if (rows[j].getAttribute("data-acc") === name) {
+        var next = rows[j].nextSibling;
+        while (next && next.nodeType === 3) next = next.nextSibling;
+        var tr = document.createElement("tr");
+        tr.innerHTML = html;
+        tr.setAttribute("data-edit", name);
+        rows[j].parentNode.insertBefore(tr, next);
+        onEdDaysInput();
+        return;
+      }
+    }
+    tbody.innerHTML += html;
+    onEdDaysInput();
+  });
+}
+
+function cancelEdit(name) {
+  var rows = $("accBody").getElementsByTagName("tr");
+  for (var i = 0; i < rows.length; i++) {
+    if (rows[i].getAttribute("data-edit") === name) {
+      rows[i].parentNode.removeChild(rows[i]);
+      return;
+    }
+  }
+}
+
+function saveEdit(name) {
+  var pass = $("ed_pass") ? $("ed_pass").value : "";
+  var got = readDaysInput("ed_days", true); // 编辑允许负数（缩短）
+  if (!got.ok) { setMsg(got.msg, true); return; }
+  var days = got.days;
+  var body = { name: name };
+  if (pass) body.password = pass;
+  // add_days：正数=延长、负数=缩短，均以原到期日为基数；0/留空=不修改
+  if (days !== 0) body.add_days = days;
+  api("PUT", "/api/accounts/" + encodeURIComponent(name), body, function (err, data) {
+    if (err) { setMsg("保存失败: " + err, true); return; }
+    var tip = "";
+    if (days > 0) {
+      tip = editingExpire
+        ? ("，到期日延长至 " + addDaysToDate(editingExpire, days))
+        : ("，有效期至 " + dateAfterDays(days));
+    } else if (days < 0) {
+      tip = editingExpire
+        ? ("，到期日缩短至 " + addDaysToDate(editingExpire, days))
+        : "（长期账号不变）";
+    }
+    // 运行中改了密码/MAC：配置已保存，但当前会话仍用旧凭据，重启账号后才生效。
+    if (data && data.pending_restart) {
+      tip += "；密码/MAC 已保存，重启该账号后生效";
+    }
+    setMsg("账号 " + name + " 已更新" + tip);
+    cancelEdit(name);
+    loadStatus();
+  });
+}
+
+function removeAccount(name) {
+  if (!window.confirm("确定删除账号 " + name + " 吗？")) return;
+  api("DELETE", "/api/accounts/" + encodeURIComponent(name), null, function (err) {
+    setMsg(err ? ("删除失败: " + err) : "账号 " + name + " 已删除", !!err);
+    loadStatus();
+  });
+}
+
+function tick() {
+  var d = new Date();
+  function p(n) { return (n < 10 ? "0" : "") + n; }
+  $("clock").textContent = "  " + d.getFullYear() + "-" + p(d.getMonth()+1) + "-" + p(d.getDate()) +
+    " " + p(d.getHours()) + ":" + p(d.getMinutes()) + ":" + p(d.getSeconds());
+}
+
+// 启动
+loadStatus();
+tick();
+if (autoRefresh) clearInterval(autoRefresh);
+autoRefresh = setInterval(function () {
+  loadStatus();
+  tick();
+}, 600000); // 10 分钟自动刷新；手动点「刷新」按钮立即刷新
+</script>
+</body>
+</html>

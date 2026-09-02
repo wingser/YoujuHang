@@ -1,0 +1,130 @@
+    border-image: url(:/login/login/Password.png) 2 2 2 2;
+    http://www.ijg.org
+, user_id=%d, 
+.?AVCloseJoinSeatPasswordBox@xzUIMsg_Battle@@
+.?AVLoginReq@@
+.?AVMyEvent_ShowPassWord@@
+.?AVQBattle_Password_Widget@@
+.?AVQHall_Password_Widget@@
+.\%s webgame -hwnd %x -user_id %s -token %s -x_pos %x -y_pos %x -width %x -height %x -url %s -ie_type %x
+1OnCheck_Password(bool)
+1OnClick_Password_Link()
+1OnEdit_Password_Line(const QString&)
+:http://7637.gotvg.com
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
+<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><s:Body><u:%s xmlns:u="%s">
+<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><s:Body><u:%s xmlns:u="%s"></u:%s></s:Body></s:Envelope>
+AchievementStageStartTimeReq::OnHttpResult fail, httpcode error or data length <= 0, version:%d httpcode:%d dataLen:%d
+AchievementStageStartTimeReq::OnHttpResult fail, protobuf unmarshal error, version:%d
+AchievementStageStartTimeReq::OnHttpResult fail, version:%d errId:%d errStr:%s
+AchievementStageStartTimeReq::OnHttpResult succeed, version:%d
+Battle_Password_Widget
+ChatReq::OnHttpResult ParseFromArray failed, code:%d data:%x length:%d
+ChatReq::OnHttpResult ParseFromArray succeed, code:%d data:%x length:%d
+EnterLobbyReq::OnHttpResult ParseFromArray failed, code:%d data:%x length:%d
+EnterLobbyReq::OnHttpResult ParseFromArray succeed, code:%d data:%x length:%d
+EnterRoomReq::OnHttpResult ParseFromArray failed, code:%d data:%x length:%d
+EnterRoomReq::OnHttpResult ParseFromArray succeed, code:%d data:%x length:%d
+EnterZone::OnHttpResult ParseFromArray failed, code:%d data:%x length:%d
+EnterZoneReq::OnHttpResult ParseFromArray succeed, code:%d data:%x length:%d
+FollowPlayerReq::OnHttpResult ParseFromArray failed, code:%d data:%x length:%d
+FollowPlayerReq::OnHttpResult ParseFromArray succeed, code:%d data:%x length:%d
+GamePlayerInfoReq::OnHttpResult failed, code:%d
+GetRoomSnapShotReplayReq::OnHttpResult fail, entityId:%d errId:%d errStr:%s
+GetRoomSnapShotReplayReq::OnHttpResult fail, httpcode error or data length <= 0, entityId:%d httpcode:%d dataLen:%d
+GetRoomSnapShotReplayReq::OnHttpResult fail, protobuf unmarshal error, entityId:%d
+GetRoomSnapShotReplayReq::OnHttpResult succeed, entityId:%d
+GetRoomSramMemCardReq::OnHttpResult fail, entityId:%d errId:%d errStr:%s
+GetRoomSramMemCardReq::OnHttpResult fail, httpcode error or data length <= 0, entityId:%d httpcode:%d dataLen:%d
+GetRoomSramMemCardReq::OnHttpResult fail, protobuf unmarshal error, entityId:%d
+GetRoomSramMemCardReq::OnHttpResult succeed, entityId:%d
+Hall_Password_Widget
+IEC http://www.iec.ch
+LeaveRoomReq::OnHttpResult ParseFromArray fail, code:%d data:%x length:%d [
+LeaveRoomReq::OnHttpResult ParseFromArray success, code:%d data:%x length:%d [
+LeaveZoneReq::OnHttpResult ParseFromArray failed, code:%d data:%x length:%d
+LeaveZoneReq::OnHttpResult ParseFromArray succeed, code:%d data:%x length:%d
+LoginReq::OnHttpResult ParseFromArray failed, code:%d data:%x length:%d
+LoginReq::OnHttpResult ParseFromArray succeed, code:%d data:%x length:%d
+OnCheck_Password
+OnClick_Password_Link
+OnEdit_Password_Line
+OnRoomPasswordCheck err = %x %s
+PASSWORD_INVALID
+PASSWORD_NOT_MATCH
+PASSWORD_TOO_LONG
+PlayerExpAddReq::OnHttpResult mRsp->ret() == Proto::UNHANDLED_MSG_ID
+PresentGiftReq::OnHttpResult mRsp->ret() == Proto::UNHANDLED_MSG_ID
+Proto.ChangeRoomSlotCMsg.password
+Proto.ClickCreateRoomConfirmData.password
+Proto.EnterRoomReq.password
+Proto.LsLoginCMsg.password
+Proto.RoomCfgInfo.password
+QBattle_Password_Widget
+QHall_Password_Widget
+QLabel#server_label,#account_label,#password_label{
+QLineEdit#password_lineEdit{
+QPushButton#account_link_btn,#password_link_btn,#help_link_btn
+QPushButton#account_link_btn:hover,#password_link_btn:hover,#help_link_btn:hover,#announcement_1_btn:hover,#announcement_2_btn:hover,#announcement_3_btn:hover,#announcement_4_btn:hover,#announcement_5_btn:hover{
+QUserInfo::OnGamePlayerInfoSMsg failed, ev->value_ != mData.mData->user_id_ %d|%d
+QUserInfo::QueryUserInfo failed, mData.mData->user_id_ == 0
+QueryAllZoneList::OnHttpResult ParseFromArray failed, code:%d data:%x length:%d
+QueryAllZoneList::OnHttpResult ParseFromArray succeed, code:%d data:%x length:%d
+QueryGameCfg::OnHttpResult ParseFromArray failed, code:%d data:%x length:%d
+QueryGameCfg::OnHttpResult ParseFromArray succeed, code:%d data:%x length:%d
+QueryZonePlayerList::OnHttpResult ParseFromArray failed, code:%d data:%x length:%d
+QueryZonePlayerList::OnHttpResult ParseFromArray succeed, code:%d data:%x length:%d
+QueryZoneRoomList::OnHttpResult ParseFromArray failed, code:%d data:%x length:%d
+QueryZoneRoomList::OnHttpResult ParseFromArray succeed, code:%d data:%x length:%d
+REDIS_INVALID_PASSWORD
+UploadRoomSramMemCardReq::OnHttpResult fail, entityId:%d errId:%d errStr:%s
+UploadRoomSramMemCardReq::OnHttpResult fail, httpcode error or data length <= 0, entityId:%d httpcode:%d dataLen:%d
+UploadRoomSramMemCardReq::OnHttpResult fail, protobuf unmarshal error, entityId:%d
+UploadRoomSramMemCardReq::OnHttpResult succeed, entityId:%d
+UserInfoReq::OnHttpResult ParseFromArray failed, code:%d data:%x length:%d
+UserInfoReq::OnHttpResult ParseFromArray succeed, code:%d data:%x length:%d
+WRONG_PASSWORD
+border-image: url(:/login/login/Password.png);
+hasPassword
+http://
+http://%s/zone/%d/
+http://192.168.1.192:55052/sram/
+http://192.168.1.82:18000/login/
+http://7637.gotvg.cn/index.php/service/faq
+http://auto.gotvg.com/dll/aviconvert/%s.html
+http://bbs.gotvg.com
+http://bbs.gotvg.com/activation.php
+http://bbs.gotvg.com/data/attachment/common/
+http://bbs.gotvg.com/thread-2410351-1-1.html
+http://client.gotvg.com/report/bug?token=%1&userid=%2&version=%3
+http://download.gotvg.cn/
+http://download.gotvg.cn/dll/dcemu/2.exe
+http://download.gotvg.cn/phone/assets/icon/%s.png
+http://download.gotvg.cn/remotecfg/pc/announce.txt
+http://download.gotvg.cn/roms/
+http://download.gotvg.cn/stb2/
+http://gamelogin3.gotvg.com:18000/login/
+http://gogm.gotvg.com/index.php/Interface-bug_env_collection
+http://ranking.gotvg.cn/Gf/admin_gold_finger_apply?token=%1&userid=%2&version=%3
+http://ranking.gotvg.cn/Index/denied.html?token=%1&userid=%2&version=%3
+http://ranking.gotvg.cn/Index/index_new.html
+http://upload.qiniu.com
+http://www.7637.com
+https://bbs.gotvg.com/forum-4-1.html
+https://bbs.gotvg.com/thread-2581692-1-1.html
+https://dl18.8546512.com:4139/soft/directx-repair.exe
+https://download.gotvg.cn/image/achievement/character/%s/%s.png
+https://download.gotvg.cn/image/authentication/
+https://download.gotvg.cn/image/authentication/%s
+https://download.gotvg.cn/image/icon/%s.jpg
+https://download.gotvg.cn/image/icon/%s_big.jpg
+my_user_id
+password
+room_host_user_id
+savePassword
+send TVG_PLAYER_ROOM_PASSWORD_CHECK fail
+send TVG_PLAYER_ROOM_PASSWORD_CHECK success
+slot=%d, user_id=%d
+styles/battle_password_widget.qss
+styles/hall_password_widget.qss
+user_id

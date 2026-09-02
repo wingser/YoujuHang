@@ -1,0 +1,232 @@
+"%s": Information lost writing value (%g) as (unsigned) RATIONAL
+%s: EV_SIGNAL incompatible use
+%s: received signal %d, but have no base configured
+, ROM1md5:%s, ROM2md5:%s, 
+, md5
+, md5=%s, 
+../resource/res/rom_md5_online_update.xml
+.?AU?$P@V?$TSingleton@UCRomMd5@@@@@CSingletonMgr@@
+.?AU?$P@V?$TSingleton@UCStaMd5@@@@@CSingletonMgr@@
+.?AU?$P@V?$TSingleton@UCStbMd5@@@@@CSingletonMgr@@
+.?AUCRomMd5@@
+.?AUCStaMd5@@
+.?AUCStbMd5@@
+.?AV?$TSingleton@UCRomMd5@@@@
+.?AV?$TSingleton@UCStaMd5@@@@
+.?AV?$TSingleton@UCStbMd5@@@@
+.?AVAddXzoneSignAck@Proto@@
+.?AVAddXzoneSignReq@Proto@@
+.?AVCFileMd5@@
+.?AVCheckPersonalSignAck@Proto@@
+.?AVCheckPersonalSignReq@Proto@@
+.?AVCheckXzoneSignAck@Proto@@
+.?AVCheckXzoneSignReq@Proto@@
+.?AVGetPersonalSignAck@Proto@@
+.?AVGetPersonalSignReq@Proto@@
+.?AVMyDownloadRomMd5Xml@@
+.?AVQSignInRemind@@
+.?AVResMd5@Proto@@
+.?AVSaveDataBeforeDownloadRomMd5Xml@Proto@@
+.?AVSignInReq@@
+.?AVxzCSignOnComponent@@
+.Proto.ResMd5
+:%s key:%s md5:%s 
+:%s, ROM1md5:%s, ROM2md5:%s, 
+?allocateNode@QHashData@@QAEPAXH@Z
+?blockSignals@QObject@@QAE_N_N@Z
+?detach_helper@QHashData@@QAEPAU1@P6AXPAUNode@1@PAX@ZP6AX0@ZHH@Z
+?free_helper@QHashData@@QAEXP6AXPAUNode@1@@Z@Z
+?hasHeightForWidth@QBoxLayout@@UBE_NXZ
+?hasHeightForWidth@QGridLayout@@UBE_NXZ
+?hasHeightForWidth@QLayoutItem@@UBE_NXZ
+?hasHeightForWidth@QSizePolicy@@QBE_NXZ
+?hasHeightForWidth@QTabWidget@@UBE_NXZ
+?hasHeightForWidth@QWidget@@UBE_NXZ
+?nextNode@QHashData@@SAPAUNode@1@PAU21@@Z
+?shared_null@QHashData@@2U1@B
+?willGrow@QHashData@@QAE_NXZ
+Application signalled CMS error
+Application signalled I/O error
+Application signalled an error
+Application signalled error during trace-callback
+Application signalled timing error
+AssignProcessToJobObject
+CDownload::CheckRom1 fail, CHECK_MD5_ERROR, name:%s|%s isReplay:%d replayMd5:%s pVersion->m_rom1Md5:%s pVersion->m_rom2Md5:%s
+CDownload::CheckRom2 fail, CHECK_MD5_ERROR, name:%s|%s isReplay:%d replayMd5:%s pVersion->m_rom1Md5:%s pVersion->m_rom2Md5:%s
+CEmuReplay::EncryptReplayWithMd5 failed, checkmd5 is empty [
+CEmuReplay::EncryptReplayWithMd5 failed, g_pMyVersion == nullptr [
+CEmuReplay::EncryptReplayWithMd5 lastReplay save failed, checkMd5:%s [
+CEmuReplay::EncryptReplayWithMd5 nowReplay save failed, checkMd5:%s nowReplayPath:%s [
+CEmuReplay::EncryptReplayWithMd5 nowReplay save failed, isAutoSaveReplay == false [
+CEmuReplay::EncryptReplayWithMd5 nowReplay save succeed, checkMd5:%s nowReplayPath:%s [
+CEmuReplay::stopRecord GetReplayMd5 failed [
+CEmuReplay::stopRecord GetReplayMd5 succeed md5:%s [
+CRomMd5::GetNameMd5 fail, versionName:%s ret1:%d foundInHotXml:%d ret2:%d foundInNormalXml:%d
+CRomMd5::GetNameMd5ForNeogeoBiosAndPgmBios fail, name:%s ret:%d found:%d
+CRomStaMgr::IsRomMd5Match call the(RomMd5).GetNameMd5 fail, full_game_name:%s
+CheckMd5FromServer, fileMd5:%s encryptedMd5:%s
+DAILY_SIGN_IN
+DataG_Battle::SetNeedReplayVerify m_gameMode:%d fileMd5:%s
+GUILD_SIGN_IN
+GoGetNextSignInTime
+GoGetNextSignInTimeForLog
+MONTH_SIGN_DAY_NUM
+MyEntertainment::DownloadRomMd5XmlResultTemp cfg.xml download complete
+MyEntertainment::DownloadRomMd5XmlResultTemp files in cfg.xml download complete, gJobMgr.need_download_rom_md5_xml_ is %d
+MyEntertainment::DownloadRomMd5XmlResultTemp rom_md5_online_update.xml download complete
+MyEntertainment::OnEmulatorStopedOld reason:%d replayNeedVerify:%d replayFileMd5:%s replayUploadEntityId:%d [
+No space for LZW hash table
+OnModuleEventAfterEmulatorStopped replay verify is required, call CGameLogic::Instance().UserReplayMd5Req [
+OnReplayAck md5 check wrong
+OnReplayMd5Ack failed errId:%x [
+OnReplayMd5Ack succeed md5Ack:%s uploadEntityId:%d [
+OnReplayMd5Ack upload replay is required [
+OnSignOnAck err = %x %s
+OnSignOnAck errId:0x%x
+OnSignOnAck errId:0x%x errStr:%s
+OnSignOnAck protocol:0x%x subType:%d
+OnUploadConfirm2 check personal sign begin
+OnUploadConfirm2 check personal sign curl post begin
+OnUploadConfirm2 check personal sign curl post end
+OnUploadConfirm2 check personal sign end
+OnUploadConfirm2 hasXzoneSign begin
+OnUploadConfirm2 hasXzoneSign curl post begin
+OnUploadConfirm2 hasXzoneSign curl post end
+OnUploadConfirm2 hasXzoneSign end
+OnUploadConfirm2 noXzoneSign begin
+OnUploadConfirm2 noXzoneSign curl post begin
+OnUploadConfirm2 noXzoneSign curl post end
+OnUploadConfirm2 noXzoneSign end
+PNG unsigned integer out of range.
+Proto.AddXzoneSignAck
+Proto.AddXzoneSignAck.err_str
+Proto.AddXzoneSignAck.md5_ack
+Proto.AddXzoneSignAck.md5_req
+Proto.AddXzoneSignReq
+Proto.AddXzoneSignReq.md5
+Proto.AddXzoneSignReq.token
+Proto.CfgData.md5
+Proto.CheckDownloadRomData.rom1_md5
+Proto.CheckDownloadRomData.rom2_md5
+Proto.CheckDownloadRomData.state_md5
+Proto.CheckPersonalSignAck
+Proto.CheckPersonalSignAck.err_str
+Proto.CheckPersonalSignReq
+Proto.CheckPersonalSignReq.md5
+Proto.CheckPersonalSignReq.token
+Proto.CheckXzoneSignAck
+Proto.CheckXzoneSignAck.err_str
+Proto.CheckXzoneSignReq
+Proto.CheckXzoneSignReq.md5
+Proto.CheckXzoneSignReq.md5_encrypt
+Proto.CheckXzoneSignReq.token
+Proto.DownloadCheckDataType1.rom1_md5
+Proto.DownloadCheckDataType1.rom2_md5
+Proto.DownloadCheckDataType1.sta_md5
+Proto.DownloadCheckDataType1.stb_md5
+Proto.EnterRoomAck.sram_key_md5
+Proto.EnterRoomAckSram.key_md5
+Proto.GameCfg.md5
+Proto.GetPersonalSignAck
+Proto.GetPersonalSignAck.err_str
+Proto.GetPersonalSignAck.key_md5
+Proto.GetPersonalSignReq
+Proto.GetPersonalSignReq.token
+Proto.PlayerSramCMsg.md5
+Proto.PlayerSramCMsg.sign
+Proto.PlayerSramCMsg.signEncrypted
+Proto.PlayerSramSMsg.retSign
+Proto.ProtobufPlayerUploadSramFile.md5
+Proto.QueryAllZoneListCMsg.md5
+Proto.ReplayHeadG.checkMd5
+Proto.ReplayHeadG.rom1Md5
+Proto.ReplayHeadG.rom2Md5
+Proto.ReplayHeadG.staMd5
+Proto.ReplayHead_2.rom1Md5
+Proto.ReplayHead_2.rom2Md5
+Proto.ReplayHead_2.staMd5
+Proto.ResMd5.md5
+Proto.ResMd5.name
+Proto.RoomCfgInfo.rom1Md5
+Proto.RoomCfgInfo.rom2Md5
+Proto.RoomCfgInfo.staMd5
+Proto.SaveDataBeforeDownloadRomMd5Xml
+Proto.SingleFileInfo.hash
+Proto.SramDataOne.md5
+Proto.SramIndexItem.md5
+Proto.UploadSramFileIndexIndexAck.index_file_md5
+Proto.UploadSramFileIndexReq.add_xzone_sign_md5
+Proto.UploadSramFileIndexReq.index_file_md5
+Proto.UploadSramFileIndexReq.personal_md5
+Proto.UploadSramFileIndexReq.xzone_md5
+Proto.UploadSramFileIndexReq.xzone_md5_encrypt
+QSignInRemind
+ResMd5
+Rom1Md5
+Rom2Md5
+SIGN_NOT_MATCH
+Sign In Remind
+SignInRemind
+SignInRsp
+SignalObjectAndWait
+TVG_REPLAY_MD5_CHECK
+TVG_SRAM_PERSONAL_SIGN_CHECK_REQ
+TVG_SRAM_XZONE_SIGN_CHECK_REQ
+TVG_SRAM_XZONE_SIGN_REQ
+The signature is invalid
+UNASSIGNED_RAKNET_GUID
+UNASSIGNED_SYSTEM_ADDRESS
+[SIGNIN]
+bad color map signature
+call CEmuNetPlay::Instance().clear in CEmulation::ExitInstance end replayNeedVerify:%d replayFileMd5:%s replayUploadEntityId:%d [
+check personal sign fail
+check xzone sign fail
+checkMd5
+download.gotvg.cn/remotecfg/pc/download_data/resource/res/rom_md5_online_update.xml
+error: bad signature
+error: expecting signature box
+evsignal_add
+evsignal_cb
+evsignal_handler
+evsignal_init
+file md5 is checking, please wait for the response from server
+funDllSetFunAssignProcessToJobObject
+get xzone sign fail
+hash
+java_generate_equals_and_hash
+md5 %s
+md5, md5
+md5, md5=%s
+md5/item[@name='%s']
+md5/item[@value='%s']
+md5:%s, 
+new_ui\task\sign_on\xz_sign_on_component.cpp
+on_refreshSignIn_clicked
+res/rom_md5.xml
+res/rom_md5_online_update.xml
+res/sta_md5.xml
+res/stb_md5.xml
+resMd5List
+retSign
+rom1Md5
+rom2Md5
+rom_md5_online_update.xml
+send MD5 fail md5 %s
+send MD5 success md5 %s
+send TVG_SIGN_ON failed
+send TVG_SIGN_ON success
+send TVG_UI_FILE_MD5_REQ fail
+send TVG_UI_FILE_MD5_REQ success
+sign
+signEncrypted
+signIn
+sign_on
+signal
+signed 
+src\config\file_md5.cpp
+staMd5
+task_sign_btn_4
+unsigned 
+variables in assignment
+void __thiscall boost::uuids::detail::sha1::process_byte(unsigned char)
+warning: support for signed sample data requires use of nonstandard extension to PNM format

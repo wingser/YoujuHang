@@ -1,0 +1,39 @@
+# 统一行尾：仓库内规范存 LF，检出时按平台转换。
+#
+# 两条硬性要求：
+#   1. *.bat / *.cmd 必须 CRLF —— Windows 批处理用 LF 时 goto / label 等可能异常；
+#   2. *.ico / *.png 等必须 binary —— 否则 text=auto 可能误判并改写字节，
+#      而 internal/tray/app.ico 是经 //go:embed 内嵌的托盘图标，损坏即编译产物异常。
+
+* text=auto
+
+# 文本：仓库内统一 LF
+*.go    text eol=lf
+*.md    text eol=lf
+*.yaml  text eol=lf
+*.yml   text eol=lf
+*.py    text eol=lf
+*.js    text eol=lf
+*.html  text eol=lf
+*.txt   text eol=lf
+*.proto text eol=lf
+*.json  text eol=lf
+*.mod   text eol=lf
+*.sum   text eol=lf
+*.manifest text eol=lf
+
+# Windows 脚本：必须 CRLF
+*.bat   text eol=crlf
+*.cmd   text eol=crlf
+
+# 二进制：禁止任何转换
+*.ico    binary
+*.png    binary
+*.jpg    binary
+*.exe    binary
+*.dll    binary
+*.zip    binary
+*.bin    binary
+*.syso   binary
+*.pcapng binary
+*.pyc    binary

@@ -1,0 +1,34 @@
+# 账号配置**样例**（已脱敏：name / password / mac 均为占位值）
+#
+# 真实配置放在运行目录（默认 server/dist/accounts.yaml），该文件**不入库**。
+# 各配置项含义见 internal/config/config.go；
+# 日常使用推荐在 Web 控制台新增/编辑账号，无需手写本文件。
+
+# Web 控制台监听地址。默认 127.0.0.1:29090（仅本机可访问，外部无法连接）。
+# 请勿改成 0.0.0.0 或局域网 IP，否则控制台会暴露到网络。命令行 -web 参数可覆盖本配置。
+web_addr: 127.0.0.1:29090
+login_addr: gamelogin3.gotvg.com:18000
+log_dir: logs
+log_console: true
+refresh_minutes: 10
+check_in_enabled: true
+auto_claim: true
+mall_enabled: true
+# 战盟房间挂机：进入"自由区"音乐房保持在线。
+# 挂机区 ID 固定为 1（自由区，含 fc_8bit），已写死在代码里（room.HangZoneID），无需配置。
+# 启用后进房挂机并自动保持，掉线自动重连；
+# 挂机监督每 5 分钟查询战队任务，3 小时在线奖励领取完成后自动退出挂机（超时后每 10 分钟复查）。
+room_hang_enabled: true
+# 战队贡献捐献：每日捐献贡献度（实测协议 596/f3=15，响应 f8={捐前,捐后,...}）。
+# 贡献度余额低于 contribute_min_balance 时不捐献；当日已捐按账号持久化，重启不重复捐献。
+contribute_enabled: true
+contribute_daily: 3000
+contribute_min_balance: 3000
+contribute_step: 1000
+accounts:
+    - name: your_account        # 改成你的账号名
+      password: your_password   # 明文密码（程序内部 MD5 后发送），注意妥善保管
+      enabled: true
+      # mac:         可选，省略则首次启动自动生成并写回（多账号各自独立）
+      # expire_date: "2026-09-03"  # 可选，挂机到期日；留空=长期挂机
+      claim_mission_ids: []

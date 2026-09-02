@@ -1,0 +1,4296 @@
+syntax = "proto3";
+
+package Proto;
+
+message AccountInfo {
+  uint32 uid = 1;
+  string account = 2;
+  int32 gender = 3;
+  string nickname = 4;
+  uint32 avatarId = 5;
+  uint32 avatarExpire = 6;
+  uint32 titleId = 7;
+  uint32 titleExpire = 8;
+  uint32 bgId = 9;
+  uint32 bgExpire = 10;
+  int32 vipLevel = 11;
+  int64 vipExpire = 12;
+  int32 vipBgId = 13;
+  int64 vipStartTime = 14;
+  string dataTransFlag = 15;
+  uint32 bbsUid = 16;
+  int32 ticket = 17;
+  int32 lastVipLevel = 18;
+  string steamId = 19;
+  string mac = 30;
+  int32 line = 31;
+  uint64 raknetId = 32;
+  string ipAddr = 33;
+  int32 platform = 34;
+}
+
+message AchGameDbDataActMode0 {
+  repeated Proto.AchGameDbDataActMode0Difficulty difficulty = 1;
+}
+
+message AchGameDbDataActMode0Character {
+  int32 char_id = 1;
+  int32 clear_solo = 2;
+  int32 clear_cooperate = 3;
+  int32 score_solo = 4;
+  int32 score_cooperate = 5;
+  int32 time_solo = 6;
+  int32 time_cooperate = 7;
+  int32 combo = 8;
+  int32 one_life_solo = 9;
+  int32 one_life_cooperate = 10;
+  int32 one_coin_solo = 11;
+  int32 one_coin_cooperate = 12;
+  int32 rescue = 13;
+}
+
+message AchGameDbDataActMode0Difficulty {
+  string name = 1;
+  repeated Proto.AchGameDbDataActMode0Character character = 2;
+}
+
+message AchGameDbDataActMode2 {
+  repeated Proto.AchGameDbDataActMode2Difficulty difficulty = 1;
+}
+
+message AchGameDbDataActMode2Character {
+  int32 char_id = 1;
+  int32 clear_solo = 2;
+  int32 clear_cooperate = 3;
+  int32 score_solo = 4;
+  int32 score_cooperate = 5;
+  int32 time_solo = 6;
+  int32 time_cooperate = 7;
+  int32 combo = 8;
+  int32 one_life_solo = 9;
+  int32 one_life_cooperate = 10;
+  int32 one_coin_solo = 11;
+  int32 one_coin_cooperate = 12;
+}
+
+message AchGameDbDataActMode2Difficulty {
+  string name = 1;
+  repeated Proto.AchGameDbDataActMode2Character character = 2;
+}
+
+message AchGameDbDataActMode3 {
+  repeated Proto.AchGameDbDataActMode3Difficulty difficulty = 1;
+}
+
+message AchGameDbDataActMode3Character {
+  int32 char_id = 1;
+  int32 clear_solo = 2;
+  int32 clear_cooperate = 3;
+  int32 score_solo = 4;
+  int32 score_cooperate = 5;
+  int32 time_solo = 6;
+  int32 time_cooperate = 7;
+  int32 combo = 8;
+  int32 one_life_solo = 9;
+  int32 one_life_cooperate = 10;
+  int32 one_coin_solo = 11;
+  int32 one_coin_cooperate = 12;
+}
+
+message AchGameDbDataActMode3Difficulty {
+  string name = 1;
+  repeated Proto.AchGameDbDataActMode3Character character = 2;
+}
+
+message AchGameDbDataActMode4 {
+  repeated Proto.AchGameDbDataActMode4Difficulty difficulty = 1;
+}
+
+message AchGameDbDataActMode4Character {
+  int32 char_id = 1;
+  int32 clear_solo = 2;
+  int32 clear_cooperate = 3;
+  int32 score_solo = 4;
+  int32 score_cooperate = 5;
+  int32 time_solo = 6;
+  int32 time_cooperate = 7;
+  int32 combo = 8;
+  int32 one_life_solo = 9;
+  int32 one_life_cooperate = 10;
+  int32 one_coin_solo = 11;
+  int32 one_coin_cooperate = 12;
+}
+
+message AchGameDbDataActMode4Difficulty {
+  string name = 1;
+  repeated Proto.AchGameDbDataActMode4Character character = 2;
+}
+
+message AchUploadActMode0 {
+  string difficulty = 1;
+  Proto.AchievementCooperateMode cooperate_mode = 2;
+  Proto.AchievementActClearStage stage_clear = 3;
+  Proto.AchievementActStageAllClearType stage_all_clear = 4;
+  int32 char_id = 5;
+  int32 stage = 6;
+  int32 score = 7;
+  int32 time = 8;
+  int32 combo = 9;
+  int32 rescue = 10;
+}
+
+message AchUploadActMode2 {
+  string difficulty = 1;
+  Proto.AchievementCooperateMode cooperate_mode = 2;
+  Proto.AchievementActClearStage stage_clear = 3;
+  Proto.AchievementActStageAllClearType stage_all_clear = 4;
+  int32 char_id = 5;
+  int32 stage = 6;
+  int32 score = 7;
+  int32 time = 8;
+  int32 combo = 9;
+}
+
+message AchUploadActMode3 {
+  string difficulty = 1;
+  Proto.AchievementCooperateMode cooperate_mode = 2;
+  Proto.AchievementActClearStage stage_clear = 3;
+  Proto.AchievementActStageAllClearType stage_all_clear = 4;
+  int32 char_id = 5;
+  int32 stage = 6;
+  int32 score = 7;
+  int32 time = 8;
+  int32 combo = 9;
+}
+
+message AchUploadActMode4 {
+  string difficulty = 1;
+  Proto.AchievementCooperateMode cooperate_mode = 2;
+  Proto.AchievementActClearStage stage_clear = 3;
+  Proto.AchievementActStageAllClearType stage_all_clear = 4;
+  int32 char_id = 5;
+  int32 stage = 6;
+  int32 score = 7;
+  int32 time = 8;
+  int32 combo = 9;
+}
+
+message AchUploaderNtfActMode0 {
+  Proto.AchievementCooperateMode cooperate_mode = 1;
+  Proto.AchievementActClearStage stage_clear = 2;
+  Proto.AchievementActStageAllClearType stage_all_clear = 3;
+  string difficulty = 4;
+  int32 char_id = 5;
+  int32 stage = 6;
+  Proto.AchievementUploadUploaderNtfData1Score score_data = 7;
+  Proto.AchievementUploadUploaderNtfData1Time time_data = 8;
+  Proto.AchievementUploadUploaderNtfData1StageClear stage_clear_data = 9;
+  Proto.AchievementUploadUploaderNtfData1Combo combo_data = 10;
+}
+
+message AchUploaderNtfActMode2 {
+  Proto.AchievementCooperateMode cooperate_mode = 1;
+  Proto.AchievementActClearStage stage_clear = 2;
+  Proto.AchievementActStageAllClearType stage_all_clear = 3;
+  string difficulty = 4;
+  int32 char_id = 5;
+  int32 stage = 6;
+  Proto.AchievementUploadUploaderNtfData1Score score_data = 7;
+  Proto.AchievementUploadUploaderNtfData1Time time_data = 8;
+  Proto.AchievementUploadUploaderNtfData1StageClear stage_clear_data = 9;
+  Proto.AchievementUploadUploaderNtfData1Combo combo_data = 10;
+}
+
+message AchUploaderNtfActMode3 {
+  Proto.AchievementCooperateMode cooperate_mode = 1;
+  Proto.AchievementActClearStage stage_clear = 2;
+  Proto.AchievementActStageAllClearType stage_all_clear = 3;
+  string difficulty = 4;
+  int32 char_id = 5;
+  int32 stage = 6;
+  Proto.AchievementUploadUploaderNtfData1Score score_data = 7;
+  Proto.AchievementUploadUploaderNtfData1Time time_data = 8;
+  Proto.AchievementUploadUploaderNtfData1StageClear stage_clear_data = 9;
+  Proto.AchievementUploadUploaderNtfData1Combo combo_data = 10;
+}
+
+message AchUploaderNtfActMode4 {
+  Proto.AchievementCooperateMode cooperate_mode = 1;
+  Proto.AchievementActClearStage stage_clear = 2;
+  Proto.AchievementActStageAllClearType stage_all_clear = 3;
+  string difficulty = 4;
+  int32 char_id = 5;
+  int32 stage = 6;
+  Proto.AchievementUploadUploaderNtfData1Score score_data = 7;
+  Proto.AchievementUploadUploaderNtfData1Time time_data = 8;
+  Proto.AchievementUploadUploaderNtfData1StageClear stage_clear_data = 9;
+  Proto.AchievementUploadUploaderNtfData1Combo combo_data = 10;
+}
+
+message AchievementEscape2UploadLobbyNtf {
+  uint32 console_id = 1;
+  uint32 game_id = 2;
+  uint32 zone_id = 3;
+  uint32 entity_id = 4;
+  uint32 room_id = 5;
+  Proto.AchievementId ach_id = 6;
+  string version_name = 7;
+  uint32 uid = 8;
+  string nickname = 9;
+  uint32 dest_uid = 10;
+  string dest_nickname = 11;
+}
+
+message AchievementEscape2UploadResultLobbyNtf {
+  bool result = 1;
+  Proto.Err error_id = 2;
+  string error_str = 3;
+  uint32 uid = 4;
+  uint32 dest_uid = 5;
+  Proto.AchievementId ach_id = 6;
+  string version_name = 7;
+}
+
+message AchievementEscapeSwitch {
+  repeated Proto.AchievementEscapeSwitchEntity entity = 1;
+}
+
+message AchievementEscapeSwitchEntity {
+  string name = 1;
+  int32 value = 2;
+}
+
+message AchievementEscapeUploadCMsg {
+  uint32 uid = 1;
+  string gameToken = 2;
+  int64 upload_time = 3;
+  uint32 dest_uid = 4;
+  string dest_nickname = 5;
+  int32 dest_slot = 6;
+  Proto.AchievementId ach_id = 7;
+  repeated uint32 dest_char_id = 8;
+  int32 frame = 9;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 1062;
+    Kind = 1;
+  }
+}
+
+message AchievementEscapeUploadNtf {
+  Proto.RoomId roomId = 1;
+  Proto.AchievementId ach_id = 2;
+  string version_name = 3;
+  uint32 uid = 4;
+  string nickname = 5;
+  uint32 dest_uid = 6;
+  string dest_nickname = 7;
+  bytes ach_data = 8;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 1062;
+    Kind = 2;
+  }
+}
+
+message AchievementEscapeUploadSMsg {
+  Proto.Err ret = 1;
+  string errStr = 2;
+}
+
+message AchievementGameDbDataAct {
+  int32 version = 1;
+  Proto.AchGameDbDataActMode0 mode0 = 2;
+  Proto.AchGameDbDataActMode1 mode1 = 3;
+  Proto.AchGameDbDataActMode2 mode2 = 4;
+  Proto.AchGameDbDataActMode3 mode3 = 5;
+  Proto.AchGameDbDataActMode4 mode4 = 6;
+}
+
+message AchievementGameDbDataFtg {
+  uint32 uid = 1;
+  int32 total = 2;
+  int32 win = 3;
+  int32 draw = 4;
+  repeated Proto.AchievementGameDbDataItemFtg character_winloss = 5;
+  repeated Proto.AchievementGameDbDataItemRecentFtg recent_characters = 6;
+  int32 escape_times = 7;
+  int32 perfect_times = 8;
+  int32 normal_1v3 = 9;
+  int32 reverse_1v3 = 10;
+  int32 extremely_reverse_1v3 = 11;
+}
+
+message AchievementGameDbDataItemFtg {
+  uint32 character_id = 1;
+  int32 total = 2;
+  int32 win = 3;
+  int32 draw = 4;
+}
+
+message AchievementGameDbDataItemRecentFtg {
+  repeated uint32 character_id = 1;
+  int32 total = 2;
+  int32 win = 3;
+  int32 draw = 4;
+}
+
+message AchievementGameDbQuickDataFtg {
+  uint32 uid = 1;
+  int32 total = 2;
+  int32 win = 3;
+  int32 draw = 4;
+  repeated Proto.AchievementGameDbDataItemFtg character_winloss = 5;
+  repeated Proto.AchievementGameDbDataItemRecentFtg recent_characters = 6;
+  int32 escape_times = 7;
+}
+
+message AchievementHttpQueryAck {
+  Proto.Err ret = 1;
+  string err_str = 2;
+  Proto.AchievementId ach_id = 3;
+  repeated Proto.AchievementHttpQueryAckItem item = 4;
+}
+
+message AchievementHttpQueryAckItem {
+  uint32 uid = 1;
+  bytes ach_data = 2;
+}
+
+message AchievementHttpQueryFullAck {
+  Proto.Err ret = 1;
+  string err_str = 2;
+  Proto.AchievementId ach_id = 3;
+  bytes ach_data = 4;
+}
+
+message AchievementHttpQueryFullReq {
+  uint32 uid = 1;
+  string token = 2;
+  Proto.AchievementId ach_id = 3;
+  uint32 target_uid = 4;
+}
+
+message AchievementHttpQueryReq {
+  uint32 uid = 1;
+  string token = 2;
+  Proto.AchievementId ach_id = 3;
+  repeated uint32 target_uid = 4;
+}
+
+message AchievementInfo {
+  string versionName = 1;
+  int32 achId = 2;
+  string achName = 3;
+  int32 showType = 4;
+  int32 upload = 5;
+  int32 antiBoss = 6;
+}
+
+message AchievementPlayerInfoNewNtf {
+  int32 ntf_type = 1;
+  uint32 uid = 2;
+  Proto.AchievementId ach_id = 3;
+  string version_name = 4;
+  bytes ach_data = 5;
+  Proto.AchievementRoomInfo room_info = 6;
+}
+
+message AchievementPlayerInfoNtf {
+  int32 ntf_type = 1;
+  uint32 uid = 2;
+  Proto.AchievementId ach_id = 3;
+  string version_name = 4;
+  bytes ach_data = 5;
+  Proto.AchievementRoomInfo room_info = 6;
+}
+
+message AchievementQueryAck {
+  Proto.Err ret = 1;
+  string err_str = 2;
+  uint32 uid = 3;
+  string version_name = 4;
+  Proto.AchievementId ach_id = 5;
+  bytes ach_data = 6;
+}
+
+message AchievementQueryReq {
+  int32 req_type = 1;
+  uint32 uid = 2;
+  Proto.AchievementId ach_id = 3;
+  string version_name = 4;
+}
+
+message AchievementQueryReq2 {
+  uint32 uid = 1;
+  string token = 2;
+  Proto.AchievementId ach_id = 3;
+  string version_name = 4;
+}
+
+message AchievementQuickDataAct {
+  int32 clear_solo = 1;
+  int32 clear_cooperate = 2;
+  int32 score_solo = 3;
+  int32 score_cooperate = 4;
+  int32 tower_level = 5;
+}
+
+message AchievementQuickDataFtg {
+  int32 total = 1;
+  int32 win = 2;
+  int32 draw = 3;
+}
+
+message AchievementQuickDataNtf {
+  int32 mainType = 1;
+  Proto.RoomId roomId = 2;
+  uint32 uid = 3;
+  Proto.AchievementId ach_id = 4;
+  string version_name = 5;
+  bytes ach_data = 6;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 1060;
+    Kind = 2;
+  }
+}
+
+message AchievementRoomInfo {
+  uint32 console_id = 1;
+  uint32 game_id = 2;
+  uint32 zone_id = 3;
+  uint32 room_id = 4;
+  uint32 entity_id = 5;
+}
+
+message AchievementStageStartTime {
+  int32 version = 1;
+  repeated Proto.AchievementStageStartTimeOne data = 2;
+}
+
+message AchievementStageStartTimeCMsg {
+  uint32 uid = 1;
+  string gameToken = 2;
+  bytes data = 3;
+  int32 version = 4;
+  int32 action = 5;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 1063;
+    Kind = 1;
+  }
+}
+
+message AchievementStageStartTimeNtf {
+  uint32 uid = 1;
+  Proto.RoomId roomId = 2;
+  bytes data = 3;
+  int32 version = 4;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 1063;
+    Kind = 2;
+  }
+}
+
+message AchievementStageStartTimeOne {
+  int32 stage = 1;
+  int32 startTime = 2;
+  int32 bossDieTime = 3;
+}
+
+message AchievementStageStartTimeSMsg {
+  Proto.Err ret = 1;
+  string errStr = 2;
+  bytes data = 3;
+}
+
+message AchievementUploadAck {
+  Proto.Err ret = 1;
+  string err_str = 2;
+  int64 time = 3;
+  int64 send_time = 4;
+  uint32 user_id = 5;
+  Proto.AchievementId ach_id = 6;
+  Proto.AchievementUploadAckEventType event_type = 7;
+  Proto.AchievementClearStageAckType stage_type = 8;
+  Proto.AchievementPlayerCount player_count = 9;
+  uint32 difficulty = 10;
+  uint32 character_id = 11;
+  uint32 data = 12;
+  uint32 last_data = 13;
+}
+
+message AchievementUploadCMsg {
+  uint32 uid = 1;
+  string gameToken = 2;
+  int64 upload_time = 3;
+  Proto.AchievementId ach_id = 4;
+  string version_name = 5;
+  bytes ach_data = 6;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 1061;
+    Kind = 1;
+  }
+}
+
+message AchievementUploadNtf {
+  Proto.RoomId roomId = 1;
+  uint32 uid = 2;
+  Proto.AchievementId ach_id = 3;
+  string version_name = 4;
+  bytes ach_data = 5;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 1061;
+    Kind = 2;
+  }
+}
+
+message AchievementUploadReq {
+  uint32 user_id = 1;
+  int64 upload_time = 2;
+  Proto.AchievementId ach_id = 3;
+  bytes ach_data = 4;
+}
+
+message AchievementUploadReqData1 {
+  int32 game_mode = 1;
+  Proto.AchievementCooperate cooperate = 2;
+  Proto.AchievementActStageClearType stage_clear = 3;
+  Proto.AchievementActStageAllClearType stage_all_clear = 4;
+  uint32 difficulty = 5;
+  uint32 char_id = 6;
+  uint32 stage = 7;
+  int32 score = 8;
+  int32 time = 9;
+  int32 combo = 10;
+  int32 tower_level = 11;
+}
+
+message AchievementUploadReqDataAct {
+  Proto.AchievementActGameMode game_mode = 1;
+  Proto.AchUploadActMode0 mode0 = 2;
+  Proto.AchUploadActMode1 mode1 = 3;
+  Proto.AchUploadActMode2 mode2 = 4;
+  Proto.AchUploadActMode3 mode3 = 5;
+  Proto.AchUploadActMode4 mode4 = 6;
+}
+
+message AchievementUploadReqDataFtg {
+  Proto.eAchievementWinLoss winloss = 1;
+  repeated uint32 char_id = 2;
+  int32 perfect_times = 3;
+  bool normal_1v3 = 4;
+  bool reverse_1v3 = 5;
+  bool extremely_reverse_1v3 = 6;
+}
+
+message AchievementUploadRoomNtfData1 {
+  int32 total_score_solo = 1;
+  int32 total_score_cooperate = 2;
+  int32 stage_clear_solo = 3;
+  int32 stage_clear_cooperate = 4;
+  int32 tower_level = 5;
+}
+
+message AchievementUploadSMsg {
+  Proto.Err ret = 1;
+  string errStr = 2;
+  bytes ach_data = 3;
+}
+
+message AchievementUploadTcpUseProtobufReq {
+  uint32 uid = 1;
+  int64 upload_time = 2;
+  Proto.AchievementId ach_id = 3;
+  string version_name = 4;
+  bytes ach_data = 5;
+}
+
+message AchievementUploadToLobbyAck {
+  bool result = 1;
+  Proto.Err error_id = 2;
+  string error_str = 3;
+}
+
+message AchievementUploadUploaderAck {
+  bool result = 1;
+  Proto.Err error_id = 2;
+  string error_str = 3;
+}
+
+message AchievementUploadUploaderNtf {
+  uint32 uid = 1;
+  string version_name = 2;
+  Proto.AchievementId ach_id = 3;
+  bytes ach_data = 4;
+}
+
+message AchievementUploadUploaderNtfData1 {
+  int32 game_mode = 1;
+  Proto.AchievementCooperate cooperate = 2;
+  Proto.AchievementActStageClearType stage_clear = 3;
+  Proto.AchievementActStageAllClearType stage_all_clear = 4;
+  uint32 difficulty = 5;
+  uint32 char_id = 6;
+  uint32 stage = 7;
+  Proto.AchievementUploadUploaderNtfData1Score score_data = 8;
+  Proto.AchievementUploadUploaderNtfData1Time time_data = 9;
+  Proto.AchievementUploadUploaderNtfData1StageClear stage_clear_data = 10;
+  Proto.AchievementUploadUploaderNtfData1Combo combo_data = 11;
+  Proto.AchievementUploadUploaderNtfData1TowerLevel tower_level_data = 12;
+}
+
+message AchievementUploadUploaderNtfData1Combo {
+  int32 old_data = 1;
+  int32 new_data = 2;
+}
+
+message AchievementUploadUploaderNtfData1Score {
+  int32 old_data = 1;
+  int32 new_data = 2;
+}
+
+message AchievementUploadUploaderNtfData1StageClear {
+  int32 old_data = 1;
+  int32 new_data = 2;
+}
+
+message AchievementUploadUploaderNtfData1Time {
+  int32 old_data = 1;
+  int32 new_data = 2;
+}
+
+message AchievementUploadUploaderNtfData1TowerLevel {
+  int32 old_data = 1;
+  int32 new_data = 2;
+}
+
+message AchievementUploadUploaderNtfDataAct {
+  Proto.AchievementActGameMode game_mode = 1;
+  Proto.AchUploaderNtfActMode0 mode0 = 2;
+  Proto.AchUploaderNtfActMode1 mode1 = 3;
+  Proto.AchUploaderNtfActMode2 mode2 = 4;
+  Proto.AchUploaderNtfActMode3 mode3 = 5;
+  Proto.AchUploaderNtfActMode4 mode4 = 6;
+}
+
+message AchievementUploadUploaderNtfDataFtg {
+  int32 game_mode = 1;
+  string version_name = 2;
+  Proto.eAchievementWinLoss winloss = 3;
+  int32 total = 4;
+  int32 win = 5;
+  int32 draw = 6;
+  int32 total_old = 7;
+  int32 win_old = 8;
+  int32 draw_old = 9;
+}
+
+message AnnounceNtf {
+  uint32 Id = 1;
+  int32 AnnounceType = 2;
+  string Msg = 3;
+  Proto.AnnounceMsgOption option = 4;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 577;
+    Kind = 2;
+  }
+}
+
+message Any {
+  string type_url = 1;
+  bytes value = 2;
+}
+
+message AuthenticationChange {
+  Proto.ChangeType ct = 1;
+  Proto.PlayerAuthenticationDataOne auth = 2;
+}
+
+message BaseCMsg {
+  uint32 uid = 1;
+  string gameToken = 2;
+}
+
+message BaseSMsg {
+  Proto.Err ret = 1;
+  string errStr = 2;
+}
+
+message BaseSMsg2 {
+  Proto.Err ret = 1;
+  string errStr = 2;
+  uint32 requesterUid = 3;
+}
+
+message BoolValue {
+  bool value = 1;
+}
+
+message BytesValue {
+  bytes value = 1;
+}
+
+message CfgData {
+  int32 cfgId = 1;
+  bool isZip = 2;
+  bytes data = 3;
+  bool useLocal = 4;
+  string md5 = 5;
+}
+
+message ChangeInfo {
+  repeated Proto.ResourceChange res = 1;
+  repeated Proto.PointChange point = 2;
+  repeated Proto.ItemChange item = 3;
+  repeated Proto.MissionChange mission = 4;
+  repeated Proto.MissionErrorChange missionError = 5;
+  repeated Proto.ThingGet thingGetList = 8;
+  repeated Proto.AuthenticationChange authentication = 9;
+  Proto.PlayerPermission permission = 12;
+  Proto.ServerTime serverTime = 100;
+}
+
+message ChangeInfoForRank {
+  repeated Proto.ResourceChange res = 1;
+  Proto.PlayerAuthentication authentication = 2;
+}
+
+message ChangeInfoNtf {
+  uint32 uid = 1;
+  Proto.ChangeInfo change = 100;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 595;
+    Kind = 2;
+  }
+}
+
+message ChangeRoomGameStatusNtf {
+  Proto.RoomId roomId = 1;
+  uint32 uid = 2;
+  int32 slot = 3;
+  int32 playType = 4;
+  int32 joinType = 5;
+  int32 netPlayType = 6;
+  bool isHost = 7;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 1041;
+    Kind = 2;
+  }
+}
+
+message ChangeRoomSettingCMsg {
+  uint32 uid = 1;
+  string gameToken = 2;
+  int32 action = 3;
+  Proto.RoomCfgInfo cfg = 4;
+  int32 slot = 5;
+  Proto.SlotStatus slotStatus = 6;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 1046;
+    Kind = 1;
+  }
+}
+
+message ChangeRoomSettingNtf {
+  uint32 uid = 1;
+  Proto.RoomId roomId = 3;
+  int32 action = 4;
+  Proto.RoomCfgInfo cfg = 5;
+  int32 slot = 6;
+  Proto.SlotStatus slotStatus = 7;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 1047;
+    Kind = 2;
+  }
+}
+
+message ChangeRoomSlotCMsg {
+  uint32 uid = 1;
+  string gameToken = 2;
+  int32 slot = 3;
+  string password = 4;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 1033;
+    Kind = 1;
+  }
+}
+
+message ChangeRoomSlotNtf {
+  Proto.RoomId roomId = 1;
+  uint32 uid = 2;
+  int32 slot = 3;
+  bool isHost = 4;
+  uint32 bgId = 5;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 1040;
+    Kind = 2;
+  }
+}
+
+message ChangeRoomSlotPlayerInfoNtf {
+  uint32 uid = 2;
+  uint32 consoleId = 3;
+  uint32 gameId = 4;
+  uint32 zoneId = 5;
+  uint32 roomId = 6;
+  uint32 entityId = 7;
+  Proto.PresentGiftPlayerQuickInfoOne presentGift = 8;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 1082;
+    Kind = 2;
+  }
+}
+
+message ChangeRoomSlotSMsg {
+  Proto.Err ret = 1;
+  string errStr = 2;
+}
+
+message ChatCMsg {
+  uint32 uid = 1;
+  string gameToken = 2;
+  int32 action = 3;
+  uint32 toId = 4;
+  Proto.ChatContent content = 5;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 561;
+    Kind = 1;
+  }
+}
+
+message ChatContent {
+  string msgRaw = 1;
+  string msgAfterFilter = 2;
+  int32 color = 3;
+  string userMac = 10;
+  uint32 chatDbId = 11;
+}
+
+message ChatNtf {
+  uint32 uid = 1;
+  int32 action = 2;
+  uint32 toId = 3;
+  Proto.ChatMsgType msgType = 4;
+  Proto.ChatContent content = 5;
+  Proto.PlayerInfo fromPl = 6;
+  Proto.RoomId fromPlRoomId = 7;
+  Proto.HornType horn_type = 8;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 562;
+    Kind = 2;
+  }
+}
+
+message ChatSMsg {
+  Proto.Err ret = 1;
+  string errStr = 2;
+  string reason = 3;
+  Proto.ChangeInfo change = 100;
+}
+
+message CheckRoomPassCMsg {
+  uint32 uid = 1;
+  string gameToken = 2;
+  int32 roomId = 3;
+  string enterPass = 4;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 1097;
+    Kind = 1;
+  }
+}
+
+message ClientShowMsgNtf {
+  Proto.ChatMsgType msgType = 1;
+  Proto.ChatContent content = 2;
+  bool showAllWindow = 3;
+  Proto.RoomId roomId = 4;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 563;
+    Kind = 2;
+  }
+}
+
+message CloseRoomNtf {
+  Proto.RoomId roomId = 1;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 1045;
+    Kind = 2;
+  }
+}
+
+message CreateBattleData {
+  uint32 my_user_id = 1;
+  string my_nickname = 2;
+  int32 game_mode = 3;
+  uint32 game_id = 4;
+  string game_title = 5;
+  int32 game_style = 6;
+  string zone_title = 7;
+  uint32 room_id = 8;
+  string room_name = 9;
+  string version_name = 10;
+  string version_title = 11;
+  string difficulty_title = 12;
+  string rule_title = 13;
+  uint32 button_count = 14;
+  bool is_creator = 15;
+  bool is_sram_game = 16;
+  int32 ui_console_id = 17;
+  bool has_special_key = 18;
+  bool has_special_key_privilege = 19;
+  bool force_60hz = 20;
+  uint32 run_frame_speed_control = 21;
+  bool need_makesave = 22;
+  bool need_initial_save = 23;
+  uint32 room_host_user_id = 24;
+  string game_name = 25;
+  string difficulty_name = 26;
+  uint32 max_slot = 27;
+  bool is_replay = 28;
+  bool show_watermark = 29;
+  uint32 render_mode = 30;
+  bool give_gift_show_barrage = 31;
+  int32 interframe_blending = 32;
+  bool filter_scanline = 33;
+  bool emulator_full_independent = 34;
+  string full_independent_emulator_exe_path = 35;
+  string full_independent_emulator_zip_path = 36;
+  string input_convert_src_config_path = 37;
+  string full_independent_emulator_main_window_class_name = 38;
+  string game_input_config_path = 39;
+  string process_communication_class_name_keyword = 40;
+  uint32 autofire_delay_limit = 41;
+  int32 autofire_process_type = 42;
+  Proto.CreateBattleDataGameReset game_reset = 43;
+  Proto.CreateBattleDataGameDiag game_diag = 44;
+  string driver_name = 45;
+  string full_independent_emulator_sram_path = 46;
+  Proto.CreateBattleDataAchieve achievement = 47;
+  bool use_select_button = 48;
+  int32 cpu_speed = 49;
+  bool is_custom_game = 50;
+  string sram_path = 51;
+  string sram_personal_key = 52;
+  bool is_sram_game_creator = 53;
+  int32 game_bios = 54;
+  int32 sram_size_type = 55;
+}
+
+message CreateBattleDataAchieve {
+  string version_name = 1;
+  int32 ach_id = 2;
+  string ach_name = 3;
+  int32 show_type = 4;
+  int32 upload_achievement = 5;
+  int32 anti_boss = 6;
+  int32 stage_count = 7;
+  int32 anti_prop = 8;
+  int32 all_clear_time_limit = 9;
+}
+
+message CreateBattleDataGameDiag {
+  bool local_support = 1;
+  bool server_support = 2;
+  bool player_support = 3;
+}
+
+message CreateBattleDataGameReset {
+  bool local_support = 1;
+  bool server_support = 2;
+  bool player_support = 3;
+}
+
+message CreateBattleSettingData {
+  int32 full_screen_mode = 1;
+  int32 image_ratio = 2;
+  int32 render_mode = 3;
+  int32 filter_scanline = 4;
+  int32 interframe_blending = 5;
+  int32 fix_stutter = 6;
+  int32 sound_mute = 7;
+  int32 sound_volume = 8;
+  int32 joystick_sensitivity = 9;
+  int32 no_focus_get_input = 10;
+  int32 input_optimize = 11;
+  bool mouse_crosshair = 12;
+  int32 filter = 13;
+}
+
+message CreateRoomNtf {
+  uint32 uid = 1;
+  Proto.RoomSlot slot = 2;
+  Proto.RoomId roomId = 3;
+  Proto.RoomCfgInfo cfg = 4;
+  uint32 bgId = 5;
+  Proto.TopRoomInfo topRoom = 6;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 1044;
+    Kind = 2;
+  }
+}
+
+message DelMailCMsg {
+  uint32 uid = 1;
+  string gameToken = 2;
+  repeated uint32 mailId = 3;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 568;
+    Kind = 1;
+  }
+}
+
+message DelMailSMsg {
+  Proto.Err ret = 1;
+  string errStr = 2;
+}
+
+message DescriptorProto {
+  string name = 1;
+  repeated google.protobuf.FieldDescriptorProto field = 2;
+  repeated google.protobuf.FieldDescriptorProto extension = 6;
+  repeated google.protobuf.DescriptorProto nested_type = 3;
+  repeated google.protobuf.EnumDescriptorProto enum_type = 4;
+  repeated google.protobuf.DescriptorProto.ExtensionRange extension_range = 5;
+  repeated google.protobuf.OneofDescriptorProto oneof_decl = 8;
+  google.protobuf.MessageOptions options = 7;
+  repeated google.protobuf.DescriptorProto.ReservedRange reserved_range = 9;
+  repeated string reserved_name = 10;
+  message ExtensionRange {
+    int32 start = 1;
+    int32 end = 2;
+  }
+  message ReservedRange {
+    int32 start = 1;
+    int32 end = 2;
+  }
+}
+
+message DoubleValue {
+  double value = 1;
+}
+
+message EnterLobbyCMsg {
+  uint32 uid = 1;
+  string gameToken = 2;
+  uint32 gameVersion = 3;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 512;
+    Kind = 1;
+  }
+}
+
+message EnterLobbySMsg {
+  Proto.Err ret = 1;
+  string errStr = 2;
+  Proto.ServerInfo gate = 3;
+  Proto.SystemConfig cfg = 4;
+  repeated Proto.ResMd5 resMd5List = 5;
+  Proto.ChangeInfo change = 100;
+}
+
+message EnterRoomCMsg {
+  uint32 uid = 1;
+  string gameToken = 2;
+  int32 roomId = 3;
+  bool isCreate = 4;
+  Proto.RoomCfgInfo cfg = 5;
+  string enterPass = 6;
+  bool justGetRoomId = 7;
+  bool showVipMsg = 8;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 1026;
+    Kind = 1;
+  }
+}
+
+message EnterRoomSMsg {
+  Proto.Err ret = 1;
+  string errStr = 2;
+  Proto.RoomSlot slot = 3;
+  Proto.RoomInfo room = 4;
+}
+
+message EnterZoneCMsg {
+  uint32 uid = 1;
+  string gameToken = 2;
+  int32 consoleId = 3;
+  int32 gameId = 4;
+  int32 zoneId = 5;
+  uint32 udpLocalIp = 6;
+  int32 udpLocalPort = 7;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 517;
+    Kind = 1;
+  }
+}
+
+message EnterZoneSMsg {
+  Proto.Err ret = 1;
+  string errStr = 2;
+  string p2pServer = 3;
+  int32 zoneServerId = 4;
+  bool isTournament = 5;
+  int32 tournamentRankId = 6;
+  int32 tournamentGameId = 7;
+  repeated Proto.GameDriver driverList = 8;
+  string zoneCfgStr = 9;
+  repeated int32 topRoomCostDaily = 13;
+  int32 tournamentRunPunishNum = 14;
+  bool isMatchZone = 15;
+}
+
+message Enum {
+  string name = 1;
+  repeated google.protobuf.EnumValue enumvalue = 2;
+  repeated google.protobuf.Option options = 3;
+  google.protobuf.SourceContext source_context = 4;
+  google.protobuf.Syntax syntax = 5;
+}
+
+message EnumDescriptorProto {
+  string name = 1;
+  repeated google.protobuf.EnumValueDescriptorProto value = 2;
+  google.protobuf.EnumOptions options = 3;
+}
+
+message EnumOptions {
+  bool allow_alias = 2;
+  bool deprecated = 3;
+  repeated google.protobuf.UninterpretedOption uninterpreted_option = 999;
+}
+
+message EnumValue {
+  string name = 1;
+  int32 number = 2;
+  repeated google.protobuf.Option options = 3;
+}
+
+message EnumValueDescriptorProto {
+  string name = 1;
+  int32 number = 2;
+  google.protobuf.EnumValueOptions options = 3;
+}
+
+message EnumValueOptions {
+  bool deprecated = 1;
+  repeated google.protobuf.UninterpretedOption uninterpreted_option = 999;
+}
+
+message Field {
+  google.protobuf.Field.Kind kind = 1;
+  google.protobuf.Field.Cardinality cardinality = 2;
+  int32 number = 3;
+  string name = 4;
+  string type_url = 6;
+  int32 oneof_index = 7;
+  bool packed = 8;
+  repeated google.protobuf.Option options = 9;
+  string json_name = 10;
+  string default_value = 11;
+  enum Kind {
+    TYPE_UNKNOWN = 0;
+    TYPE_DOUBLE = 1;
+    TYPE_FLOAT = 2;
+    TYPE_INT64 = 3;
+    TYPE_UINT64 = 4;
+    TYPE_INT32 = 5;
+    TYPE_FIXED64 = 6;
+    TYPE_FIXED32 = 7;
+    TYPE_BOOL = 8;
+    TYPE_STRING = 9;
+    TYPE_GROUP = 10;
+    TYPE_MESSAGE = 11;
+    TYPE_BYTES = 12;
+    TYPE_UINT32 = 13;
+    TYPE_ENUM = 14;
+    TYPE_SFIXED32 = 15;
+    TYPE_SFIXED64 = 16;
+    TYPE_SINT32 = 17;
+    TYPE_SINT64 = 18;
+  }
+  enum Cardinality {
+    CARDINALITY_UNKNOWN = 0;
+    CARDINALITY_OPTIONAL = 1;
+    CARDINALITY_REQUIRED = 2;
+    CARDINALITY_REPEATED = 3;
+  }
+}
+
+message FieldDescriptorProto {
+  string name = 1;
+  int32 number = 3;
+  google.protobuf.FieldDescriptorProto.Label label = 4;
+  google.protobuf.FieldDescriptorProto.Type type = 5;
+  string type_name = 6;
+  string extendee = 2;
+  string default_value = 7;
+  int32 oneof_index = 9;
+  string json_name = 10;
+  google.protobuf.FieldOptions options = 8;
+  enum Type {
+    TYPE_DOUBLE = 1;
+    TYPE_FLOAT = 2;
+    TYPE_INT64 = 3;
+    TYPE_UINT64 = 4;
+    TYPE_INT32 = 5;
+    TYPE_FIXED64 = 6;
+    TYPE_FIXED32 = 7;
+    TYPE_BOOL = 8;
+    TYPE_STRING = 9;
+    TYPE_GROUP = 10;
+    TYPE_MESSAGE = 11;
+    TYPE_BYTES = 12;
+    TYPE_UINT32 = 13;
+    TYPE_ENUM = 14;
+    TYPE_SFIXED32 = 15;
+    TYPE_SFIXED64 = 16;
+    TYPE_SINT32 = 17;
+    TYPE_SINT64 = 18;
+  }
+  enum Label {
+    LABEL_OPTIONAL = 1;
+    LABEL_REQUIRED = 2;
+    LABEL_REPEATED = 3;
+  }
+}
+
+message FieldOptions {
+  google.protobuf.FieldOptions.CType ctype = 1;
+  bool packed = 2;
+  google.protobuf.FieldOptions.JSType jstype = 6;
+  bool lazy = 5;
+  bool deprecated = 3;
+  bool weak = 10;
+  repeated google.protobuf.UninterpretedOption uninterpreted_option = 999;
+  enum CType {
+    STRING = 0;
+    CORD = 1;
+    STRING_PIECE = 2;
+  }
+  enum JSType {
+    JS_NORMAL = 0;
+    JS_STRING = 1;
+    JS_NUMBER = 2;
+  }
+}
+
+message FileDescriptorProto {
+  string name = 1;
+  string package = 2;
+  repeated string dependency = 3;
+  repeated int32 public_dependency = 10;
+  repeated int32 weak_dependency = 11;
+  repeated google.protobuf.DescriptorProto message_type = 4;
+  repeated google.protobuf.EnumDescriptorProto enum_type = 5;
+  repeated google.protobuf.ServiceDescriptorProto service = 6;
+  repeated google.protobuf.FieldDescriptorProto extension = 7;
+  google.protobuf.FileOptions options = 8;
+  google.protobuf.SourceCodeInfo source_code_info = 9;
+  string syntax = 12;
+}
+
+message FileDescriptorSet {
+  repeated google.protobuf.FileDescriptorProto file = 1;
+}
+
+message FileOptions {
+  string java_package = 1;
+  string java_outer_classname = 8;
+  bool java_multiple_files = 10;
+  bool java_generate_equals_and_hash = 20;
+  bool java_string_check_utf8 = 27;
+  google.protobuf.FileOptions.OptimizeMode optimize_for = 9;
+  string go_package = 11;
+  bool cc_generic_services = 16;
+  bool java_generic_services = 17;
+  bool py_generic_services = 18;
+  bool deprecated = 23;
+  bool cc_enable_arenas = 31;
+  string objc_class_prefix = 36;
+  string csharp_namespace = 37;
+  string swift_prefix = 39;
+  string php_class_prefix = 40;
+  repeated google.protobuf.UninterpretedOption uninterpreted_option = 999;
+  enum OptimizeMode {
+    SPEED = 1;
+    CODE_SIZE = 2;
+    LITE_RUNTIME = 3;
+  }
+}
+
+message FloatValue {
+  float value = 1;
+}
+
+message FollowPlayerCMsg {
+  uint32 uid = 1;
+  string gameToken = 2;
+  uint32 targetUid = 3;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 604;
+    Kind = 1;
+  }
+}
+
+message FollowPlayerNtf {
+  enum TYPE {
+    EnumStart = 0;
+    ID = 605;
+    Kind = 2;
+  }
+}
+
+message FollowPlayerSMsg {
+  Proto.Err ret = 1;
+  string errStr = 2;
+  Proto.FollowPlayerTargetInfo targetInfo = 3;
+}
+
+message FollowPlayerTargetInfo {
+  int32 gameId = 1;
+  int32 zoneId = 2;
+  int32 roomId = 3;
+}
+
+message ForwardServerOne {
+  int32 ServerGroup = 1;
+  uint32 Ip = 2;
+  uint32 Ip2 = 3;
+  uint32 Ip3 = 4;
+  uint32 PortUdp = 5;
+}
+
+message GameCfg {
+  int32 cfgId = 1;
+  string md5 = 2;
+}
+
+message GameCfgInfo {
+  int32 consoleId = 1;
+  int32 gameId = 2;
+  int32 sortId = 3;
+  string cfgStr = 5;
+}
+
+message GameCfgQueryCMsg {
+  uint32 uid = 1;
+  string gameToken = 2;
+  repeated Proto.GameCfg cfgList = 3;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 513;
+    Kind = 1;
+  }
+}
+
+message GameCfgQuerySMsg {
+  Proto.Err ret = 1;
+  string errStr = 2;
+  repeated Proto.CfgData cfgData = 3;
+}
+
+message GameDriver {
+  string driverName = 1;
+  string baseOnDriver = 2;
+  int32 hardwareAdd = 3;
+  int32 hardwareDel = 4;
+  string bios = 5;
+  Proto.RomInfoDesc romInfo = 6;
+}
+
+message GamePlayData {
+  repeated Proto.GamePlayOne games = 1;
+}
+
+message GamePlayInfo {
+  int32 frame = 1;
+  int32 replayType = 2;
+  bool isProcessed = 3;
+  Proto.ReplayPlayerG player = 11;
+  Proto.ReplayWinLoss winLoss = 12;
+  Proto.ReplayPlayerChangeSeat playerChangeSeat = 16;
+}
+
+message GamePlayOne {
+  int32 gameId = 1;
+  int32 useCoin = 2;
+  uint32 playTime = 3;
+  uint32 obTime = 4;
+}
+
+message GamePlayerInfo {
+  Proto.PlayerInfoBase base = 1;
+  repeated Proto.PlayerInfoTournament tournamentList = 2;
+  Proto.GamePlayerInfoGiveGift giveGift = 3;
+  Proto.GamePlayerInfoGuild guild = 4;
+  Proto.GamePlayerInfoBbs bbs = 5;
+  Proto.GamePlayerInfoSocial social = 6;
+  Proto.GamePlayerInfoMisc misc = 15;
+}
+
+message GamePlayerInfoBbs {
+  int64 regDate = 1;
+  int32 area = 2;
+  int32 userGroup = 3;
+  int32 totalSubject = 4;
+  int32 totalView = 5;
+  int32 signIn = 6;
+}
+
+message GamePlayerInfoCMsg {
+  uint32 uid = 1;
+  string gameToken = 2;
+  uint32 targetUid = 3;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 581;
+    Kind = 1;
+  }
+}
+
+message GamePlayerInfoGiveGift {
+  int32 haoqi = 1;
+  int32 heat = 2;
+}
+
+message GamePlayerInfoGuild {
+  string guildName = 1;
+  int32 guildLevel = 2;
+  int32 job = 3;
+}
+
+message GamePlayerInfoMisc {
+  int32 userInfoVisitTimes = 1;
+}
+
+message GamePlayerInfoSMsg {
+  Proto.Err ret = 1;
+  string errStr = 2;
+  Proto.GamePlayerInfo info = 3;
+}
+
+message GamePlayerInfoSocial {
+  int32 attentionNum = 1;
+  int32 followerNum = 2;
+}
+
+message GameSave {
+  bytes saveData = 10;
+}
+
+message GameTournamentBlackListOne {
+  uint32 uid = 1;
+  int64 addTime = 2;
+  bool isEnable = 3;
+  string nickname = 4;
+  int32 level = 5;
+  uint32 avatar = 6;
+  int32 vipLevel = 7;
+  int32 tourScore = 8;
+}
+
+message GateForwardToPlayerMsg {
+  int32 cmdId = 1;
+  int32 broadcastType = 2;
+  Proto.BaseSMsg baseS = 5;
+  Proto.ChangeInfoNtf ChangeInfoNtf = 8;
+  Proto.PlayerInOutZoneNtf PlayerInOutZoneNtf = 12;
+  Proto.PlayerInOutRoomNtf PlayerInOutRoomNtf = 13;
+  Proto.KickNtf KickNtf = 14;
+  Proto.UploadRoomReplayNtf UploadRoomReplayNtf = 15;
+  Proto.RoomInfoChangeNtf RoomInfoChangeNtf = 16;
+  Proto.RequestMakeRoomSnapShotNtf RequestMakeRoomSnapShotNtf = 17;
+  Proto.ChangeRoomSlotNtf ChangeRoomSlotNtf = 18;
+  Proto.ChangeRoomGameStatusNtf ChangeRoomGameStatusNtf = 19;
+  Proto.UploadRoomSnapShotNtf UploadRoomSnapShotNtf = 20;
+  Proto.NetPlayingInfoNtf NetPlayingInfoNtf = 21;
+  Proto.CreateRoomNtf CreateRoomNtf = 22;
+  Proto.CloseRoomNtf CloseRoomNtf = 23;
+  Proto.ChangeRoomSettingNtf ChangeRoomSettingNtf = 24;
+  Proto.ChatNtf ChatNtf = 25;
+  Proto.WinLossChangeNtf WinLossChangeNtf = 26;
+  Proto.RingRoomNtf RingRoomNtf = 27;
+  Proto.TournamentGameResultNtf TournamentGameResultNtf = 28;
+  Proto.ClientShowMsgNtf ClientShowMsgNtf = 29;
+  Proto.MailNtf MailNtf = 30;
+  Proto.AnnounceNtf AnnounceNtf = 31;
+  Proto.RootUpdateNtf RootUpdateNtf = 32;
+  Proto.AchievementQuickDataNtf AchievementQuickDataNtf = 33;
+  Proto.AchievementEscapeUploadNtf AchievementEscapeUploadNtf = 34;
+  Proto.QuickGameNtf QuickGameNtf = 35;
+  Proto.SystemConfigNtf SystemConfigNtf = 36;
+  Proto.UpdateLocalStatusNtf UpdateLocalStatusNtf = 37;
+  Proto.AchievementStageStartTimeNtf AchievementStageStartTimeNtf = 38;
+  Proto.InvitePlayerNtf InvitePlayerNtf = 39;
+  Proto.AchievementUploadNtf AchievementUploadNtf = 40;
+  Proto.PresentGift2PlayerNtf PresentGift2PlayerNtf = 42;
+  Proto.ChangeRoomSlotPlayerInfoNtf ChangeRoomSlotPlayerInfoNtf = 43;
+  Proto.GuildNtf GuildNtf = 44;
+  Proto.RoomVoteNtf RoomVoteNtf = 45;
+  Proto.TournamentInfoChangeNtf TournamentInfoChangeNtf = 46;
+  Proto.PlayerSocialNtf PlayerSocialNtf = 47;
+  Proto.VipNtf VipNtf = 48;
+  Proto.PlayerAuthenticationNtf PlayerAuthenticationNtf = 49;
+  Proto.UploadRoomSnapShotFailNtf UploadRoomSnapShotFailNtf = 50;
+  Proto.RequestMakeRoomSramMemCardNtf RequestMakeRoomSramMemCardNtf = 51;
+  Proto.PlayerExtraInfoNtf PlayerExtraInfoNtf = 52;
+  Proto.RoomPlayNtf RoomPlayNtf = 53;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 2449;
+    Kind = 2;
+  }
+}
+
+message GateLoginCMsg {
+  uint32 uid = 1;
+  string gameToken = 2;
+  bool isReconnect = 3;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 2304;
+    Kind = 2;
+  }
+}
+
+message GateLoginSMsg {
+  Proto.Err ret = 1;
+  string errStr = 2;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 2305;
+    Kind = 2;
+  }
+}
+
+message GateServerInfo {
+  repeated Proto.GateServerOne list = 1;
+}
+
+message GateServerOne {
+  int32 line = 1;
+  string tcpAddr = 2;
+  string httpAddr = 3;
+}
+
+message GeneratedCodeInfo {
+  repeated google.protobuf.GeneratedCodeInfo.Annotation annotation = 1;
+  message Annotation {
+    repeated int32 path = 1;
+    string source_file = 2;
+    int32 begin = 3;
+    int32 end = 4;
+  }
+}
+
+message GetMailListCMsg {
+  uint32 uid = 1;
+  string gameToken = 2;
+  uint32 start = 3;
+  bool onlyCheck = 4;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 565;
+    Kind = 1;
+  }
+}
+
+message GetMailListSMsg {
+  Proto.Err ret = 1;
+  string errStr = 2;
+  Proto.ServerTime serverTime = 3;
+  repeated Proto.MAIL_DATA_ONE mail = 4;
+  int32 unhandledCnt = 5;
+}
+
+message GetRoomSnapShotReplayCMsg {
+  uint32 uid = 1;
+  string gameToken = 2;
+  bool getSnapshot = 3;
+  bool getAllReplay = 4;
+  bool isJoin = 5;
+  int32 entityId = 6;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 1032;
+    Kind = 1;
+  }
+}
+
+message GetRoomSnapShotReplaySMsg {
+  Proto.Err ret = 1;
+  string errStr = 2;
+  int32 snapShotFrame = 3;
+  repeated Proto.ReplayPackOne packList = 4;
+  uint32 uploaderUid = 5;
+  bytes snapShotData = 10;
+  bool needDownloadSnapShot = 11;
+  string snapShotUrl = 12;
+}
+
+message GetRoomSramMemCardCMsg {
+  uint32 uid = 1;
+  string gameToken = 2;
+  int32 entityId = 3;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 1092;
+    Kind = 1;
+  }
+}
+
+message GetRoomSramMemCardSMsg {
+  Proto.Err ret = 1;
+  string errStr = 2;
+  Proto.SramMemCard sramMemCard = 3;
+  bool needDownloadFromRemote = 4;
+  string remoteUrl = 5;
+}
+
+message GetVerifyImgCMsg {
+  uint32 uid = 1;
+  string gameToken = 2;
+  int32 verifyType = 3;
+  int32 roomId = 4;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 1059;
+    Kind = 1;
+  }
+}
+
+message GetVerifyImgSMsg {
+  Proto.Err ret = 1;
+  string errStr = 2;
+  string imgType = 3;
+  bytes imgData = 4;
+}
+
+message GmCommandCMsg {
+  uint32 uid = 1;
+  string gameToken = 2;
+  string command = 3;
+  bool isInner = 10;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 2304;
+    Kind = 1;
+  }
+}
+
+message GmCommandSMsg {
+  Proto.Err ret = 1;
+  string errStr = 2;
+  Proto.ChangeInfo change = 3;
+}
+
+message GuildApplicationMemberForClientOne {
+  uint32 uid = 1;
+  string nickname = 2;
+  int32 level = 3;
+  int32 vipLevel = 4;
+  int64 vipExpire = 5;
+}
+
+message GuildCMsg {
+  uint32 uid = 1;
+  string gameToken = 2;
+  Proto.GuildOpType action = 3;
+  Proto.GuildCMsg_Common common = 4;
+  Proto.GuildCMsg_QueryOneGuild queryOneGuild = 5;
+  Proto.GuildCMsg_CreateGuild createGuild = 6;
+  Proto.GuildCMsg_ApplyGuild applyGuild = 7;
+  Proto.GuildCMsg_ChangeJob changeJob = 8;
+  Proto.GuildCMsg_VitalityContribution vitalityContribution = 9;
+  Proto.GuildCMsg_CommonStr commonStr = 10;
+  Proto.GuildCMsg_ChairmanHandover chairmanHandover = 11;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 596;
+    Kind = 1;
+  }
+}
+
+message GuildCMsg_ApplyGuild {
+  int32 guildId = 1;
+}
+
+message GuildCMsg_ChairmanHandover {
+  uint32 targetUid = 1;
+  string smsCode = 2;
+}
+
+message GuildCMsg_ChangeJob {
+  uint32 uid = 1;
+  int32 direction = 2;
+}
+
+message GuildCMsg_Common {
+  uint32 uid = 1;
+}
+
+message GuildCMsg_CommonStr {
+  string value = 1;
+}
+
+message GuildCMsg_CreateGuild {
+  string name = 1;
+  string slogan = 2;
+}
+
+message GuildCMsg_QueryOneGuild {
+  int32 guildId = 1;
+}
+
+message GuildCMsg_VitalityContribution {
+  int32 count = 1;
+}
+
+message GuildChangeInfo_MemberExp {
+  uint32 uid = 1;
+  string nickname = 2;
+  int32 oldAddId = 3;
+  int32 oldAddWay = 4;
+  int32 addId = 5;
+  int32 addWay = 6;
+}
+
+message GuildDataGuildList {
+  bytes guildList = 1;
+  repeated int32 applicationGuildList = 2;
+}
+
+message GuildForClient {
+  int32 id = 1;
+  string name = 2;
+  int32 level = 3;
+  string creator = 4;
+  int64 createTime = 5;
+  int32 vitality = 6;
+  string slogan = 7;
+  repeated Proto.GuildMemberForClientOne memberList = 8;
+  repeated Proto.GuildApplicationMemberForClientOne applicationList = 9;
+  int32 memberCountLimit = 10;
+  string chairmanNickname = 11;
+  string log = 12;
+}
+
+message GuildForClientLookUp {
+  int32 id = 1;
+  int64 createTime = 2;
+  string slogan = 3;
+  repeated Proto.GuildMemberForClientLookUpOne memberList = 4;
+}
+
+message GuildInnerLog {
+  repeated Proto.GuildInnerLogOne logList = 1;
+}
+
+message GuildInnerLogLevelUp {
+  uint32 uid = 1;
+  string nickname = 2;
+  int32 level = 3;
+}
+
+message GuildInnerLogOne {
+  int64 eventTime = 1;
+  Proto.eGuildInnerLog action = 2;
+  Proto.GuildInnerLogOneVitalityContribution vitalityContribution = 3;
+  Proto.GuildInnerLogOneVitalityContributionByTicket vitalityContributionByTicket = 4;
+  Proto.GuildInnerLogOneChangeMemberJob changeMemberJob = 5;
+  Proto.GuildInnerLogOneChairmanHandover chairmanHandover = 6;
+  Proto.GuildInnerLogOneRename rename = 7;
+  Proto.GuildInnerLogOneApplicationApproval applicationApproval = 8;
+  Proto.GuildInnerLogOneMemberLeave memberLeave = 9;
+  Proto.GuildInnerLogOneKickMember kickMember = 10;
+  Proto.GuildInnerLogLevelUp levelUp = 11;
+  Proto.GuildInnerLogOneSetSlogan setSlogan = 12;
+}
+
+message GuildInnerLogOneApplicationApproval {
+  uint32 operatorUid = 1;
+  string operatorNickname = 2;
+  uint32 targetUid = 3;
+  string targetNickname = 4;
+}
+
+message GuildInnerLogOneChairmanHandover {
+  bool isGm = 1;
+  uint32 operatorUid = 2;
+  string operatorNickname = 3;
+  uint32 targetUid = 4;
+  string targetNickname = 5;
+}
+
+message GuildInnerLogOneChangeMemberJob {
+  int32 action = 1;
+  int32 job = 2;
+  uint32 operatorUid = 3;
+  string operatorNickname = 4;
+  uint32 targetUid = 5;
+  string targetNickname = 6;
+}
+
+message GuildInnerLogOneKickMember {
+  bool isGm = 1;
+  uint32 operatorUid = 2;
+  string operatorNickname = 3;
+  uint32 targetUid = 4;
+  string targetNickname = 5;
+}
+
+message GuildInnerLogOneMemberLeave {
+  uint32 uid = 1;
+  string nickname = 2;
+}
+
+message GuildInnerLogOneRename {
+  bool isGm = 1;
+  uint32 operatorUid = 2;
+  string operatorNickname = 3;
+  string newName = 4;
+}
+
+message GuildInnerLogOneSetSlogan {
+  bool isGm = 1;
+  uint32 operatorUid = 2;
+  string operatorNickname = 3;
+  string newSlogan = 4;
+}
+
+message GuildInnerLogOneVitalityContribution {
+  uint32 uid = 1;
+  string nickname = 2;
+  int32 vitalityCount = 3;
+}
+
+message GuildInnerLogOneVitalityContributionByTicket {
+  uint32 uid = 1;
+  string nickname = 2;
+  int32 vitalityCount = 3;
+  int32 ticketCount = 4;
+}
+
+message GuildMemberExpEffect {
+  int32 id = 1;
+  int32 way = 2;
+}
+
+message GuildMemberForClientLookUpOne {
+  uint32 uid = 1;
+  string nickname = 2;
+  int32 contribution = 3;
+}
+
+message GuildMemberForClientOne {
+  uint32 uid = 1;
+  string nickname = 2;
+  int32 job = 3;
+  int32 contribution = 4;
+  int32 expId = 5;
+  int64 lastOnlineTime = 6;
+  bool isOnline = 7;
+  int32 level = 8;
+  int32 vip = 9;
+  int64 vipExpire = 10;
+}
+
+message GuildNtf {
+  Proto.GuildOpType action = 1;
+  int32 guildId = 2;
+  Proto.GuildNtf_Common common = 3;
+  Proto.GuildNtf_TransferGuild transferGuild = 4;
+  Proto.GuildNtf_ApplyGuild applyGuild = 5;
+  Proto.GuildNtf_ApproveApplication approveApplication = 6;
+  Proto.GuildNtf_RejectApplication rejectApplication = 7;
+  Proto.GuildNtf_MemberLeave memberLeave = 8;
+  Proto.GuildNtf_KickMember kickMember = 9;
+  Proto.GuildNtf_ChangeJob changeJob = 10;
+  Proto.GuildNtf_VitalityContribution vitalityContribution = 11;
+  Proto.GuildNtf_UpgradeGuild upgradeGuild = 12;
+  Proto.GuildNtf_MemberExp memberExp = 13;
+  Proto.GuildNtf_CommonStr commonStr = 14;
+  Proto.GuildNtf_MemberAddVitality memberAddVitality = 15;
+  Proto.GuildInnerLogOne log = 16;
+  repeated Proto.GuildChangeInfo_MemberExp memberExpChange = 17;
+  Proto.GuildNtf_LogInOut logInOut = 18;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 597;
+    Kind = 2;
+  }
+}
+
+message GuildNtf_ApplyGuild {
+  uint32 uid = 1;
+  string nickname = 2;
+  int32 level = 3;
+  int32 vipLevel = 4;
+  int64 vipExpire = 5;
+}
+
+message GuildNtf_ApproveApplication {
+  uint32 operatorUid = 1;
+  string operatorNickname = 2;
+  uint32 targetUid = 3;
+  string targetNickname = 4;
+  int32 targetLevel = 5;
+  int32 targetVipLevel = 6;
+  int64 targetVipExpire = 7;
+  int32 expAddId = 8;
+  int32 memberCount = 9;
+  bool isOnline = 10;
+}
+
+message GuildNtf_ChangeJob {
+  uint32 operatorUid = 1;
+  string operatorNickname = 2;
+  uint32 targetUid = 3;
+  string targetNickname = 4;
+  int32 targetJob = 5;
+  int32 expAddId = 6;
+}
+
+message GuildNtf_Common {
+  uint32 uid = 1;
+  string nickname = 2;
+}
+
+message GuildNtf_CommonStr {
+  string value = 1;
+}
+
+message GuildNtf_KickMember {
+  uint32 operatorUid = 1;
+  string operatorNickname = 2;
+  uint32 targetUid = 3;
+  string targetNickname = 4;
+  int32 memberCount = 5;
+}
+
+message GuildNtf_LogInOut {
+  uint32 uid = 1;
+  string nickname = 2;
+  bool online = 3;
+  int64 lastOnlineTime = 4;
+}
+
+message GuildNtf_MemberAddVitality {
+  Proto.GuildMemberAddVitalityWay way = 1;
+  uint32 operatorUid = 2;
+  int32 addVitality = 4;
+  int32 actualAddVitality = 5;
+  int32 nowVitality = 6;
+  Proto.MissionRewardGuildVitality missionRewardDetail = 7;
+}
+
+message GuildNtf_MemberExp {
+  uint32 operatorUid = 1;
+  string operatorNickname = 2;
+  uint32 targetUid = 3;
+  string targetNickname = 4;
+  int32 expId = 5;
+}
+
+message GuildNtf_MemberLeave {
+  uint32 uid = 1;
+  string nickname = 2;
+  int32 memberCount = 3;
+}
+
+message GuildNtf_RejectApplication {
+  uint32 operatorUid = 1;
+  string operatorNickname = 2;
+  uint32 targetUid = 3;
+  string targetNickname = 4;
+}
+
+message GuildNtf_TransferGuild {
+  uint32 operatorUid = 1;
+  string operatorNickname = 2;
+  uint32 targetUid = 3;
+  string targetNickname = 4;
+}
+
+message GuildNtf_UpgradeGuild {
+  int32 level = 1;
+  uint32 uid = 2;
+  string nickname = 3;
+  int32 memberCountLimit = 4;
+  repeated Proto.GuildNtf_UpgradeGuildMemberExp memberExp = 5;
+}
+
+message GuildNtf_UpgradeGuildMemberExp {
+  uint32 uid = 1;
+  int32 expAddId = 2;
+}
+
+message GuildNtf_VitalityContribution {
+  uint32 uid = 1;
+  string nickname = 2;
+  int32 way = 3;
+  int32 count = 4;
+  int32 memberContribution = 5;
+  int32 guildVitality = 6;
+}
+
+message GuildSMsg {
+  Proto.Err ret = 1;
+  string errStr = 2;
+  Proto.GuildOpType action = 3;
+  Proto.GuildSMsg_QueryGuildList queryGuildList = 4;
+  Proto.GuildSMsg_QueryOneGuild queryOneGuild = 5;
+  Proto.GuildSMsg_QueryMyGuild queryMyGuild = 6;
+  Proto.GuildSMsg_CreateGuild createGuild = 7;
+  Proto.GuildSMsg_VitalityContribution vitalityContribution = 8;
+  Proto.GuildSMsg_VitalityContributionByTicket vitalityContributionByTicket = 9;
+  Proto.GuildChangeInfo_MemberExp memberExpChange = 10;
+}
+
+message GuildSMsg_CreateGuild {
+  uint32 uid = 1;
+  Proto.GuildForClient guild = 2;
+  Proto.GuildMemberForClientOne guildMember = 3;
+}
+
+message GuildSMsg_QueryGuildList {
+  bytes guildList = 1;
+  repeated int32 applicationGuildList = 2;
+}
+
+message GuildSMsg_QueryMyGuild {
+  int32 guildId = 1;
+  Proto.GuildForClient guild = 2;
+  Proto.GuildDataGuildList guildList = 3;
+  uint32 myUid = 4;
+  int32 myVitality = 5;
+}
+
+message GuildSMsg_QueryOneGuild {
+  Proto.GuildForClientLookUp guild = 1;
+}
+
+message GuildSMsg_VitalityContribution {
+  int32 oldVitality = 1;
+  int32 vitality = 2;
+  int32 contributionLast = 3;
+  int32 contributionNow = 4;
+}
+
+message GuildSMsg_VitalityContributionByTicket {
+  int32 leftTicket = 1;
+  int32 vitalityAddCount = 2;
+  int32 contributionLast = 3;
+  int32 contributionNow = 4;
+}
+
+message HeartBeatCMsg {
+  enum TYPE {
+    EnumStart = 0;
+    ID = 549;
+    Kind = 1;
+  }
+}
+
+message HeartBeatSMsg {
+  Proto.Err ret = 1;
+  string errStr = 2;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 550;
+    Kind = 1;
+  }
+}
+
+message ITEM_DATA_ONE {
+  uint32 uuid = 1;
+  int32 count = 2;
+  int32 id = 3;
+  uint32 expireTime = 4;
+}
+
+message InGameStatusChangeCMsg {
+  uint32 uid = 1;
+  string gameToken = 2;
+  int32 status = 3;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 1088;
+    Kind = 1;
+  }
+}
+
+message InnerForwardServerOne {
+  int32 serverGroup = 1;
+  uint32 ip = 2;
+  uint32 ip2 = 3;
+  uint32 ip3 = 4;
+  uint32 portUdp = 5;
+  bool isMatch = 6;
+}
+
+message InnerGateServerOne {
+  int32 gateId = 1;
+  string tcpAddr = 2;
+}
+
+message InnerZoneServerOne {
+  int32 zoneId = 1;
+  string httpAddr = 2;
+}
+
+message Int32Value {
+  int32 value = 1;
+}
+
+message Int64Value {
+  int64 value = 1;
+}
+
+message InvitePlayerCMsg {
+  uint32 uid = 1;
+  string gameToken = 2;
+  int32 action = 3;
+  uint32 toUid = 4;
+  int32 gameId = 5;
+  int32 zoneId = 6;
+  int32 roomId = 7;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 592;
+    Kind = 1;
+  }
+}
+
+message InvitePlayerNtf {
+  uint32 fromUid = 1;
+  int32 action = 2;
+  uint32 toUid = 3;
+  string fromNickname = 4;
+  int32 gameId = 5;
+  int32 zoneId = 6;
+  int32 roomId = 7;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 593;
+    Kind = 2;
+  }
+}
+
+message InvitePlayerSMsg {
+  Proto.Err ret = 1;
+  string errStr = 2;
+}
+
+message ItemChange {
+  Proto.ChangeType ct = 1;
+  Proto.ITEM_DATA_ONE item = 2;
+}
+
+message ItemData {
+  repeated Proto.ITEM_DATA_ONE item = 1;
+}
+
+message KickNtf {
+  int32 kType = 1;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 533;
+  }
+}
+
+message LeaveRoomCMsg {
+  uint32 uid = 1;
+  string gameToken = 2;
+  Proto.LeaveRoomReason reason = 3;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 1027;
+    Kind = 1;
+  }
+}
+
+message LeaveZoneCMsg {
+  uint32 uid = 1;
+  string gameToken = 2;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 534;
+    Kind = 1;
+  }
+}
+
+message LsLoginCMsg {
+  uint32 gameVersion = 1;
+  string account = 2;
+  string password = 3;
+  string mac = 4;
+  int32 platform = 5;
+  uint64 raknetId = 6;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 256;
+    Kind = 1;
+  }
+}
+
+message LsLoginSMsg {
+  Proto.Err ret = 1;
+  string errStr = 2;
+  uint32 uid = 3;
+  string token = 4;
+  Proto.ServerInfo game = 5;
+  int32 line = 6;
+}
+
+message LsSteamLoginCMsg {
+  string steamId = 1;
+  string nickName = 2;
+  string authTicket = 3;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 258;
+    Kind = 1;
+  }
+}
+
+message LsSteamLoginSMsg {
+  Proto.Err ret = 1;
+  string errStr = 2;
+  string account = 3;
+  string passEnc = 4;
+}
+
+message LsTrapperCMsg {
+  string mac = 1;
+  string account = 2;
+  uint32 uid = 3;
+  string localInfo = 4;
+  string sysInfo1 = 5;
+  string sysInfo2 = 6;
+  string sysInfo3 = 7;
+  string userIdentify = 8;
+  string localIdentify = 9;
+  int32 debuggerFlag = 10;
+  string machineId = 11;
+  string biosId = 12;
+  int32 reqFlag = 50;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 257;
+    Kind = 1;
+  }
+}
+
+message LsTrapperSMsg {
+  Proto.Err ret = 1;
+  string errStr = 2;
+  int32 reqFlag = 50;
+}
+
+message MAIL_DATA_ONE {
+  uint32 id = 1;
+  string title = 2;
+  string from = 3;
+  bool isFullContent = 4;
+  string content = 5;
+  uint32 sendTime = 6;
+  uint32 expireTime = 7;
+  bool isRead = 8;
+  bool isTakeAttach = 9;
+  Proto.MailAttach attach = 10;
+  int32 mailType = 11;
+}
+
+message MailAttach {
+  repeated Proto.MailAttachOne attach = 10;
+}
+
+message MailAttachOne {
+  Proto.ITEM_DATA_ONE item = 1;
+  Proto.ResourceChange res = 2;
+}
+
+message MailNtf {
+  uint32 Id = 1;
+  string Title = 2;
+  string FromStr = 3;
+  int32 MailType = 4;
+  repeated uint32 ToIdList = 5;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 569;
+    Kind = 2;
+  }
+}
+
+message MessageOptions {
+  bool message_set_wire_format = 1;
+  bool no_standard_descriptor_accessor = 2;
+  bool deprecated = 3;
+  bool map_entry = 7;
+  repeated google.protobuf.UninterpretedOption uninterpreted_option = 999;
+}
+
+message MethodDescriptorProto {
+  string name = 1;
+  string input_type = 2;
+  string output_type = 3;
+  google.protobuf.MethodOptions options = 4;
+  bool client_streaming = 5;
+  bool server_streaming = 6;
+}
+
+message MethodOptions {
+  bool deprecated = 33;
+  google.protobuf.MethodOptions.IdempotencyLevel idempotency_level = 34;
+  repeated google.protobuf.UninterpretedOption uninterpreted_option = 999;
+  enum IdempotencyLevel {
+    IDEMPOTENCY_UNKNOWN = 0;
+    NO_SIDE_EFFECTS = 1;
+    IDEMPOTENT = 2;
+  }
+}
+
+message Mission {
+  int32 id = 1;
+  int32 val = 2;
+  bool accomplish = 3;
+  uint32 submitTime = 5;
+  int64 beforeTime = 6;
+}
+
+message MissionChange {
+  Proto.ChangeType ct = 1;
+  Proto.Mission mission = 2;
+}
+
+message MissionErrorChange {
+  Proto.Err errId = 1;
+  int32 missionTrigger = 2;
+  int32 missionId = 3;
+  int32 rewardId = 4;
+  int32 rewardValue = 5;
+}
+
+message MissionListCMsg {
+  uint32 uid = 1;
+  string gameToken = 2;
+  int32 missionTab = 3;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 1172;
+    Kind = 1;
+  }
+}
+
+message MissionListSMsg {
+  Proto.Err ret = 1;
+  string errStr = 2;
+  repeated Proto.Mission mission = 3;
+  Proto.ChangeInfo change = 100;
+}
+
+message MissionRewardGuildVitality {
+  repeated Proto.MissionRewardGuildVitalityOne reward = 1;
+}
+
+message MissionRewardGuildVitalityOne {
+  int32 missionTrigger = 1;
+  int32 missionId = 2;
+  int32 rewardId = 3;
+  int32 rewardValue = 4;
+}
+
+message MissionSubmitCMsg {
+  uint32 uid = 1;
+  string gameToken = 2;
+  repeated int32 missionIdList = 3;
+  Proto.MissionSubmitOpType action = 4;
+  Proto.MissionSubmitCMsg_DailyOnline dailyOnline = 5;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 1174;
+    Kind = 1;
+  }
+}
+
+message MissionSubmitCMsg_DailyOnline {
+  int32 day = 1;
+}
+
+message MissionSubmitSMsg {
+  Proto.Err ret = 1;
+  string errStr = 2;
+  Proto.MissionSubmitOpType action = 3;
+  Proto.ChangeInfo change = 100;
+}
+
+message MyVipData {
+  Proto.eVipLevel level = 1;
+  uint32 expireTimeOld = 2;
+  int32 bgId = 3;
+  int64 expireTime = 4;
+  int64 leftTime = 5;
+  Proto.eVipLevel lastLevel = 6;
+  bool justExpired = 7;
+}
+
+message NetPlayingInfo {
+  int32 action = 1;
+  int32 frame = 2;
+  uint32 checksum = 3;
+  int32 myAdv = 4;
+}
+
+message NetPlayingInfoCMsg {
+  uint32 uid = 1;
+  string gameToken = 2;
+  Proto.NetPlayingInfo info = 3;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 1042;
+    Kind = 1;
+  }
+}
+
+message NetPlayingInfoNtf {
+  uint32 uid = 1;
+  Proto.NetPlayingInfo info = 2;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 1043;
+    Kind = 2;
+  }
+}
+
+message ObStatistics {
+  int32 obNum = 1;
+  int32 potentialObNum = 2;
+}
+
+message OfflineExpCalcDetail {
+  repeated Proto.OfflineExpCalcDetailRawOne rawOne = 1;
+  repeated Proto.OfflineExpCalcDetailResultOne resultOne = 2;
+  int64 effectiveLastTime = 3;
+  int64 effectiveNowTime = 4;
+  int32 vipLevel = 5;
+  int64 vipExpireTime = 6;
+  int32 lastVipLevel = 7;
+  int32 effectiveVipLevel = 8;
+}
+
+message OfflineExpCalcDetailRawOne {
+  int32 id = 1;
+  Proto.ExpAddId propId = 2;
+  int64 startTime = 3;
+  int64 expireTime = 4;
+  int32 ratio = 5;
+}
+
+message OfflineExpCalcDetailResultOne {
+  int64 startTime = 1;
+  int64 endTime = 2;
+  repeated int32 rawId = 3;
+}
+
+message OneofDescriptorProto {
+  string name = 1;
+  google.protobuf.OneofOptions options = 2;
+}
+
+message OneofOptions {
+  repeated google.protobuf.UninterpretedOption uninterpreted_option = 999;
+}
+
+message Option {
+  string name = 1;
+  google.protobuf.Any value = 2;
+}
+
+message PlayerAuthentication {
+  repeated Proto.PlayerAuthenticationOne authList = 1;
+}
+
+message PlayerAuthenticationDataOne {
+  bool active = 1;
+  Proto.AuthenticationId authId = 2;
+  int32 val1 = 3;
+  int32 val2 = 4;
+  string valStr = 5;
+}
+
+message PlayerAuthenticationNtf {
+  uint32 uid = 1;
+  repeated Proto.PlayerAuthenticationDataOne authList = 2;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 603;
+    Kind = 2;
+  }
+}
+
+message PlayerAuthenticationOne {
+  Proto.AuthenticationId id = 1;
+  int32 val1 = 2;
+  int32 val2 = 3;
+  string valStr = 4;
+}
+
+message PlayerAuthentication_old {
+  int32 female = 30;
+  int32 master = 31;
+  int32 anchor = 32;
+  string anchor_address = 33;
+  int32 bbs_celebrity = 34;
+  int32 genuine_pc = 35;
+  int32 yeyou_mogul = 36;
+  int32 genuine_pc_image_id = 37;
+  int32 haoqi_week = 38;
+  int32 haoqi_month = 39;
+  int32 heat_week = 40;
+  int32 heat_month = 41;
+  int32 decade = 42;
+  int32 shenhao = 43;
+  int32 crowdfunding = 44;
+}
+
+message PlayerCheckInCMsg {
+  uint32 uid = 1;
+  string gameToken = 2;
+  int32 checkInType = 3;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 1175;
+    Kind = 1;
+  }
+}
+
+message PlayerCheckInSMsg {
+  Proto.Err ret = 1;
+  string errStr = 2;
+  Proto.ChangeInfo change = 100;
+}
+
+message PlayerExpAddCMsg {
+  uint32 uid = 1;
+  string gameToken = 2;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 1186;
+    Kind = 1;
+  }
+}
+
+message PlayerExpAddSMsg {
+  Proto.Err ret = 1;
+  string errStr = 2;
+  int32 avatar = 3;
+  int32 bg = 4;
+  int32 title = 5;
+  int32 expcard = 6;
+  int32 vip = 7;
+  int32 authentication = 8;
+  int32 guild = 9;
+  int32 avatarAuto = 10;
+}
+
+message PlayerExtraInfoNtf {
+  uint32 uid = 1;
+  Proto.PlayerRunInfo runInfo = 2;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 1095;
+    Kind = 2;
+  }
+}
+
+message PlayerInOutRoomNtf {
+  repeated Proto.RoomPlayerChange players = 1;
+  Proto.RoomId roomId = 4;
+  Proto.LeaveRoomReason leaveRoomReason = 5;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 532;
+  }
+}
+
+message PlayerInOutZoneNtf {
+  repeated Proto.ZonePlayerChange players = 1;
+  int32 consoleId = 2;
+  int32 gameId = 3;
+  int32 zoneId = 4;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 531;
+  }
+}
+
+message PlayerInfo {
+  uint32 uid = 1;
+  Proto.PlayerInfoBase base = 2;
+  Proto.RoomPlayerOne roomInfo = 3;
+  Proto.PlayerInfoTournament tournament = 4;
+  Proto.PlayerPermission permission = 5;
+}
+
+message PlayerInfoBase {
+  string nickName = 1;
+  int32 level = 2;
+  int32 gender = 3;
+  uint32 avatar = 4;
+  uint32 title = 5;
+  uint32 bg = 6;
+  int32 line = 7;
+  uint64 raknetId = 8;
+  uint32 udpLocalIp = 9;
+  int32 udpLocalPort = 10;
+  int32 vipLevel = 11;
+  string ipAddr = 12;
+  string mac = 13;
+  uint32 vipBgId = 14;
+  int32 platform = 16;
+  string guildName = 17;
+  int32 guildLevel = 18;
+  int32 guildId = 19;
+  int32 inputStatus = 20;
+  int32 netStatus = 21;
+  int32 expAdd = 22;
+  int32 expCardExpire = 23;
+  int32 expCardSize = 24;
+  string headUrl = 25;
+  int32 gmLevel = 27;
+  bool isBanPlay = 28;
+  Proto.PlayerAuthentication_old auth = 30;
+  Proto.PlayerAuthentication auth2 = 31;
+}
+
+message PlayerInfoTournament {
+  int32 score = 1;
+  int32 allGameNum = 2;
+  int32 winNum = 3;
+  int32 runNum = 4;
+  int32 rankNum = 5;
+  int32 winInRow = 6;
+  int32 lossInRow = 7;
+  int32 tournamentGameId = 10;
+  int32 runAllCount = 20;
+  int64 lastRunTime = 21;
+}
+
+message PlayerKickPlayerCMsg {
+  uint32 uid = 1;
+  string gameToken = 2;
+  int32 action = 3;
+  uint32 targetUid = 4;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 1076;
+    Kind = 1;
+  }
+}
+
+message PlayerKickPlayerSMsg {
+  Proto.Err ret = 1;
+  string errStr = 2;
+  Proto.ChangeInfo change = 100;
+}
+
+message PlayerLocalStatus {
+  int32 inputStatus = 3;
+  int32 netStatus = 4;
+  int32 expAdd = 5;
+  int32 expCardExpire = 6;
+  int32 expCardSize = 7;
+}
+
+message PlayerMutePlayerCMsg {
+  uint32 uid = 1;
+  string gameToken = 2;
+  int32 action = 3;
+  uint32 toUid = 4;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 594;
+    Kind = 1;
+  }
+}
+
+message PlayerMutePlayerSMsg {
+  Proto.Err ret = 1;
+  string errStr = 2;
+  Proto.ChangeInfo change = 100;
+}
+
+message PlayerPermission {
+  bool isMatchPlayer = 1;
+  bool isJudge = 2;
+  bool isRingMaster = 3;
+}
+
+message PlayerRunInfo {
+  int32 runAllCount = 1;
+  int64 lastRunTime = 2;
+  bool isRunNoConsequence = 3;
+  int32 runNoConsequenceCountMax = 4;
+  int32 runNoConsequenceCountNow = 5;
+}
+
+message PlayerSocialCMsg {
+  uint32 uid = 1;
+  string gameToken = 2;
+  int32 action = 3;
+  repeated uint32 uidList = 4;
+  uint32 targetUid = 5;
+  int32 groupId = 6;
+  string groupName = 7;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 1176;
+    Kind = 1;
+  }
+}
+
+message PlayerSocialNtf {
+  int32 action = 1;
+  uint32 uid = 2;
+  Proto.RoomId roomId = 3;
+  int32 onlineStatus = 4;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 1178;
+  }
+}
+
+message PlayerSocialSMsg {
+  Proto.Err ret = 1;
+  string errStr = 2;
+  Proto.SocialPlayerData playerData = 3;
+  repeated Proto.SocialPlayerQuickInfo playerQuickList = 4;
+  Proto.ChangeInfo change = 100;
+}
+
+message PlayerSramCMsg {
+  uint32 uid = 1;
+  string gameToken = 2;
+  int32 action = 3;
+  int32 uploadOrDownload = 4;
+  string sign = 5;
+  string key = 6;
+  bytes sramData = 7;
+  string versionName = 8;
+  string signEncrypted = 9;
+  string md5 = 10;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 1184;
+    Kind = 1;
+  }
+}
+
+message PlayerSramSMsg {
+  Proto.Err ret = 1;
+  string errStr = 2;
+  Proto.SramData sramData = 3;
+  string retSign = 4;
+  string uploadOrDownloadUrl = 5;
+  Proto.ChangeInfo change = 100;
+}
+
+message PointChange {
+  Proto.ChangeType ct = 1;
+  int32 pointId = 2;
+  int32 val = 3;
+  int32 default = 4;
+}
+
+message PresentGift2PlayerCMsg {
+  uint32 uid = 1;
+  string gameToken = 2;
+  int32 action = 3;
+  repeated uint32 queryUid = 4;
+  int32 propId = 5;
+  int32 propCount = 6;
+  string senderNickname = 7;
+  uint32 targetUid = 8;
+  string targetNickname = 9;
+  uint32 consoleId = 10;
+  uint32 gameId = 11;
+  uint32 zoneId = 12;
+  uint32 roomId = 13;
+  uint32 entityId = 14;
+  int32 topRoomId = 15;
+  bool isOldZone = 16;
+  string queryReason = 17;
+  Proto.PresentGiftReqAction2 queryRank = 18;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 1080;
+    Kind = 1;
+  }
+}
+
+message PresentGift2PlayerNtf {
+  Proto.BroadcastRange broadcastRange = 1;
+  uint32 consoleId = 2;
+  uint32 gameId = 3;
+  uint32 zoneId = 4;
+  uint32 roomId = 5;
+  uint32 entityId = 6;
+  Proto.PresentGift2PlayerNtfData data = 7;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 1081;
+    Kind = 2;
+  }
+}
+
+message PresentGift2PlayerNtfData {
+  uint32 uid = 1;
+  string nickname = 2;
+  uint32 targetUid = 3;
+  string targetNickname = 4;
+  int32 propId = 5;
+  int32 propCount = 6;
+  Proto.PresentGift2PlayerNtfData.BarrageType barrageType = 7;
+  int32 haoQi = 8;
+  int32 heat = 9;
+  int32 targetHaoQi = 10;
+  int32 targetHeat = 11;
+  enum BarrageType {
+    Null = 0;
+    Room = 1;
+    Zone = 2;
+    Game = 3;
+    Platform = 4;
+  }
+}
+
+message PresentGift2PlayerRspData {
+  int32 haoQi = 1;
+  int32 heat = 2;
+  int32 targetHaoQi = 3;
+  int32 targetHeat = 4;
+  int32 broadcastRange = 5;
+  int32 ticket = 6;
+}
+
+message PresentGift2PlayerSMsg {
+  Proto.Err ret = 1;
+  string errStr = 2;
+  repeated Proto.PresentGiftPlayerQuickInfoOne quickInfo = 3;
+  Proto.PresentGift2PlayerRspData data = 4;
+  Proto.PresentGiftRankData rank = 5;
+  Proto.PresentGiftAuthData auth = 6;
+}
+
+message PresentGiftAuthData {
+  bytes data = 1;
+}
+
+message PresentGiftAuthencationData {
+  repeated Proto.PresentGiftAuthencationPlayerOne player = 1;
+  int64 updateTime = 2;
+}
+
+message PresentGiftAuthencationPlayerOne {
+  uint32 uid = 1;
+  Proto.PresentGiftRankSubType rankType = 2;
+  Proto.PresentGiftAuthenticationType authType = 3;
+}
+
+message PresentGiftPlayerQuickInfoOne {
+  uint32 uid = 1;
+  int32 haoQi = 2;
+  int32 heat = 3;
+  Proto.Err ret = 4;
+}
+
+message PresentGiftRankData {
+  int32 mainType = 1;
+  int32 subType = 2;
+  int32 subSubType = 3;
+  Proto.Err retRankNow = 4;
+  string errStrRankNow = 5;
+  Proto.Err retRankLast = 6;
+  string errStrRankLast = 7;
+  Proto.PresentGiftRankDataSub rankNow = 8;
+  Proto.PresentGiftRankDataSub rankLast = 9;
+  string nextMonthTime = 10;
+  string nextWeekTime = 11;
+}
+
+message PresentGiftRankDataSub {
+  repeated Proto.RankDataOne ranks = 1;
+  int32 myRank = 2;
+  int32 maxNum = 3;
+  int32 myRankPercent = 4;
+}
+
+message PresentGiftReqAction2 {
+  int32 mainType = 1;
+  int32 subType = 2;
+  int32 subSubType = 3;
+}
+
+message ProtobufAchievementEscape {
+  uint32 dest_uid = 1;
+  string dest_nickname = 2;
+  int32 dest_slot = 3;
+  int32 ach_id = 4;
+  repeated uint32 dest_char_id = 5;
+  int64 send_time = 6;
+  int32 frame = 7;
+}
+
+message ProtobufAchievementEscapeAck {
+  Proto.Err ret = 1;
+  string err_str = 2;
+}
+
+message ProtobufAchievementEscapeDbAckToLobby {
+  int32 dest_uid = 1;
+  string dest_nickname = 2;
+  int32 ach_id = 3;
+  string version_name = 4;
+  int32 escape_times = 5;
+  int32 winloss_all = 6;
+  int32 winloss_win = 7;
+  int32 winloss_draw = 8;
+  int32 total_score_single_ = 9;
+  int32 total_score_multi_ = 10;
+  int32 clear_times_single_ = 11;
+  int32 clear_times_multi_ = 12;
+}
+
+message ProtobufAchievementEscapeLobbyToDb {
+  uint32 dest_uid = 1;
+  string dest_nickname = 2;
+  int32 ach_id = 3;
+  string version_name = 4;
+  repeated uint32 dest_char_id = 5;
+  Proto.eAchievementWinLoss winloss = 6;
+}
+
+message ProtobufAchievementEscapeNtf {
+  uint32 lobby_id = 1;
+  uint32 console_id = 2;
+  uint32 game_id = 3;
+  uint32 server_id = 4;
+  uint32 room_id = 5;
+  uint32 uid = 6;
+  string nickname = 7;
+  uint32 dest_uid = 8;
+  string dest_nickname = 9;
+}
+
+message ProtobufAchievementNtf {
+  uint32 lobby_id = 1;
+  uint32 console_id = 2;
+  uint32 game_id = 3;
+  uint32 server_id = 4;
+  uint32 room_id = 5;
+  uint32 dest_uid = 6;
+  string dest_nickname = 7;
+  int32 ach_id = 8;
+  string version_name = 9;
+  int32 winloss_all = 10;
+  int32 winloss_win = 11;
+  int32 winloss_draw = 12;
+  int32 total_score_single_ = 13;
+  int32 total_score_multi_ = 14;
+  int32 clear_times_single_ = 15;
+  int32 clear_times_multi_ = 16;
+  int32 escape_times = 17;
+}
+
+message ProtobufAchievementUploadError {
+  Proto.Err ret = 1;
+  string err_str = 2;
+  int64 time = 3;
+  uint32 lobby_id = 4;
+  uint32 console_id = 5;
+  uint32 game_id = 6;
+  uint32 server_id = 7;
+  uint32 room_id = 8;
+  uint32 uid = 9;
+  int32 ach_game = 10;
+  string version_name = 11;
+}
+
+message ProtobufAchievementWinLoss {
+  int32 user_id = 1;
+  int32 ach_id = 2;
+}
+
+message QueryAllZoneListCMsg {
+  uint32 uid = 1;
+  string gameToken = 2;
+  string md5 = 3;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 560;
+    Kind = 1;
+  }
+}
+
+message QueryAllZoneListSMsg {
+  Proto.Err ret = 1;
+  string errStr = 2;
+  repeated Proto.ZoneCfgInfo zoneList = 3;
+  repeated Proto.GameCfgInfo gameList = 4;
+  repeated Proto.GameDriver driverList = 5;
+  bool useCache = 10;
+}
+
+message QueryGameCfgCMsg {
+  uint32 uid = 1;
+  string gameToken = 2;
+  int32 gameId = 3;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 1187;
+    Kind = 1;
+  }
+}
+
+message QueryGameCfgSMsg {
+  Proto.Err ret = 1;
+  string errStr = 2;
+  Proto.GameCfgInfo gameInfo = 3;
+  repeated Proto.ZoneCfgInfo zoneList = 4;
+}
+
+message QueryZoneInfoCMsg {
+  uint32 uid = 1;
+  string gameToken = 2;
+  int32 consoleId = 3;
+  int32 gameId = 4;
+  int32 zoneId = 5;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 516;
+    Kind = 1;
+  }
+}
+
+message QueryZoneInfoSMsg {
+  Proto.Err ret = 1;
+  string errStr = 2;
+  repeated Proto.ZoneInfo zoneList = 3;
+}
+
+message QueryZonePlayerListCMsg {
+  uint32 uid = 1;
+  string gameToken = 2;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 1024;
+    Kind = 1;
+  }
+}
+
+message QueryZonePlayerListSMsg {
+  Proto.Err ret = 1;
+  string errStr = 2;
+  repeated Proto.PlayerInfo playerList = 3;
+}
+
+message QueryZoneRoomListCMsg {
+  uint32 uid = 1;
+  string gameToken = 2;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 1025;
+    Kind = 1;
+  }
+}
+
+message QueryZoneRoomListSMsg {
+  Proto.Err ret = 1;
+  string errStr = 2;
+  repeated Proto.RoomInfo roomList = 3;
+  repeated int32 ringMasterRoomIdList = 4;
+}
+
+message QuickGameCMsg {
+  uint32 uid = 1;
+  string gameToken = 2;
+  int32 action = 3;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 1072;
+    Kind = 1;
+  }
+}
+
+message QuickGameNtf {
+  Proto.QuickGameStatus status = 1;
+  string msg = 2;
+  int32 roomId = 3;
+  int32 slotId = 4;
+  bool waitRoomStart = 5;
+  bool joinGame = 6;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 1073;
+    Kind = 2;
+  }
+}
+
+message QuickGameSMsg {
+  Proto.Err ret = 1;
+  string errStr = 2;
+}
+
+message RankDataOne {
+  uint32 uid = 1;
+  string nickname = 2;
+  int32 val1 = 4;
+  int32 val2 = 5;
+  int64 val3 = 6;
+  uint32 avatar = 7;
+  uint32 bg = 8;
+  int32 level = 9;
+  int32 vipLevel = 10;
+  int32 guildId = 11;
+  int32 no = 12;
+  Proto.PlayerAuthentication auth = 30;
+}
+
+message RankListCMsg {
+  uint32 uid = 1;
+  string gameToken = 2;
+  int32 rankId = 3;
+  repeated int32 noList = 4;
+  int32 start = 5;
+  int32 count = 6;
+  bool needMyData = 8;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 564;
+    Kind = 1;
+  }
+}
+
+message RankListSMsg {
+  Proto.Err ret = 1;
+  string errStr = 2;
+  repeated Proto.RankDataOne ranks = 3;
+  int32 myRank = 4;
+  int32 maxNum = 5;
+  int32 myRankPercent = 6;
+  repeated Proto.RankListSMsg.GuildNameMapEntry guildNameMap = 7;
+  message GuildNameMapEntry {
+    int32 key = 1;
+    string value = 2;
+  }
+}
+
+message ReadMailCMsg {
+  uint32 uid = 1;
+  string gameToken = 2;
+  uint32 mailId = 3;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 566;
+    Kind = 1;
+  }
+}
+
+message ReadMailSMsg {
+  Proto.Err ret = 1;
+  string errStr = 2;
+  string content = 3;
+  uint32 expireTime = 4;
+}
+
+message RefreshInfoCMsg {
+  uint32 uid = 1;
+  string gameToken = 2;
+  int32 action = 3;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 515;
+    Kind = 1;
+  }
+}
+
+message RefreshInfoSMsg {
+  Proto.Err ret = 1;
+  string errStr = 2;
+  Proto.ChangeInfo change = 100;
+}
+
+message ReplayDataG {
+  int32 chunkNum = 1;
+  int32 frameCnt = 2;
+  int32 frameBegin = 3;
+  int32 byte_count = 17;
+  int32 code_count = 18;
+  int32 code_reset_count = 19;
+  int32 buffer_reset_count = 20;
+  bytes replayData = 30;
+}
+
+message ReplayDataTvg {
+  string replayBegin = 1;
+  uint32 replayVersion = 2;
+  Proto.ReplayHead_1 head1 = 10;
+  Proto.ReplayHead_2 head2 = 11;
+  repeated Proto.ReplayHead_3 head3 = 12;
+  bytes replayData = 22;
+  Proto.SnapShot snapShot = 23;
+  Proto.GameSave gameSave = 24;
+}
+
+message ReplayDataTvgG {
+  string replayBegin = 1;
+  uint32 replayVersion = 2;
+  Proto.ReplayHeadG head = 10;
+  repeated Proto.GamePlayInfo infoList = 11;
+  repeated Proto.ReplayDataG dataList = 15;
+  Proto.SnapShot snapShot = 20;
+  Proto.GameSave gameSave = 21;
+}
+
+message ReplayDataTvgHead {
+  string replayBegin = 1;
+  uint32 replayVersion = 2;
+}
+
+message ReplayHeadG {
+  string ruleTitle = 1;
+  string rom1Md5 = 2;
+  string rom2Md5 = 3;
+  string staMd5 = 4;
+  int32 cpu_core = 5;
+  uint32 roomCreateUid = 6;
+  int64 roomCreateTime = 7;
+  string versionName = 8;
+  string gameDiff = 9;
+  int32 gameVersion = 10;
+  int32 portNum = 11;
+  string gameTitle = 12;
+  string rom1Name = 13;
+  string rom2Name = 14;
+  int32 slotNum = 15;
+  int32 gameType = 16;
+  bool force60Hz = 17;
+  int32 skipReadFirstSnapShot = 18;
+  int32 skipRomCheckCrc = 19;
+  string checkMd5 = 20;
+  int32 cpuSpeed = 21;
+  int32 bios = 22;
+}
+
+message ReplayHeadNet {
+  int32 chunkNum = 1;
+  int32 frameCnt = 2;
+  int32 frameBegin = 3;
+  int32 byteCount = 4;
+  int32 codeCount = 5;
+}
+
+message ReplayHead_1 {
+  int32 chunkNum = 1;
+  int32 frameCnt = 2;
+  int32 frameBegin = 3;
+  int32 newestFrame = 4;
+  int32 buffOffset = 5;
+  int32 buffSize = 6;
+  int32 byte_count = 17;
+  int32 code_count = 18;
+  int32 code_reset_count = 19;
+  int32 buffer_reset_count = 20;
+  string gameName = 31;
+  string gameDiff = 32;
+  int32 gameVersion = 33;
+  repeated Proto.ReplayInputOne m_packBeginInput = 40;
+}
+
+message ReplayHead_2 {
+  int32 replayHead3ChunkNum = 1;
+  string ruleTitle = 2;
+  string rom1Md5 = 3;
+  string rom2Md5 = 4;
+  string staMd5 = 5;
+  int32 cpu_core = 6;
+  uint32 roomCreateUid = 7;
+  int64 roomCreateTime = 8;
+}
+
+message ReplayHead_3 {
+  int32 frame = 1;
+  int32 replayType = 2;
+  bool isProcessed = 3;
+  Proto.ReplayPlayer player = 11;
+  Proto.ReplayStatistics statistics = 12;
+  Proto.ObStatistics obAvg = 13;
+  Proto.ObStatistics obMax = 14;
+  Proto.ReplayMaker maker = 15;
+  Proto.ReplayPlayerChangeSeat player_change_seat = 16;
+}
+
+message ReplayInputOne {
+  uint32 val32 = 1;
+}
+
+message ReplayMaker {
+  uint32 myUid = 1;
+  uint32 beginFrame = 2;
+}
+
+message ReplayPackOne {
+  Proto.ReplayHeadNet head = 1;
+  bytes data = 2;
+}
+
+message ReplayPlayer {
+  int32 slot = 1;
+  uint32 uid = 2;
+}
+
+message ReplayPlayerChangeSeat {
+  int32 slot = 1;
+  int32 slot_old = 2;
+  uint32 uid = 3;
+}
+
+message ReplayPlayerG {
+  uint32 uid = 1;
+  string name = 2;
+  int32 level = 3;
+  uint32 avatar = 4;
+  uint32 bg = 5;
+}
+
+message ReplayStatistics {
+  int32 slot = 1;
+  int32 num = 2;
+}
+
+message ReplayWinLoss {
+  int32 p1Win = 1;
+  int32 p2Win = 2;
+  int32 p1WinInRow = 3;
+  int32 p2WinInRow = 4;
+}
+
+message ReportPlayerCMsg {
+  uint32 uid = 1;
+  string gameToken = 2;
+  int32 reportType = 3;
+  uint32 targetUid = 4;
+  uint32 chatId = 5;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 583;
+    Kind = 1;
+  }
+}
+
+message RequestMakeRoomSnapShotNtf {
+  enum TYPE {
+    EnumStart = 0;
+    ID = 549;
+  }
+}
+
+message RequestMakeRoomSramMemCardNtf {
+  uint32 requesterUid = 1;
+  int32 requestEntityId = 2;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 1185;
+  }
+}
+
+message ResMd5 {
+  string name = 1;
+  string md5 = 2;
+}
+
+message ResourceChange {
+  Proto.Res res = 1;
+  int32 val32 = 2;
+  int64 val64 = 3;
+  string valStr = 4;
+}
+
+message ResourceData {
+  repeated Proto.ResourceChange res = 1;
+}
+
+message RingMasterGameInfo {
+  uint32 masterUid = 1;
+  string masterNickname = 2;
+  int32 masterMaxWinInRow = 3;
+  int32 masterWinNum = 4;
+  repeated Proto.RingMasterPlayerOne playerList = 10;
+}
+
+message RingMasterPlayerOne {
+  uint32 uid = 1;
+  string nickname = 2;
+  int32 level = 3;
+  int32 winNum = 4;
+}
+
+message RingPlayer {
+  uint32 uid = 1;
+}
+
+message RingRoomCMsg {
+  uint32 uid = 1;
+  string gameToken = 2;
+  int32 action = 3;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 1049;
+    Kind = 1;
+  }
+}
+
+message RingRoomNtf {
+  Proto.RoomId roomId = 1;
+  repeated Proto.RingPlayer ringPlayers = 2;
+  bool needChangSlotToPlay = 3;
+  bool needChangSlotToOb = 4;
+  int32 flag = 5;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 1056;
+    Kind = 2;
+  }
+}
+
+message RingRoomSMsg {
+  Proto.Err ret = 1;
+  string errStr = 2;
+  repeated Proto.RingPlayer ringPlayers = 3;
+}
+
+message RomInfoDesc {
+  repeated Proto.RomInfoDescOne list = 6;
+}
+
+message RomInfoDescOne {
+  string name = 1;
+  uint32 len = 2;
+  uint32 crc = 3;
+  uint32 type = 4;
+}
+
+message RoomBaseInfo {
+  int32 version = 1;
+  int32 difficult = 2;
+  int32 ruleValue = 3;
+}
+
+message RoomCfgInfo {
+  string roomName = 1;
+  bool hasPassword = 2;
+  string password = 3;
+  int32 ruleId = 4;
+  int32 versionId = 5;
+  int32 difficultId = 6;
+  int32 bios = 7;
+  int32 verifyCode = 8;
+  int32 levelLimit = 9;
+  int32 vipBst = 10;
+  int32 topRoomId = 11;
+  Proto.ObStatus obStatus = 12;
+  Proto.ChatStatus chatStatus = 13;
+  bool noSnapshotRoom = 14;
+  string rom1Md5 = 15;
+  string rom2Md5 = 16;
+  string staMd5 = 17;
+  int32 gameVersion = 18;
+  int32 levelLimitType = 19;
+  string versionName = 20;
+  int32 ruleValue = 21;
+  bool ringMasterGame = 22;
+  uint32 createRoomTime = 23;
+  int32 topRoomDay = 24;
+}
+
+message RoomId {
+  int32 consoleId = 1;
+  int32 gameId = 2;
+  int32 zoneId = 3;
+  int32 roomId = 4;
+}
+
+message RoomInfo {
+  int32 id = 1;
+  Proto.RoomCfgInfo cfg = 2;
+  Proto.RoomStatus status = 3;
+  repeated Proto.RoomPlayerOne playerList = 4;
+  repeated Proto.RoomPlayerOne obList = 5;
+  repeated Proto.ForwardServerOne forwardList = 6;
+  uint32 hostUid = 7;
+  repeated Proto.SlotStatus slotStatus = 8;
+  repeated int32 WinLoss = 9;
+  repeated int32 WinInRow = 10;
+  Proto.AchievementInfo achievement = 11;
+  repeated Proto.RoomPlayingPlayerOne playingPlayer = 12;
+  Proto.RingMasterGameInfo ringMasterInfo = 13;
+  uint32 bgId = 14;
+  Proto.TopRoomInfo topRoom = 15;
+  uint32 createUid = 16;
+}
+
+message RoomInfoChange {
+  Proto.ChangeType ct = 1;
+  Proto.RoomInfo roomInfo = 2;
+  Proto.RoomInfoPeeking roomInfoPeeking = 3;
+}
+
+message RoomInfoChangeNtf {
+  int32 gameId = 1;
+  int32 zoneId = 2;
+  repeated Proto.RoomInfoChange roomChangeList = 3;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 1078;
+    Kind = 2;
+  }
+}
+
+message RoomInfoPeeking {
+  int32 obNum = 1;
+}
+
+message RoomMuteCMsg {
+  uint32 uid = 1;
+  string gameToken = 2;
+  int32 action = 3;
+  uint32 targetUid = 4;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 1074;
+    Kind = 1;
+  }
+}
+
+message RoomMuteSMsg {
+  Proto.Err ret = 1;
+  string errStr = 2;
+}
+
+message RoomPlayNtf {
+  Proto.RoomPlayResult roomPlayResult = 2;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 1096;
+    Kind = 2;
+  }
+}
+
+message RoomPlayResult {
+  uint32 p1Uid = 1;
+  uint32 p2Uid = 2;
+  Proto.GameResult result = 3;
+}
+
+message RoomPlayerChange {
+  Proto.ChangeType ct = 1;
+  uint32 uid = 2;
+  Proto.RoomPlayerOne player = 3;
+}
+
+message RoomPlayerOne {
+  uint32 uid = 1;
+  Proto.RoomSlot slot = 2;
+  bool isHost = 3;
+  int32 roomId = 4;
+  bool showVipMsg = 100;
+}
+
+message RoomPlayingPlayerOne {
+  uint32 uid = 1;
+  int32 inputStatus = 2;
+  int32 netStatus = 3;
+}
+
+message RoomTvgCMsg {
+  uint32 uid = 1;
+  string gameToken = 2;
+  bool isLast = 3;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 1057;
+    Kind = 1;
+  }
+}
+
+message RoomTvgSMsg {
+  Proto.Err ret = 1;
+  string errStr = 2;
+  Proto.ReplayDataTvgG replayTvg = 3;
+}
+
+message RoomVoteCMsg {
+  uint32 uid = 1;
+  string gameToken = 2;
+  Proto.RoomVoteType voteType = 3;
+  Proto.VoteAction action = 4;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 1089;
+    Kind = 1;
+  }
+}
+
+message RoomVoteNtf {
+  Proto.RoomVoteType voteType = 1;
+  Proto.VoteResult voteResult = 2;
+  Proto.VoteStatus voteStatus = 3;
+  repeated Proto.RoomVoteStatus voteList = 4;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 1090;
+    Kind = 2;
+  }
+}
+
+message RoomVoteStatus {
+  uint32 uid = 1;
+  Proto.VoteAction action = 2;
+  bool isChange = 3;
+}
+
+message RootUpdateNtf {
+  int32 isAll = 1;
+  repeated int32 cfgIdList = 2;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 578;
+    Kind = 2;
+  }
+}
+
+message ServerInfo {
+  string httpAddr = 1;
+  int32 line = 2;
+  string tcpAddr = 3;
+}
+
+message ServerStatusUpdate {
+  int32 needReEnterZone = 1;
+}
+
+message ServerTime {
+  uint32 time = 1;
+  uint32 lastApRecoverTime = 2;
+  int32 year = 3;
+  int32 month = 4;
+  int32 day = 5;
+}
+
+message ServiceDescriptorProto {
+  string name = 1;
+  repeated google.protobuf.MethodDescriptorProto method = 2;
+  google.protobuf.ServiceOptions options = 3;
+}
+
+message ServiceOptions {
+  bool deprecated = 33;
+  repeated google.protobuf.UninterpretedOption uninterpreted_option = 999;
+}
+
+message SnapShot {
+  bool replayCut = 1;
+  int32 emuFrame = 2;
+  int32 emuSaveLoadFrame = 3;
+  int32 runAfterLoadFrame = 4;
+  int32 noDrawFrame = 5;
+  bytes videoSnapShot = 10;
+  bytes inputBeginData = 11;
+}
+
+message SocialPlayerData {
+  repeated Proto.SocialPlayerOne friendList = 1;
+  repeated Proto.SocialPlayerOne attentionList = 2;
+  repeated Proto.SocialPlayerOne followerList = 3;
+  repeated Proto.SocialPlayerOne blackList = 4;
+  repeated Proto.SocialPlayerOne specialAttentionList = 5;
+  repeated Proto.SocialPlayerGroup groupList = 6;
+}
+
+message SocialPlayerGroup {
+  int32 groupId = 1;
+  string groupName = 2;
+  string groupTitle = 3;
+  repeated uint32 uid = 4;
+}
+
+message SocialPlayerOne {
+  uint32 uid = 1;
+  int32 group = 2;
+}
+
+message SocialPlayerQuickInfo {
+  uint32 uid = 1;
+  string nickname = 2;
+  uint32 avatar = 3;
+  int32 level = 4;
+  int64 exp = 5;
+  int32 vipLevel = 6;
+  Proto.PlayerAuthentication auth = 10;
+  int32 gameId = 20;
+  int32 zoneId = 21;
+  int32 roomId = 22;
+  int32 guildLevel = 30;
+  string guildName = 31;
+  bool isOnline = 100;
+}
+
+message SourceCodeInfo {
+  repeated google.protobuf.SourceCodeInfo.Location location = 1;
+  message Location {
+    repeated int32 path = 1;
+    repeated int32 span = 2;
+    string leading_comments = 3;
+    string trailing_comments = 4;
+    repeated string leading_detached_comments = 6;
+  }
+}
+
+message SourceContext {
+  string file_name = 1;
+}
+
+message SramData {
+  repeated Proto.SramDataOne data = 1;
+}
+
+message SramDataOne {
+  int32 version = 1;
+  string versionName = 2;
+  string key = 3;
+  string md5 = 4;
+  int64 uploadTime = 5;
+}
+
+message SramMemCard {
+  bytes memCard1 = 1;
+  bytes memCard2 = 2;
+}
+
+message StringValue {
+  string value = 1;
+}
+
+message SubError {
+  Proto.Err ret = 1;
+  string errStr = 2;
+}
+
+message SystemConfig {
+  int32 quickGame_disable = 1;
+  int32 playerMutePlayerTicket = 2;
+}
+
+message SystemConfigNtf {
+  Proto.SystemConfig cfg = 1;
+  Proto.ServerStatusUpdate status = 2;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 582;
+    Kind = 2;
+  }
+}
+
+message TakeMailAttachCMsg {
+  uint32 uid = 1;
+  string gameToken = 2;
+  repeated uint32 mailId = 3;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 567;
+    Kind = 1;
+  }
+}
+
+message TakeMailAttachSMsg {
+  Proto.Err ret = 1;
+  string errStr = 2;
+  repeated uint32 successMailId = 3;
+  Proto.ChangeInfo change = 4;
+}
+
+message ThingGet {
+  int32 id = 1;
+  int32 count = 2;
+  string str = 3;
+  int32 extraFlag = 4;
+  uint32 uuid = 5;
+  bool isNew = 6;
+}
+
+message TinyGuild {
+  repeated Proto.TinyGuildOne guildList = 1;
+}
+
+message TinyGuildOne {
+  int32 id = 1;
+  string name = 2;
+  int32 level = 3;
+  string chairman = 4;
+  int32 memberCount = 5;
+  int32 contribution = 6;
+}
+
+message TopRoomInfo {
+  int32 topRoomId = 1;
+  uint32 topRoomOwnerUid = 2;
+  string topRoomOwnerNickname = 3;
+  int64 topRoomExpireTime = 6;
+}
+
+message TournamentGameCfgCMsg {
+  uint32 uid = 1;
+  string gameToken = 2;
+  int32 action = 3;
+  int32 tourGameId = 4;
+  int32 setVal = 5;
+  uint32 targetUid = 6;
+  int32 changeType = 7;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 599;
+    Kind = 1;
+  }
+}
+
+message TournamentGameCfgOne {
+  int32 tourGameId = 1;
+  int32 oppoRankDiffType = 2;
+  int32 oppoNetType = 3;
+  repeated Proto.GameTournamentBlackListOne oppoBlackList = 4;
+  int32 todayRunCount = 5;
+  int32 maxNoConsequenceCount = 6;
+  int32 maxBlackListNum = 7;
+}
+
+message TournamentGameCfgSMsg {
+  Proto.Err ret = 1;
+  string errStr = 2;
+  Proto.TournamentGameCfgOne cfg = 3;
+  Proto.ChangeInfo change = 100;
+}
+
+message TournamentGameResultNtf {
+  Proto.RoomId roomId = 1;
+  Proto.TournamentScoreChange scoreChange = 2;
+  int32 p1WIn = 3;
+  int32 p2WIn = 4;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 1058;
+    Kind = 2;
+  }
+}
+
+message TournamentInfoChangeNtf {
+  Proto.TournamentScoreOne score = 1;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 1091;
+    Kind = 2;
+  }
+}
+
+message TournamentScoreChange {
+  Proto.TournamentScoreOne p1 = 1;
+  Proto.TournamentScoreOne p2 = 2;
+  int32 tournamentGameId = 10;
+}
+
+message TournamentScoreOne {
+  uint32 uid = 1;
+  Proto.PlayerInfoTournament info = 2;
+  int32 scoreChange = 3;
+  bool isRun = 4;
+  bool isWin = 5;
+  bool isRunNoConsequence = 6;
+  int32 noConsequenceRunCount = 7;
+}
+
+message Type {
+  string name = 1;
+  repeated google.protobuf.Field fields = 2;
+  repeated string oneofs = 3;
+  repeated google.protobuf.Option options = 4;
+  google.protobuf.SourceContext source_context = 5;
+  google.protobuf.Syntax syntax = 6;
+}
+
+message UInt32Value {
+  uint32 value = 1;
+}
+
+message UInt64Value {
+  uint64 value = 1;
+}
+
+message UninterpretedOption {
+  repeated google.protobuf.UninterpretedOption.NamePart name = 2;
+  string identifier_value = 3;
+  uint64 positive_int_value = 4;
+  int64 negative_int_value = 5;
+  double double_value = 6;
+  bytes string_value = 7;
+  string aggregate_value = 8;
+  message NamePart {
+    required string name_part = 1;
+    required bool is_extension = 2;
+  }
+}
+
+message UpdateLocalStatusCMsg {
+  uint32 uid = 1;
+  string gameToken = 2;
+  Proto.PlayerLocalStatus localStatus = 3;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 584;
+    Kind = 1;
+  }
+}
+
+message UpdateLocalStatusNtf {
+  uint32 uid = 1;
+  Proto.PlayerLocalStatus localStatus = 2;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 585;
+    Kind = 2;
+  }
+}
+
+message UploadRoomReplayCMsg {
+  uint32 uid = 1;
+  string gameToken = 2;
+  repeated Proto.ReplayPackOne packList = 3;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 1028;
+    Kind = 1;
+  }
+}
+
+message UploadRoomReplayNtf {
+  int32 packBegin = 1;
+  repeated Proto.ReplayPackOne packList = 2;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 1029;
+    Kind = 2;
+  }
+}
+
+message UploadRoomReplaySMsg {
+  Proto.Err ret = 1;
+  string errStr = 2;
+  int32 needAmendPackStart = 3;
+}
+
+message UploadRoomSnapShotCMsg {
+  uint32 uid = 1;
+  string gameToken = 2;
+  int32 snapShotFrame = 3;
+  bytes snapShotData = 4;
+  int32 uploadType = 5;
+  int32 entityId = 6;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 1030;
+    Kind = 1;
+  }
+}
+
+message UploadRoomSnapShotFailNtf {
+  Proto.SubError subErrorSnapshot = 1;
+  Proto.SubError subErrorSramMemCard = 2;
+  int32 entityId = 3;
+  uint32 uploaderUid = 4;
+  int32 snapShotFrame = 5;
+  int32 uploadType = 6;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 1094;
+  }
+}
+
+message UploadRoomSnapShotNtf {
+  uint32 uploaderUid = 1;
+  int32 snapShotFrame = 2;
+  int32 uploadType = 3;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 1031;
+  }
+}
+
+message UploadRoomSnapShotSMsg {
+  Proto.Err ret = 1;
+  string errStr = 2;
+}
+
+message UploadRoomSramMemCardCMsg {
+  uint32 uid = 1;
+  string gameToken = 2;
+  Proto.SramMemCard sramMemCard = 3;
+  int32 entityId = 4;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 1093;
+    Kind = 1;
+  }
+}
+
+message UploadRoomSramMemCardSMsg {
+  Proto.Err ret = 1;
+  string errStr = 2;
+}
+
+message UseItemCMsg {
+  uint32 uid = 1;
+  string gameToken = 2;
+  int32 itemId = 3;
+  int32 itemCount = 4;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 576;
+    Kind = 1;
+  }
+}
+
+message UseItemSMsg {
+  Proto.Err ret = 1;
+  string errStr = 2;
+  Proto.ChangeInfo change = 3;
+}
+
+message UsePaidItemCMsg {
+  uint32 uid = 1;
+  string gameToken = 2;
+  int32 useItemType = 3;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 598;
+    Kind = 1;
+  }
+}
+
+message UsePaidItemSMsg {
+  Proto.Err ret = 1;
+  string errStr = 2;
+  Proto.ChangeInfo change = 100;
+}
+
+message UserInfoCMsg {
+  uint32 uid = 1;
+  string gameToken = 2;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 514;
+    Kind = 1;
+  }
+}
+
+message UserInfoSMsg {
+  Proto.Err ret = 1;
+  string errStr = 2;
+  Proto.ResourceData res = 3;
+  Proto.GamePlayData gamePlay = 4;
+  Proto.ItemData item = 5;
+  Proto.MyVipData vip = 6;
+  Proto.PlayerAuthentication authentication = 7;
+  Proto.ChangeInfo change = 100;
+}
+
+message VipCMsg {
+  uint32 uid = 1;
+  string gameToken = 2;
+  Proto.VipOpType action = 3;
+  Proto.VipCMsg_BuyVip buyVip = 4;
+  Proto.VipCMsg_PlaceOrder placeOrder = 5;
+  Proto.VipCMsg_PayOrder payOrder = 6;
+  Proto.VipCMsg_QueryRank queryRank = 7;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 600;
+    Kind = 1;
+  }
+}
+
+message VipCMsg_BuyVip {
+  int32 levelId = 1;
+  int32 durationId = 2;
+}
+
+message VipCMsg_PayOrder {
+  Proto.eVipLevel vipLevel = 1;
+  int64 startTime = 2;
+  int64 expireTime = 3;
+  int32 duration = 4;
+  Proto.eVipPriceOpenRenewal priceType = 5;
+  Proto.eVipDayCalcType expireType = 6;
+  Proto.eVipBecomeVipAnnouncementType announcementType = 7;
+}
+
+message VipCMsg_PlaceOrder {
+  int32 levelId = 1;
+  int32 durationId = 2;
+}
+
+message VipCMsg_QueryRank {
+  int32 count = 1;
+}
+
+message VipNtf {
+  Proto.VipOpType action = 1;
+  Proto.VipNtf_BuyVip buyVip = 2;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 601;
+    Kind = 2;
+  }
+}
+
+message VipNtf_BuyVip {
+  uint32 uid = 1;
+  string nickname = 2;
+  Proto.eVipLevel level = 3;
+  int32 duration = 4;
+  Proto.eVipPriceOpenRenewal openRenewal = 5;
+}
+
+message VipSMsg {
+  Proto.Err ret = 1;
+  string errStr = 2;
+  Proto.VipOpType action = 3;
+  Proto.MyVipData vipState = 4;
+  Proto.VipSMsg_BuyVip buyVip = 5;
+  Proto.RankListSMsg queryRank = 6;
+  Proto.VipSMsg_PlaceOrder placeOrder = 7;
+  Proto.VipSMsg_PayOrder payOrder = 8;
+  Proto.ChangeInfo change = 100;
+}
+
+message VipSMsg_BuyVip {
+  Proto.eVipPriceOpenRenewal priceType = 1;
+}
+
+message VipSMsg_PayOrder {
+  Proto.eVipPriceOpenRenewal priceType = 1;
+}
+
+message VipSMsg_PlaceOrder {
+  Proto.eVipLevel VipLevel = 1;
+  int32 Duration = 2;
+  int64 StartTime = 3;
+  int64 ExpireTime = 4;
+  Proto.eVipPriceOpenRenewal PriceType = 5;
+  Proto.eVipDayCalcType DayChangeType = 6;
+  Proto.eVipBecomeVipAnnouncementType AnnouncementType = 7;
+  int32 Coupon = 8;
+  int32 CouponAdd = 9;
+  int32 CurrentVipExpired = 10;
+  Proto.eVipLevel CurrentVipLevel = 11;
+  int64 CurrentVipExpireTime = 12;
+  int64 CurrentVipLeftTime = 13;
+}
+
+message WinLossAndAchievementUploadAchievement {
+  Proto.AchievementId ach_id = 1;
+  string version_name = 2;
+  bytes ach_data = 3;
+}
+
+message WinLossAndAchievementUploadCMsg {
+  uint32 uid = 1;
+  string gameToken = 2;
+  int64 upload_time = 3;
+  Proto.WinLossAndAchievementUploadWinLoss winloss = 4;
+  Proto.WinLossAndAchievementUploadAchievement achievement = 5;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 1060;
+    Kind = 1;
+  }
+}
+
+message WinLossAndAchievementUploadWinLoss {
+  int32 result = 3;
+}
+
+message WinLossChangeNtf {
+  Proto.RoomId roomId = 1;
+  int32 p1Win = 2;
+  int32 p2Win = 3;
+  int32 p1WinInRowCount = 4;
+  int32 p2WinInRowCount = 5;
+  Proto.RingMasterGameInfo ringMasterInfo = 6;
+  enum TYPE {
+    EnumStart = 0;
+    ID = 1048;
+    Kind = 2;
+  }
+}
+
+message ZoneCfgInfo {
+  int32 consoleId = 1;
+  int32 gameId = 2;
+  int32 zoneId = 3;
+  string cfgStr = 5;
+}
+
+message ZoneId {
+  int32 consoleId = 1;
+  int32 gameId = 2;
+  int32 zoneId = 3;
+}
+
+message ZoneInfo {
+  int32 consoleId = 1;
+  int32 gameId = 2;
+  int32 zoneId = 3;
+  int32 playerNum = 4;
+}
+
+message ZonePlayerChange {
+  Proto.ChangeType ct = 1;
+  uint32 uid = 2;
+  Proto.PlayerInfoBase player = 3;
+  Proto.PlayerInfoTournament tournament = 4;
+  Proto.PlayerPermission permission = 5;
+}

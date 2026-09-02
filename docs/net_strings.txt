@@ -1,0 +1,1141 @@
+    background-image: url(:/vipInfo/vipInfo_frame/state_common.png);
+    background-image: url(:/vipInfo/vipInfo_frame/vip_entire_bg_1.png);
+    background-image: url(:/vipInfo/vipInfo_frame/vip_entire_bg_2.png);
+    background-image: url(:/vipInfo/vipInfo_frame/vip_entire_bg_3.png);
+    border-image: url(:/vipInfo/vipInfo_frame/charge_hot.png);
+    border-image: url(:/vipInfo/vipInfo_frame/refresh_hot.png);
+  border-image: url(:/vipInfo/vipInfo_frame/badge_ssvip.png);
+  border-image: url(:/vipInfo/vipInfo_frame/badge_ssvip_checked.png);
+  border-image: url(:/vipInfo/vipInfo_frame/badge_svip.png);
+  border-image: url(:/vipInfo/vipInfo_frame/badge_svip_checked.png);
+  border-image: url(:/vipInfo/vipInfo_frame/badge_vip.png);
+  border-image: url(:/vipInfo/vipInfo_frame/badge_vip_checked.png);
+  border-image: url(:/vipInfo/vipInfo_frame/buy_vip.png);
+  border-image: url(:/vipInfo/vipInfo_frame/close_window_1.png);
+  border-image: url(:/vipInfo/vipInfo_frame/close_window_2.png);
+  border-image: url(:/vipInfo/vipInfo_frame/current_vip_level_0.png);
+  border-image: url(:/vipInfo/vipInfo_frame/current_vip_level_1.png);
+  border-image: url(:/vipInfo/vipInfo_frame/current_vip_level_2.png);
+  border-image: url(:/vipInfo/vipInfo_frame/current_vip_level_3.png);
+  border-image: url(:/vipInfo/vipInfo_frame/duration_image_1.png);
+  border-image: url(:/vipInfo/vipInfo_frame/duration_image_2.png);
+  border-image: url(:/vipInfo/vipInfo_frame/duration_image_3.png);
+  border-image: url(:/vipInfo/vipInfo_frame/duration_image_4.png);
+  border-image: url(:/vipInfo/vipInfo_frame/logo_bai.png);
+  border-image: url(:/vipInfo/vipInfo_frame/logo_hei.png);
+  border-image: url(:/vipInfo/vipInfo_frame/renewal_vip.png);
+  border-image: url(:/vipInfo/vipInfo_frame/vip_duration_bg_ssvip.png) 10 10 10 10;
+  border-image: url(:/vipInfo/vipInfo_frame/vip_duration_bg_svip.png) 10 10 10 10;
+ SNAPSHOT_FRAME_LESS_THAN_CURRENT
+" is already defined (as something other than a package) in file "
+#editButton,#frame_3,#frame_4,#frame_2,#frame_5{
+#followFrame
+#frame_6{
+#frame{
+#guessDetailFrame{
+#guessMainFrame{
+#player_list_selete_frame QPushButton:disabled{
+#player_list_selete_frame QPushButton:hover{
+#player_list_selete_frame QPushButton:pressed{
+#player_list_selete_frame QPushButton{
+#slot_top_cardHeaderFrame{
+#slot_top_playerInfoFrame > QLabel{
+#slot_top_playerInfoFrame {
+%?verticalHeader@QTableView@@QBEPAVQHeaderView@@XZ
+%d AddRemoteInput frame[%d] %x
+%d _processFbaRecvData frame[%d] %x %x
+%d recvInputData frame[%d~%d]
+%d sendMyInputData frame[%d~%d]
+%s RefreshNetworkAdapterWireType
+%s ResetData, frame:%d
+%s UploadAllClear failed, data is incorrect, frame:%d slot:%d stage:%d stageIndex:%d lastStageIndex:%d score:%d time:%d combo:%d m_allClearTimeLimit:%d
+%s UploadAllClear failed, necessary conditions unreached, frame:%d slot:%d stage:%d stageIndex:%d lastStageIndex:%d isOneCoin:%d
+%s UploadAllClear only upload score failed, data is incorrect, frame:%d slot:%d stage:%d stageIndex:%d lastStageIndex:%d score:%d combo:%d
+%s UploadAllClear only upload score, frame:%d slot:%d difficulty:%s isCooperateEntire:%d charId:%d stage:%d stageIndex:%d lastStageIndex:%d score:%d combo:%d
+%s UploadAllClear, frame:%d slot:%d difficulty:%s isCooperateEntire:%d isOneLife:%d charId:%d stage:%d stageIndex:%d lastStageIndex:%d score:%d time:%d combo:%d
+%s UploadOnlyScore failed, data is incorrect, frame:%d slot:%d stage:%d score:%d combo:%d
+%s UploadOnlyScore, frame:%d slot:%d difficulty:%s isCooperateEntire:%d charId:%d stage:%d score:%d combo:%d
+%s UploadSingleStage failed, data is incorrect, frame:%d slot:%d stage:%d stageIndex:%d lastStageIndex:%d score:%d time:%d combo:%d
+%s UploadSingleStage failed, necessary conditions unreached, frame:%d slot:%d stage:%d stageIndex:%d lastStageIndex:%d isOneCoin:%d stageStartTime:%d
+%s UploadSingleStage, frame:%d slot:%d difficulty:%s isCooperate:%d charId:%d stage:%d stageIndex:%d lastStageIndex:%d score:%d time:%d combo:%d
+%s combo changed %d|%d, frame:%d slot:%d stage:%d
+%s game over, frame:%d slot:%d stage:%d
+%s has cheat, frame:%d slot:%d stage:%d lastFrameTry2EndEmulator:%d
+%s is cooperate mode entirely, frame:%d slot:%d stage:%d
+%s is cooperate mode stage %d, frame:%d slot:%d
+%s life decreased %d|%d, frame:%d slot:%d stage:%d isOneLife:%d
+%s life increased %d|%d, frame:%d slot:%d stage:%d isOneLife:%d
+%s lives use up, frame:%d slot:%d stage:%d isOneCoin:%d
+%s midway join, frame:%d slot:%d stage:%d stageStartTime:%d scoreByLastPlayer:%d
+%s opening, frame:%d slot:%d charId:%d
+%s stage all clear, prepare to upload data, frame:%d slot:%d stage:%d|%d passTimes:%d
+%s stage clear, prepare to upload data, frame:%d slot:%d stage:%d|%d passTimes:%d
+%s xzAchievementSyncTime::Unpack failed, data.size() < sizeof(s32) * max_round_, %d|%d
+%s xzAchievementSyncTime::Unpack failed, round_ is null
+%s xzAchievementSyncTime::Unpack round[%d]:%u
+%s xzAchievementSyncTime::Unpack succeed, max_round_:%d
+%s: Data buffer too small to hold strip %lu
+%s: Data buffer too small to hold tile %ld
+%s: No space for SGILog translation buffer
+%s: No space for data buffer at scanline %ld
+&PREDICTION_JOIN_WAR_NET_CANNOT_BE_ZERO
+'package.%s' must be a string
+'package.loaders' must be a table
+'package.preload' must be a table
+.?AU?$P@V?$TSingleton@VCNetDisk@@@@@CSingletonMgr@@
+.?AU?$P@V?$TSingleton@VVip_Info_Frame_Xml@@@@@CSingletonMgr@@
+.?AV?$TSingleton@VCNetDisk@@@@
+.?AV?$TSingleton@VVip_Info_Frame_Xml@@@@
+.?AV?$_Packaged_state@$$A6AXXZ@std@@
+.?AVAfterOpenBattleWindowCompletePairModeNetMode@xzLogicMsg_Window@@
+.?AVBeforeCloseBattleWindowInPairModeNetMode@xzLogicMsg_Window@@
+.?AVBeforeDestroyNetMode@xzLogicMsg_GamePairMode@@
+.?AVBeforeDestroyNetModePrepare@xzLogicMsg_GamePairMode@@
+.?AVCEmuNetPlay@GAMECLIENT@@
+.?AVCNetDisk@@
+.?AVCNetPlay@GAMECLIENT@@
+.?AVCNetWorkForward@NetworkSystem@@
+.?AVCNetWorkTcp@NetworkSystem@@
+.?AVCNetWorkTcpBase@NetworkSystem@@
+.?AVCP2PRecieve@NetworkSystem@@
+.?AVCRaknetListener@@
+.?AVConnectPlayerRequestSendToServer@xzLogicMsg_GamePairMode@@
+.?AVData2Fba@CEmuNetPlay@GAMECLIENT@@
+.?AVData2Fba_AutofireDelay@CEmuNetPlay@GAMECLIENT@@
+.?AVData2Fba_AutofireState@CEmuNetPlay@GAMECLIENT@@
+.?AVDestroyNetMode@xzLogicMsg_GamePairMode@@
+.?AVDestroyNetModePrepare@xzLogicMsg_GamePairMode@@
+.?AVEUpdateReplayFrame@@
+.?AVINetworkListener@NetworkSystem@@
+.?AVLeaveRoomSendToServer@xzLogicMsg_Lobby@@
+.?AVMyEvent_CabinetChanged@@
+.?AVMyEvent_ChatRecv@@
+.?AVMyEvent_RoomListVipAckSuccess@@
+.?AVNetModeOpenBattleWindowRequest@xzLogicMsg_GamePairMode@@
+.?AVNetModePrepareComplete@xzUIMsg_GamePairMode@@
+.?AVNetModePrepareEmulatorWaitTargetOvertime@xzLogicMsg_GamePairMode@@
+.?AVNetModePrepareOvertime@xzLogicMsg_GamePairMode@@
+.?AVNetModePrepareTargetLeave@xzLogicMsg_GamePairMode@@
+.?AVNetModeShowTimeEnd@xzLogicMsg_GamePairMode@@
+.?AVNetPlayingInfo@Proto@@
+.?AVNetPlayingInfoCMsg@Proto@@
+.?AVNetPlayingInfoNtf@Proto@@
+.?AVNetPlayingInfoReq@@
+.?AVNetworkAdapterWireTypeNtf@Proto@@
+.?AVNetworkAdapterWireTypeQueryAck@Proto@@
+.?AVNetworkAdapterWireTypeQueryReq@Proto@@
+.?AVNetworkAdapterWireTypeReq@Proto@@
+.?AVPlayerCardShowOvertime_GamePairModeNetMode@xzUIMsg_Battle@@
+.?AVProtobufGiftOnGiveGiftUpdateSender@Proto@@
+.?AVProtobufGuildLevelUpAck@Proto@@
+.?AVProtobufIMAddGroupAck@Proto@@
+.?AVProtobufIMMoveToGroupAck@Proto@@
+.?AVProtobufIMRemoveFromGroupAck@Proto@@
+.?AVProtobufIMRemoveGroupAck@Proto@@
+.?AVProtobufIMRenameGroupAck@Proto@@
+.?AVProtobufRaknetId@Proto@@
+.?AVProtobufRaknetIdListNtf@Proto@@
+.?AVProtobufRaknetIdNtf@Proto@@
+.?AVProtobufVipBecomeVipAck@Proto@@
+.?AVProtobufVipBecomeVipAckPart@Proto@@
+.?AVProtobufVipL2UOldBecomeVipAck@Proto@@
+.?AVProtobufVipModifyVipAck@Proto@@
+.?AVQBattle_Key_Lianfa_Frame@@
+.?AVQBattle_Player_List_Frame@@
+.?AVQBattle_Player_List_Frame_Et@@
+.?AVQBattle_Player_List_Frame_Et_Item@@
+.?AVQFrame@@
+.?AVQFriendChatFrame@@
+.?AVQHallLeftFrameButton@@
+.?AVQHallSeleteGameLeftFrameButton@@
+.?AVQHallYouXiYinDaoFrame@@
+.?AVQHall_Create_Room_Frame@@
+.?AVQHall_Create_User_Room_Frame@@
+.?AVQHall_Form_ChaZhao_Room_Frame@@
+.?AVQHall_Help_Frame@@
+.?AVQHall_Pair_Frame@@
+.?AVQHall_User_Define_Frame@@
+.?AVQHall_User_Define_Frame_Game_Item@@
+.?AVQIm_GoodFriend_Form_Item_Frame@@
+.?AVQIm_GoodFriend_Form_Item_Frame_Item@@
+.?AVQPlayer_List_Frame@@
+.?AVQShader_Frame@@
+.?AVReplayDataAck@xzLogicMsg_EmuNet@@
+.?AVReplayDataNtf@xzLogicMsg_EmuNet@@
+.?AVReplayDataRequest@xzLogicMsg_EmuNet@@
+.?AVReplayHeadNet@Proto@@
+.?AVReplayPackOne@Proto@@
+.?AVSaveDataRequest@xzLogicMsg_EmuNet@@
+.?AVSendHornResult@Prop@@
+.?AVShowNetModePrepareStart@xzLogicMsg_GamePairMode@@
+.?AVShowNetModeStart@xzLogicMsg_GamePairMode@@
+.?AVSingleModeStartSendToServer@xzLogicMsg_GamePairMode@@
+.?AVStartNetMode@xzLogicMsg_GamePairMode@@
+.?AVStartNetModePrepare@xzLogicMsg_GamePairMode@@
+.?AVThreadEntity_SendHorn@Prop@@
+.?AVUpdateNetModePrepareTime@xzUIMsg_GamePairMode@@
+.?AVUpdateUserInfoInNetModePrepareStart@xzUIMsg_GamePairMode@@
+.?AVVip_BecomeVipAck@Proto@@
+.?AVVip_Info_Frame_Xml@@
+.?AVxzCChessMoneySendThread@@
+.?AVxzCGiftSystemSendThread@@
+.?AVxzCLogicModuleEmuNet@@
+.?AVxzCModelCabinetBaseInfo@@
+.?AVxzPairModeNetModePart@@
+.?AVxzPairModeNetModePreparePart@@
+.?AVxzReqDataToNetController@@
+.?AVxzTTextColor_CabinetUI@@
+.Proto.NetPlayingInfo"(
+.Proto.NetPlayingInfoNtf
+.Proto.ReplayHeadNet
+.Proto.ReplayPackOne
+.Proto.ReplayPackOne"(
+/ACHIEVEMENT_UPLOAD_ESCAPE_FAILED_REPEATED_FRAME
+1OnClick_Hall_Left_Frame(int)
+1OnClick_Hall_Selete_Game_Frame(int)
+1OnClick_SendFace()
+1OnSendMsg()
+1onClickPlayerListFrame()
+1onFilterScanlineToggle(bool)
+1onFromNetdisk()
+1onNetTurnLeft()
+1onNetTurnRight()
+1onRecv()
+1onRecvAll()
+1onSendGift()
+1onSendSms()
+1onSetNet()
+1onShowGiftFrame0()
+1onShowGiftFrame1()
+1onShowGiftFrame2()
+1onShowGiftFrame3()
+1onTripleBufferToggled(bool)
+2 -close_window_sended_ =true
+2frameChanged(int)
+3 -close_window_sended_ =true
+4 -close_window_sended_ =true
+5 -close_window_sended_ =true
+8LDNEt
+:/hall_left_frame/hall_left_frame/tab_effect.png
+<Dont send your secret key to anyone>
+??0QFrame@@QAE@PAVQWidget@@V?$QFlags@W4WindowType@Qt@@@@@Z
+??1QFrame@@UAE@XZ
+?changeEvent@QFrame@@MAEXPAVQEvent@@@Z
+?event@QFrame@@MAE_NPAVQEvent@@@Z
+?frameGeometry@QWidget@@QBE?AVQRect@@XZ
+?frameWidth@QFrame@@QBEHXZ
+?header@QTreeView@@QBEPAVQHeaderView@@XZ
+?headerItem@QTreeWidget@@QBEPAVQTreeWidgetItem@@XZ
+?horizontalHeader@QTableView@@QBEPAVQHeaderView@@XZ
+?horizontalHeaderItem@QTableWidget@@QBEPAVQTableWidgetItem@@H@Z
+?metaObject@QFrame@@UBEPBUQMetaObject@@XZ
+?paintEvent@QFrame@@MAEXPAVQPaintEvent@@@Z
+?qt_metacall@QFrame@@UAEHW4Call@QMetaObject@@HPAPAX@Z
+?qt_metacast@QFrame@@UAEPAXPBD@Z
+?sendEvent@QCoreApplication@@SA_NPAVQObject@@PAVQEvent@@@Z
+?sender@QObject@@IBEPAV1@XZ
+?setDefaultSectionSize@QHeaderView@@QAEXH@Z
+?setFrameShadow@QFrame@@QAEXW4Shadow@1@@Z
+?setFrameShape@QFrame@@QAEXW4Shape@1@@Z
+?setHeaderItem@QTreeWidget@@QAEXPAVQTreeWidgetItem@@@Z
+?setHighlightSections@QHeaderView@@QAEX_N@Z
+?setHorizontalHeaderItem@QTableWidget@@QAEXHPAVQTableWidgetItem@@@Z
+?setLineWidth@QFrame@@QAEXH@Z
+?setMidLineWidth@QFrame@@QAEXH@Z
+?setStretchLastSection@QHeaderView@@QAEX_N@Z
+?setVerticalHeaderItem@QTableWidget@@QAEXHPAVQTableWidgetItem@@@Z
+@ ?sizeHint@QFrame@@UBE?AVQSize@@XZ
+AchievementEscapeUploadReq achId:%d versionName:%s frame:%d
+AddObserverInput frame:%d forceAdd:%d IsFirstSlot:%d useNetKey:%d
+AddObserverInput frame:%d forceAdd:%d before m_observerFbaInput:%d backFrame:%d input:0x%04x 0x%04x 0x%04x 0x%04x
+AddObserverInput frame:%d forceAdd:%d before m_observerFbaInput:%d backFrame:%d input:0x%08x 0x%08x 0x%08x 0x%08x
+AddOneOb 2 frame:%d size:%d first:%d last:%d
+AddRemoteInput %d front:%d, frame:%d
+AddRemoteInput slot:%d offset < 0 endframe:%d dataFba.frameStart:%d
+BPREDICTION_DEDUCT_OUQI_FAILED_FOR_DATA_PROCESS_REQUEST_PACK_FAILED
+Battle_Key_Lianfa_Frame
+Battle_Player_List_Frame
+Bogus buffer control mode
+Buffer error in compressed datastream in %s chunk
+Buffer passed to JPEG library is too small
+Byte size calculation and serialization were inconsistent.  This may indicate a bug in protocol buffers or it may be caused by concurrent modification of 
+CEmuNetPlay
+CEmuNetPlay LoadBack
+CEmuNetPlay ResetEmu
+CEmuNetPlay SaveBack
+CEmuNetPlay::FbaAfterModifyInput prepare_to_end_emulator2_=true reason:%d [
+CEmuNetPlay::FbaAfterModifyInput prepare_to_end_emulator_=true reason:%d [
+CEmuNetPlay::Instance().SetPrepareToEndEmulator
+CEmuNetPlay::ResetPrepareToEndEmulator2 [
+CEmuNetPlay::SetPrepareToEndEmulator prepare_to_end_emulator_=%d [
+CEmuNetPlay::Wait2GetThisFrameInput prepare_to_end_emulator2_=true reason:%d [
+CEmuNetPlay::Wait2GetThisFrameInput prepare_to_end_emulator_=true reason:%d [
+CEmuNetPlay::Wait2GetThisFrameObInput prepare_to_end_emulator2_=true reason:%d [
+CEmuNetPlay::Wait2GetThisFrameObInput prepare_to_end_emulator_=true reason:%d [
+CEmuNetPlay::afterLoad m_pSharedData->emu_end=%d
+CEmuNetPlay::emuStart para == FBA_STATE_ENTER_CIRCLE
+CEmuNetPlay::emuStart para == FBA_STATE_INIT_AUTOFIRE_CONFIG
+CEmuNetPlay::emuStart para == FBA_STATE_INIT_BEGIN
+CEmuNetPlay::emuStart para == FBA_STATE_INIT_BURNER_LOAD_ROM_BEGIN
+CEmuNetPlay::emuStart para == FBA_STATE_INIT_BURNER_LOAD_ROM_END
+CEmuNetPlay::emuStart para == FBA_STATE_INIT_BURN_LOAD_ROM_BEGIN
+CEmuNetPlay::emuStart para == FBA_STATE_INIT_BURN_LOAD_ROM_END
+CEmuNetPlay::emuStart para == FBA_STATE_INIT_BurnDriver_INIT_BEGIN
+CEmuNetPlay::emuStart para == FBA_STATE_INIT_BurnDriver_INIT_END
+CEmuNetPlay::emuStart para == FBA_STATE_INIT_END
+CEmuNetPlay::emuStart para == FBA_STATE_INIT_FIRST_LOAD_BEGIN
+CEmuNetPlay::emuStart para == FBA_STATE_INIT_FIRST_LOAD_END
+CEmuNetPlay::emuStart para == FBA_STATE_INIT_GBA_INIT_BEGIN
+CEmuNetPlay::emuStart para == FBA_STATE_INIT_INPUT_INIT_BEGIN
+CEmuNetPlay::emuStart para == FBA_STATE_INIT_INPUT_INIT_END
+CEmuNetPlay::emuStart para == FBA_STATE_INIT_MEDIA_INIT_BEGIN
+CEmuNetPlay::emuStart para == FBA_STATE_INIT_MEDIA_INIT_END
+CEmuNetPlay::emuStart para == FBA_STATE_INIT_PROCESS_CMDLINE_BEGIN
+CEmuNetPlay::emuStart para == FBA_STATE_INIT_PROCESS_CMDLINE_END
+CEmuNetPlay::emuStart para == FBA_STATE_INIT_PS_DLL_LOAD_END
+CEmuNetPlay::emuStart para == FBA_STATE_SOME_FRAME_HAS_BEEN_EMULATED
+CEmuNetPlay::init game_index %d unhandled
+CEmuNetPlay::init prepare_to_end_emulator_=%d
+CEmulation::InitInstance call emunetplay init
+CGameLogic::OnEmuFollowGamePlayAck send event ModuleGEvent_UI_ClickEnterZone console:%d game:%d zone:%d autoSelect:%d
+CGameLogic::OnEmuMidwayJoinNtf uid:%d inputStatus:%d netStatus:%d
+CGameLogic::OnGiftNtf call UpdateSlot_PresentGift uidSend:%d slot:%d
+CGameLogic::OnHeartBeat received:%d lastSendTime:%d lastReceiveTime:%d
+CGameLogic::OnThreadNotify after connect succeed send msg to server for verify send failed status set to eReconnectStatus::ENUM_RECON_FAILED[
+CGameLogic::OnThreadNotify after connect succeed send msg to server for verify send succeed status set to eReconnectStatus::ENUM_RECON_WAITING[
+CGameLogic::OnVipAck errorCode:%d rspType:%d
+CGameLogic::ReconnectServerReq as heart beat not received force set to lastHeartbeatRecvTime == nowTime:%d [
+CGameLogic::ReconnectServerReq as tcp send failed current reconect status:%d [
+CGameLogic::ReconnectServerReq as tcp send failed current reconect status:eReconnectStatus::ENUM_RECON_BEGIN [
+CGameLogic::ReconnectServerReq as tcp send failed current reconect status:eReconnectStatus::ENUM_RECON_FAILED [
+CGameLogic::ReconnectServerReq as tcp send failed current reconect status:eReconnectStatus::ENUM_RECON_NORMAL [
+CGameLogic::ReconnectServerReq as tcp send failed current reconect status:eReconnectStatus::ENUM_RECON_NO_MORE [
+CGameLogic::ReconnectServerReq as tcp send failed current reconect status:eReconnectStatus::ENUM_RECON_SERVER_DISCONNECT [
+CGameLogic::ReconnectServerReq as tcp send failed current reconect status:eReconnectStatus::ENUM_RECON_WAITING [
+CGameLogic::ReconnectServerReq as tcp send failed force set to lastHeartbeatRecvTime == nowTime:%d [
+CGameLogic::ReconnectServerReq as tcp send failed status set to eReconnectStatus::ENUM_RECON_BEGIN [
+CGameLogic::ReconnectServerReq as tcp send failed status set to eReconnectStatus::ENUM_RECON_NORMAL [
+CGameLogic::SendChatMsgReq 
+CGameLogic::SendHeartBeat failed:%d lastSendTime:%d lastReceiveTime:%d
+CGameLogic::SendHeartBeat succeed:%d lastSendTime:%d lastReceiveTime:%d
+CGameLogic::SendMsgAfterFirstConnectServer 
+CHECK failed: (buffer_size) >= (0): 
+CHECK failed: (count) <= (buffer_used_): 
+CHECK failed: (n) <= (std::numeric_limits<size_t>::max() - kHeaderSize): 
+CHECK failed: (new_size) <= ((std::numeric_limits<size_t>::max() - kRepHeaderSize) / sizeof(old_rep->elements[0])): 
+CHECK failed: backup_bytes_ == 0 && buffer_.get() != NULL: 
+CLoginConnect::RunUpdateCycle case SEND_MSG_PROTOSUB_IM_FIRSTONLINE 
+CLoginConnect::RunUpdateCycle case SEND_MSG_PROTOSUB_LS_LOGIN_PLUS2 
+CNetWorkForward Socket block
+CNetWorkForward Socket closed
+CNetWorkForward Socket failed
+CPingMgr::BeginReconnect after connect succeed send msg to server for verify send failed status set to eReconnectStatus::ENUM_RECON_FAILED[
+CPingMgr::BeginReconnect after connect succeed send msg to server for verify send succeed status set to eReconnectStatus::ENUM_RECON_WAITING[
+CPingMgr::BeginReconnect call CNetWorkTcp::Instance().ConnectServerAsyn failed status set to eReconnectStatus::ENUM_RECON_FAILED[
+CPingMgr::BeginReconnect call CNetWorkTcp::Instance().ConnectServerAsyn succeed and than send msg to server for verify[
+CRaknetListener::OnConnectSuccess
+CSound::PauseEmuSound force:%d m_bIsSoundPlay:%d IsInNewZone SendEvent to module
+CSound::ResumeEmuSound force:%d m_isEnable:%d m_bIsSoundPlay:%d IsInNewZone SendEvent to module
+CWebbrowserCtrl::ThreadFunction send data failed, hwnd is nullptr, mainType:%d
+CWebbrowserCtrl::ThreadFunction send data failed, m_webProcessId is 0
+CWebbrowserCtrl::ThreadFunction send data failed, mainType:%d timeElapse:%lld lastError:%d
+CWebbrowserCtrl::ThreadFunction send data succeed, mainType:%d timeElapse:%lld
+Cannot allocate buffer larger than kint32max for 
+Cannot allocate file buffer
+Cannot read TIFF header
+CheckNetKeyMode begin mode:%d
+CheckNetKeyMode end mode:%d
+CheckNetplay num:%d slot:%d m_isNetPlay:%d
+CheckSendChatInvalid fail %s
+CheckSendChatInvalid failed %s
+CheckSendChatVip failed %s %d
+CheckSendLeaveRoom leave room req had been sender before [
+CheckSendLeaveRoom leave room req send to server [
+CloseRoomCheckCriticalState close window command had been sended [
+CloseRoomCheckCriticalState close window command had been sended but is offline [
+CompressAndUploadSnapShot frame:%d rawLength:%d compressedLength:%d
+ConnectP2pServer MyRakNetGUID = %s ip:%s
+Copyright (c) 1998 Hewlett-Packard Company
+CreateInternalPacketFromBitStream failed
+DataG::PackSettingDataBeforeStartGame end
+DataG::PackSettingDataBeforeStartGame pack to json failed, base64 encode failed
+DataG::PackSettingDataBeforeStartGame pack to json failed, protobuf to json failed, errId:%d
+DataG::PackSettingDataBeforeStartGame pack to json failed, protobuf to json failed, errId:%d errStr:%s
+DataG::PackSettingDataBeforeStartGame pack to json failed, serialized string is empty
+DataG::PackSettingDataBeforeStartGame pack to protobuf failed, base64 encode failed
+DataG::PackSettingDataBeforeStartGame pack to protobuf failed, serialized string is empty
+DataG::PackSettingDataBeforeStartGame start
+DataG_Battle::OnEmulatorEnd m_gameMode:GAME_MODE_PAIR_MODE_NET_MODE is in warm up mode, this is the end
+DataG_Battle::OnEmulatorEnd m_gameMode:GAME_MODE_PAIR_MODE_NET_MODE net mode entered, do nothing
+DataG_Battle::PackData fail, packed json data is empty
+DataG_Battle::PackData fail, protobuf to json failed, errId:%d
+DataG_Battle::PackData fail, protobuf to json failed, errId:%d errStr:%s
+DataG_Battle::PackData fail, serialized protobuf data is empty
+DeletePredictInput type:%d frame:%d
+DisonnectP2pServer MyRakNetGUID = %s
+Error writing TIFF header
+Error: frame not present in MNG file
+Event_UpdateReplayFrame
+FaxRecvParams
+FaxRecvTime
+Field numbers $0 through $1 are reserved for the protocol buffer library implementation.
+FlushFileBuffers
+FlushProcessWriteBuffers
+FrameStartCallBack 0 emuframe:%d firstFrame:%d clock:%d lastClock:%d
+FrameStartCallBack 1 frame:%d flag:%d netplay:%d ob:%d mode:%d
+Framenr out of bounds
+FriendChatFrame
+GPEC_UPLOAD_SRAM_MEMCARD callback received, currentFrame:%d card1Len:%d card2Len:%d
+GameGMain::OnFbaInitStateCallBack nType == FBA_STATE_SOME_FRAME_HAS_BEEN_EMULATED
+GetCurrentPackageId
+GetEnhMetaFileHeader
+GetNetInput 
+GetNetInput from input4NetBuff->input[i] m_pSharedData->isForwardMakeup == 1, controls=0x%.4x
+GetNetInput from input4NetBuff->input[i] m_pSharedData->isForwardMakeup == 2, controls=0x%.4x
+GetNetInput from m_lastInput, controls=0x%.4x
+GetNetInput from m_pairedFbaInput.front()->input[i], controls=0x%.4x
+GetNewestMatchFrame temp_pairedFbaInput4NetbuffPredict[i]->frame != m_pairedFbaInput[offset + i]->frame
+GetTotalPacketsReceived
+GetTotalPacketsSent
+GoTcpSend
+HallYouXiYinDaoFrame
+Hall_Create_Room_Frame
+Hall_Create_User_Room_Frame
+Hall_Form_ChaZhao_Room_Frame
+Hall_Help_Frame
+Hall_Pair_Frame
+Hall_User_Define_Frame
+Hall_User_Define_Frame_Game_Item
+Incorrect Exif header
+Internal buffer for JPEG processing too small
+Internal buffer-overflow
+InternetCloseHandle
+InternetOpenUrlW
+InternetOpenW
+InternetReadFile
+InternetSetOptionW
+JobObjectOnProcessEnd is not web process processId=%x
+JobObjectOnProcessEnd is web process processId=%x
+JobObjectOnProcessEnd processId=0
+MakeSaveData2Send para:%d m_netKeyMode:%d
+Maximum directory nesting exceeded (corrupt exif header)
+MidwayJoinGameReq failed because of emu.m_pSdata->emu_frame <= 15
+MyEntertainment::OnPresentGift2PlayerNtf GetPlayerById sender not found, uid:%d
+MyEntertainment::OnPresentGift2PlayerNtfOld GetPlayerById sender not found, uid:%d
+MyEntertainment::OnPresentGift2PlayerUpdateSenderOrReceiverNtfOld GetPlayerById not found, uid:%d
+MyEntertainment::OnPresentGift2PlayerUpdateSenderOrReceiverNtfOld is myself
+MyEntertainment::OnPresentGift2PlayerUpdateSenderOrReceiverNtfOld is not myself, uid:%d
+MyLobby::OnQueryZonePlayerListAck failed, data lost, dataLen:%d pack:%d|%d playerCount:%d|%d
+MyLobby::OnQueryZonePlayerListAck failed, err:%d errStr:%s dataLen:%d pack:%d|%d playerCount:%d|%d
+MyLobby::OnQueryZonePlayerListAck succeed, all data received, dataLen:%d pack:%d|%d playerCount:%d|%d
+MyLobby::OnQueryZonePlayerListAck succeed, dataLen:%d pack:%d|%d playerCount:%d|%d
+MyLobby::OnReconnectSucceed close window sended force set to false
+NETAPI32.dll
+NULL row buffer for row %ld, pass %d
+NetPlayingInfo
+NetPlayingInfoCMsg
+NetPlayingInfoNtf
+NetWorkStartSuccess
+Netbios
+Netease
+NewTotalPacketsReceived
+NewTotalPacketsSent
+No MNG header (MHDR) found
+No space for raster buffer
+No space for strip buffer
+No space for tile buffer
+No valid header-chunk
+Non-primitive types can't be packed.
+Not a TIFF file, bad magic number %d (0x%x)
+OnCheckEmuSum frame:%d checkSum:%d
+OnClickCloseBattleWindow close window command set to sended [
+OnClickCloseBattleWindow emulation had been ended and local state is in room, call CheckSendLeaveRoom [
+OnClickCloseBattleWindow emulation is inited and active but emulator end command had been sended [
+OnClick_Hall_Left_Frame
+OnClick_Hall_Selete_Game_Frame
+OnClick_SendFace
+OnEmuGameEndAckProcessCloseRoomCourse emulation had been ended and local state is in room, call CheckSendLeaveRoom [
+OnEmuGameEndNtfProcessCloseRoomCourse emulation had been ended before and local state is in room, call CheckSendLeaveRoom [
+OnEmuGameEndNtfProcessCloseRoomCourse emulation is inited and active but emulator end command had been sended [
+OnEmulatorStopedOld emulation had been ended before and local state is in room, call CheckSendLeaveRoom [
+OnEnterRoomAck normal mode is not on seat, do not query network adapter wire type
+OnEnterRoomAck pair mode net mode
+OnEnterRoomAck pair mode net mode is not on seat, do not query network adapter wire type
+OnEnterRoomSMsg is not on seat, do not query network adapter wire type
+OnLeaveRoomAckProcessCloseRoomCourse emulation had been ended and local state is in room, call CheckSendLeaveRoom [
+OnLeaveRoomAckProcessCloseRoomCourse emulation is inited and active but emulator end command had been sended [
+OnLeaveRoomNtfProcessCloseRoomCourse is myself emulation is inited and active but emulator end command had been sended [
+OnLeaveRoomNtfRoomEmptyProcessCloseRoomCourse is not myself but room is empty uid:%d reason:%d emulation is inited and active but emulator end command had been sended [
+OnLeaveRoomNtfRoomEmptyProcessCloseRoomCourse is not myself but room is empty uid:%d reason:%d, call CheckSendLeaveRoom [
+OnLogInVipAck
+OnModuleEventSendFirstMsgToGateServer 
+OnProssPacket isDuplicate wSubCmd:0x%04x wLen:%d %d->%d
+OnReplayDataAck packBegin:%d packNum:%d allPackNum:%d
+OnReplyPauseBroadcast frame:%d
+OnSendChatMsgAck err = %x %s
+OnSendEmuSave err = %x %s
+OnSendMsg
+OnServerInOutPackUseProtobuf has dynamic authentication uid:%d authCount:%d
+OnServerInOutPackUseProtobuf has no authentication param uid:%d
+OnServerInOutPackUseProtobuf has static authentication uid:%d
+OnThreadEnd_QueryPresentGiftAuthencation unpack error %d
+P2pOnProcessSyncFrameEmu guid = %s ID_EVENT_DATA length = %d
+PCX_UnpackPixels: Can't handle packed pixels with more than 1 plane
+PackBits
+PackBitsDecode: Not enough data for scanline %ld
+PackBitsDecode: discarding %d bytes to avoid buffer overrun
+Player_List_Frame
+ProcessDuplicateRecievedPacket checkPacketSum:%d
+ProcessDuplicateRecievedPacket is duplicate i:%d
+ProcessDuplicateRecievedPacket not found
+Proto.NetPlayingInfoCMsg.gameToken
+Proto.NetworkAdapterWireTypeNtf
+Proto.NetworkAdapterWireTypeQueryAck
+Proto.NetworkAdapterWireTypeQueryReq
+Proto.NetworkAdapterWireTypeReq
+Proto.PresentGift2PlayerCMsg.senderNickname
+Proto.PresentGift2PlayerCMsgCopy.senderNickname
+Proto.PresentGift2PlayerLobby2Vip.senderNickname
+Proto.PresentGift2PlayerOldCMsg.sender_nickname
+Proto.ProtobufGiftOnGiveGiftUpdateSender
+Proto.ProtobufGiftOnGiveGiftUpdateSender.nickname
+Proto.ProtobufGuildLevelUpAck
+Proto.ProtobufIMAddGroupAck
+Proto.ProtobufIMAddGroupAck.err_str
+Proto.ProtobufIMAddGroupAck.group_name
+Proto.ProtobufIMAddGroupAck.group_title
+Proto.ProtobufIMMoveToGroupAck
+Proto.ProtobufIMMoveToGroupAck.err_str
+Proto.ProtobufIMMoveToGroupAck.group_name
+Proto.ProtobufIMRemoveFromGroupAck
+Proto.ProtobufIMRemoveFromGroupAck.err_str
+Proto.ProtobufIMRemoveFromGroupAck.group_name
+Proto.ProtobufIMRemoveGroupAck
+Proto.ProtobufIMRemoveGroupAck.err_str
+Proto.ProtobufIMRemoveGroupAck.group_name
+Proto.ProtobufIMRenameGroupAck
+Proto.ProtobufIMRenameGroupAck.err_str
+Proto.ProtobufIMRenameGroupAck.group_name
+Proto.ProtobufIMRenameGroupAck.group_title
+Proto.ProtobufRaknetId
+Proto.ProtobufRaknetIdListNtf
+Proto.ProtobufRaknetIdNtf
+Proto.ProtobufVipBecomeVipAck
+Proto.ProtobufVipBecomeVipAck.err_str
+Proto.ProtobufVipBecomeVipAckPart
+Proto.ProtobufVipL2UOldBecomeVipAck
+Proto.ProtobufVipL2UOldBecomeVipAck.text
+Proto.ProtobufVipModifyVipAck
+Proto.ProtobufVipModifyVipAck.err_str
+Proto.Vip_BecomeVipAck
+Protocol Buffer map usage error:
+Protocol Buffer reflection usage error:
+QBattle::OnPlayerChangeSlotNtf_InnerExchange uid:%d slot:%d oldSlot:%d playerSlot:%d inputStatus:%d netStatus:%d
+QBattle::OnPlayerLocalStatusNtf mainType == 0, uid:%d slot:%d inputStatus:%d netStatus:%d
+QBattle::OnPlayerLocalStatusNtf mainType == 2, uid:%d slot:%d netStatus:%d
+QBattle::OnPlayerMidWayJoinNtf uid:%d slot:%d inputStatus:%d netStatus:%d
+QBattle::init process player card data, uid:%d slot:%d inputStatus:%d netStatus:%d
+QBattle::initSlots GAME_MODE_PAIR_MODE_NET_MODE
+QBattle::startEmuG SendEvent ModuleGEvent_StartEmulatorTemp end
+QBattle::startEmuG SendEvent ModuleGEvent_StartEmulatorTemp start
+QBattle_Key_Lianfa_Frame
+QBattle_Player_List_Frame
+QBattle_Player_List_Frame_Et
+QBattle_Player_List_Frame_Et_Item
+QFrame#Im_GoodFriend_Chat_Form_Item_background:hover[color= "false"]{
+QFrame#Im_GoodFriend_Chat_Form_Item_background:hover[color= "true"]{
+QFrame#Im_GoodFriend_Chat_Form_Item_background:pressed[color = "false"]{
+QFrame#Im_GoodFriend_Chat_Form_Item_background:pressed[color = "true"]{
+QFrame#Im_GoodFriend_Chat_Form_Item_background[color = "false"]{
+QFrame#Im_GoodFriend_Chat_Form_Item_background[color = "true"]{
+QFrame#achievePageGameListVLayout_frame{
+QFrame#anim_frame{
+QFrame#background{
+QFrame#chat_player_background{
+QFrame#chat_player_land_1, #chat_player_land_2, #chat_player_land_3{
+QFrame#chat_top_background{
+QFrame#cheat_save_frame{
+QFrame#close_background{
+QFrame#dlg_background{
+QFrame#down_frame{
+QFrame#download_frame{
+QFrame#et_background_frame{
+QFrame#fc{
+QFrame#frame_backGround[background = "0"]{
+QFrame#frame_backGround[background = "10001"]{
+QFrame#frame_backGround[background = "10002"]{
+QFrame#frame_backGround[background = "10003"]{
+QFrame#frame_backGround[background = "10004"]{
+QFrame#frame_backGround[background = "10005"]{
+QFrame#frame_backGround{
+QFrame#game_background{
+QFrame#gif_avatar_background{
+QFrame#hall_main_lobby_the_player_background{
+QFrame#hall_main_lobby_the_room_player_background[Color = "0"]{
+QFrame#hall_main_lobby_the_room_player_background[Color = "1"]{
+QFrame#hall_main_lobby_the_room_player_background[Color = "2"]{
+QFrame#hall_main_lobby_the_room_player_background[Color = "3"]{
+QFrame#hall_main_lobby_the_room_player_nameorvip,#hall_main_lobby_the_room_player_nameorvip_2{
+QFrame#hall_main_lobby_the_room_player_text_background{
+QFrame#hall_main_lobby_the_room_player_tilte_2{
+QFrame#hall_main_lobby_the_room_player_tilte{
+QFrame#hall_main_lobby_the_tubiao_background_1,#hall_main_lobby_the_tubiao_background_2,#hall_main_lobby_the_tubiao_background_3{
+QFrame#hall_pair_background{
+QFrame#hall_selete_game_form_reels_background{
+QFrame#hall_youxiyindao_background{
+QFrame#im_add_goodfriend_background_form{
+QFrame#im_add_goodfriend_background_item_form{
+QFrame#im_good_background_1{
+QFrame#im_goodfriend_chat_background{
+QFrame#image_avatar_background{
+QFrame#item_background{
+QFrame#join_background{
+QFrame#list_frame{
+QFrame#md_frame_1{
+QFrame#md_frame_2{
+QFrame#md{
+QFrame#msg_background,#btn_background{
+QFrame#msg_background{
+QFrame#player_authentication{
+QFrame#player_avair_frame{
+QFrame#player_background[player = "false"]{
+QFrame#player_background[player = "true"]{
+QFrame#player_background_1,#player_background_2{
+QFrame#player_background{
+QFrame#player_chat_frame{
+QFrame#player_list_selete_frame{
+QFrame#player_selete_button_background_frame{background-color: rgba(0, 0, 0, 0);border:none}  QLabel#button_text{color: rgb(0, 0, 0);}
+QFrame#player_selete_button_background_frame{background-color: rgba(0, 0, 0, 255);border:none}  QLabel#button_text{color: rgb(255, 255, 255);}
+QFrame#right_background{
+QFrame#scale_frame{
+QFrame#sfc_frame_1_1{
+QFrame#sfc_frame_1{
+QFrame#sfc_frame_2_1{
+QFrame#sfc_frame_2_2{
+QFrame#sfc_frame_2{
+QFrame#sfc{
+QFrame#shader_background{
+QFrame#slave_background{
+QFrame#slave_from{
+QFrame#slave_player_background{
+QFrame#slot_top_et_background_frame{
+QFrame#slot_top_list_frame{
+QFrame#slot_top_masterFrame{
+QFrame#slot_top_slave_off_frame{
+QFrame#tabResolution_shader{
+QFrame#talking_horn_frame{
+QFrame#talking_horn_item_frame[color ="0"]{
+QFrame#talking_horn_item_frame[color ="1"]{
+QFrame#talking_horn_item_frame[color ="2"]{
+QFrame#talking_selete_form_background_1{
+QFrame#tilte_name_background_1,#tilte_name_background_2,#player_data_background_1,#player_data_background_2{
+QFrame#top_frame{
+QFrame#update_tilte_frame,#update_tilte_frame_back,#update_back_old_version{
+QFrame#userinfoCharActBackGround{
+QFrame#vipDurationImage[durationId="1"] {
+QFrame#vipDurationImage[durationId="2"] {
+QFrame#vipDurationImage[durationId="3"] {
+QFrame#vipDurationImage[durationId="4"] {
+QFrame#vip_background[vipId="1"] {
+QFrame#vip_background[vipId="2"] {
+QFrame#vip_background[vipId="3"] {
+QFrame#vip_background{
+QFrame#vip_dialog_frame,#vip_al_dialog_frame{
+QFrame#vip_smg_background{
+QFrame#vote_frame_1{
+QFrame#vote_frame_2{
+QFrame#web_form_backGround,#web_frame{
+QFrame#web_groupBox{
+QFrame{
+QFriendChatFrame
+QHallForm::OnClickEnterServerReq send event ModuleGEvent_UI_ClickEnterZone console:%d game:%d zone:%d autoSelect:%d
+QHallForm::OnClick_Hall_Left_Frame 
+QHallForm::OnClick_Hall_Left_Frame _id=%d sub end
+QHallForm::OnClick_Hall_Left_Frame _id=%d sub start
+QHallLeftFrameButton
+QHallSeleteGameLeftFrameButton
+QHallYouXiYinDaoFrame
+QHall_Create_Room_Frame
+QHall_Create_User_Room_Frame
+QHall_Form_ChaZhao_Room_Frame
+QHall_Help_Frame
+QHall_Pair_Frame
+QHall_User_Define_Frame
+QHall_User_Define_Frame_Game_Item
+QHeaderView::section {
+QHeaderView::section:first 
+QIm_GoodFriend_Form_Item_Frame
+QIm_GoodFriend_Form_Item_Frame_Item
+QLabel#fc_frame_1{
+QLabel#fc_frame_2{
+QLabel#slot_top_network[net = "0"]{
+QLabel#slot_top_network[net = "1"]{
+QLabel#slot_top_network{
+QPlayer_List_Frame
+QPushButton#btnRecv,#btnDelete,#btnBack{
+QPushButton#btnRecv:hover,#btnDelete:hover,#btnBack:hover{
+QPushButton#btnRecv:pressed,#btnDelete:pressed,#btnBack:pressed{
+QPushButton#btnRecvAll{
+QPushButton#btnRecv{
+QPushButton{  border-image:url(:/hall_left_frame/hall_left_frame/tab_down.png) 0 0 18 0} QPushButton:hover{border-image:url(:/hall_left_frame/hall_left_frame/tab_down.png) 18 0 0 0} QPushButton:pressed{border-image:url(:/hall_left_frame/hall_left_frame/tab_down.png) 0 0 18 0}
+QPushButton{ border-image:url(:/hall_left_frame/hall_left_frame/btn_dating.png) 0 0 136 0} QPushButton:hover{border-image:url(:/hall_left_frame/hall_left_frame/btn_dating.png) 68 0 68 0} QPushButton:pressed{border-image:url(:/hall_left_frame/hall_left_frame/btn_dating.png) 136 0 0 0}
+QPushButton{border-image:url(:/hall_left_frame/hall_left_frame/btn_dating.png) 136 0 0 0} QPushButton:hover{border-image:url(:/hall_left_frame/hall_left_frame/btn_dating.png) 136 0 0 0} QPushButton:pressed{border-image:url(:/hall_left_frame/hall_left_frame/btn_dating.png) 136 0 0 0}
+QScrollArea#cheat_frame{
+QShader_Frame
+QWidget#slot_top_slotFrame,#slot_top_cardFrame{
+QueryRoomPlayerList send request
+REPLAY_FRAME_NOT_MATCH
+RecvServerLostReq 001 idNumber:%d
+RecvServerLostReq 002 idNumber:%d, value:%d
+ReplayHeadNet
+ReplayPackOne
+SLOT_PLAYER_OB isFirstObSlot frame:%d
+SYSTEM\CurrentControlSet\Control\Network\{4D36E972-E325-11CE-BFC1-08002BE10318}\
+SendAchievementDataToServer
+SendChatMsgReq fail %d %s
+SendChatMsgReq success %d %s
+SendHorn
+SendHornResult DealWithData fail, m_stateFound:%d m_state:%d m_errIdFound:%d m_errIdOld:%d m_funId:%d m_errId:%d m_errStr:%s
+SendLoopParameters
+SendMessageTimeoutW
+SendMessageW
+SendMobileSmsRsp
+SendMobileSmsRsp DealWithData fail, m_errIdFound:%d m_errId:%d m_errStr:%s
+SendRandomChat_Old text:%s
+SendServerLostReq failed
+SendServerLostReq success idNumber:%d
+SendSmallHornRsp
+SendSms create thread succeed
+SendSms failed, create thread failed
+SendSms failed, it is running
+SendSms failed, url not found in config file, key:%s
+Service Pack 6a (Build %d)n
+SetFun_AfterNetBuffLoad
+SetFun_AfterNetBuffSave
+SetFun_FbaAfterNetBuffLoad
+SetFun_FbaAfterNetBuffSave
+SetFun_FbaGetCurrentFrameAchievement
+SetFun_FbaGetNewestMatchNetBuffSlot
+SetFun_Fbafun_SetFun_FbaFrameEndCallBack
+SetFun_Fbafun_SetFun_FbaFrameStartCallBack
+SetFun_Fbafun_SetFun_LocigFrameStartCallBack
+SetFun_GetNetInput
+SetFun_GetNetInput_U1632
+SetFun_SendGBAInputData
+SetFun_UpdateNetInputAfter
+SetFun_UpdateNetInputBefore
+SetNetworkSim
+Shader_Frame
+Start Of Frame 0x%02x: width=%u, height=%u, components=%d
+StartSendSaveThread compresslength:%d length:%d
+StateCheckSum frame %d checkSum %d
+StateCheckSum m_pSharedData && frame > m_pSharedData->emu_frame %d %d
+Step Frame
+SystemG_Replay::GameFrameChange REPLAY_NODE_PLAYER_CHANGE_SEAT
+SystemG_Replay::GameFrameChange REPLAY_NODE_SLOT_PLAYER
+SystemG_Room::OnEnterRoomSMsg uid:%d inputStatus:%d netStatus:%d
+SystemG_Room::OnGetRoomSnapShotReplaySMsg frame:%d packListSize:%d uploaderUid:%d dataSize:%d
+SystemG_Room::OnGetRoomSnapShotReplaySMsg need download, frame:%d packListSize:%d uploaderUid:%d downloadUrl:%s
+SystemG_Room::OnLeaveRoomSMsg send ModuleGEvent_RoomLeftToTaskFlow reason:%d [
+SystemG_Room::OnPlayerNetworkAdapterWireTypeNtf is my room, location:%d|%d|%d|%d|%d
+SystemG_Room::OnPlayerNetworkAdapterWireTypeNtf is not my room, location:%d|%d|%d|%d|%d
+SystemG_Room::OnPlayerNetworkAdapterWireTypeNtf player not found, uid:%d value:%d
+SystemG_Room::OnPlayerNetworkAdapterWireTypeNtf uid:%d value:%d
+SystemG_Room::OnUpdateLocalStatusNtf player not found, uid:%d inputStatus:%d netStatus:%d expAdd:%d expCardSize:%d expCardExpire:%d
+SystemG_Room::OnUpdateLocalStatusNtf uid:%d inputStatus:%d netStatus:%d expAdd:%d expCardSize:%d expCardExpire:%d
+SystemG_Room::PlayerLocalStatus_Inner_NetworkAdapterWireTypeUploadToServer
+SystemG_Room::PlayerLocalStatus_Inner_NetworkAdapterWireTypeUploadToServer do not upload, not in room
+SystemG_Room::PlayerLocalStatus_Inner_NetworkAdapterWireTypeUploadToServer do not upload, not on seat
+SystemG_Room::PlayerLocalStatus_OnNetworkAdapterWireTypeQueryResult netStatus:%d
+TIFFReadBufferSetup
+TIFFWriteBufferSetup
+TaskGFollow::Run case TaskGStep_Follow_EnterZone send event ModuleGEvent_UI_ClickEnterZone console:%d game:%d zone:%d autoSelect:%d
+TaskGManager::OnEmulatorEnded is new zone, player is in room, send leave room request [
+TaskGManager::OnEmulatorEnded is old zone, player is in room, send leave room request
+TaskGManager::OnRoomLeft reason:%d send end emulator request [
+The given translation buffer was not of sufficient size
+UNASSIGNED_RAKNET_GUID
+UPNP_GetTotalPacketsReceived
+UPNP_GetTotalPacketsSent
+URL_HALL_CABINET_LAYOUT_REPLAY_RANK_WAI
+UploadRoomSnapShotReq entityId:%d saveFrame:%d uploadType:%d checkCompress:%d
+UploadRoomSramMemCardReq entityId:%d currentFrame:%d card1Len:%d card2Len:%d checkCompress:%d
+User-Agent: Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.2; SV1; .NET CLR 1.1.4322; .NET CLR 2.0.50727)
+WEB - Send-Start
+WEB - Send-Stop
+WININET.dll
+[packed = true] can only be specified for repeated primitive fields.
+_PACKAGE
+addToNetwork %s myGUId:%s type:%d
+addToNetwork success m_stNetwork4PingInfo size = %d
+addToNetwork success m_stNetworkInfo size = %d
+additionalSendInterval
+afterLoad m_isObserver = true frame:%d isBeforeLoad:%d emuFrame:%d
+afterLoad m_pSharedData->isTargetObserver = false frame:%d isBeforeLoad:%d
+afterSave to midway frame:%d
+afterSave to ob frame:%d emuFrame:%d
+allgameframe
+background-image: url(:/vipInfo/vipInfo_frame/vip_entire_bg_1.png);
+bad TGA header
+bad header
+barrageFrame
+beginFrame
+border-image: url(:/battle/battle/network.png) 0 0 12 0;
+border-image: url(:/battle/battle/network.png) 12 0 0 0;
+border-image: url(:/battle_key/battle_key/fc_dm_frame.png);
+border-image: url(:/battle_key/battle_key/md_frame_1.png);
+border-image: url(:/battle_key/battle_key/md_frame_2.png);
+border-image: url(:/battle_key/battle_key/sfc_frame_1.png);
+border-image: url(:/battle_key/battle_key/sfc_frame_2.png);
+border-image: url(:/battle_key/battle_key/sfc_frame_3.png);
+border-image: url(:/vipInfo/vipInfo_frame/charge_default.png);
+border-image: url(:/vipInfo/vipInfo_frame/refresh_default.png);
+border-image: url(:/vipInfo/vipInfo_frame/vip_duration_bg_normal_vip.png);
+border-image: url(:/vipInfo/vipInfo_frame/vip_duration_bg_normal_vip_checked.png);
+border-image: url(:/vipInfo/vipInfo_frame/vip_duration_bg_ssvip.png);
+border-image: url(:/vipInfo/vipInfo_frame/vip_duration_bg_ssvip_checked.png);
+border-image: url(:/vipInfo/vipInfo_frame/vip_duration_bg_svip.png);
+border-image: url(:/vipInfo/vipInfo_frame/vip_duration_bg_svip_checked.png);
+border-image:url(":/hall_left_frame/hall_left_frame/hall_effect.png");
+border-image:url(":/hall_left_frame/hall_left_frame/tab_effect.png");
+buffer error
+buffer. Use the 'bytes' type if you intend to send raw 
+buffer_reset_count
+call CEmuNetPlay::Instance().clear in CEmulation::ExitInstance end replayNeedVerify:%d replayFileMd5:%s replayUploadEntityId:%d [
+call CEmuNetPlay::Instance().clear in CEmulation::ExitInstance start [
+call CEmuNetPlay::Instance().clear in CEmulation::InitInstance end
+call CEmuNetPlay::Instance().clear in CEmulation::InitInstance start
+call CEmuReplay::Instance().uninit in CEmuNetPlay::clear end [
+call CEmuReplay::Instance().uninit in CEmuNetPlay::clear start [
+call the(CWebbrowserCtrl).SendData(E_UPDATESIZE_H, param) 
+cannot get header
+checkVipAck
+close_room_course_.emulator_ end_emulator_sended_-10 = %d
+close_room_course_.emulator_ end_emulator_sended_-10 = %d 
+close_room_course_.emulator_ end_emulator_sended_-2 = %d 
+close_room_course_.emulator_ end_emulator_sended_-2 = 1
+close_room_course_.emulator_ end_emulator_sended_-7 = %d
+close_room_course_.emulator_ end_emulator_sended_-7 = %d 
+close_room_course_.emulator_ end_emulator_sended_-8 = %d
+close_room_course_.emulator_ end_emulator_sended_-8 = %d 
+close_room_course_.emulator_ end_emulator_sended_-9 = %d
+close_room_course_.emulator_ end_emulator_sended_-9 = %d 
+close_room_course_.room_ CheckSendLeaveRoom leave_room_req_sended_ = %d
+congestionManager.OnGotPacket failed
+deletePlayerBySlot %d playerInNetPlay = %d
+drop input frame %d m_myInput.back %d
+e:\gotvg\trunk\xzone_client\x-zone-qt\x-zone_lib\raknet\source\DS_List.h
+e:\gotvg\trunk\xzone_client\x-zone-qt\x-zone_lib\raknet\source\DS_Map.h
+e:\gotvg\trunk\xzone_client\x-zone-qt\x-zone_lib\raknet\source\DS_MemoryPool.h
+e:\gotvg\trunk\xzone_client\x-zone-qt\x-zone_lib\raknet\source\DS_RangeList.h
+e:\gotvg\trunk\xzone_client\x-zone-qt\x-zone_lib\raknet\source\DS_ThreadsafeAllocatingQueue.h
+e:\gotvg\trunk\xzone_client\x-zone-qt\x-zone_lib\raknet\source\ReliabilityLayer.h
+emu reset frame %d
+emuCloseFlag != 0 frame = %d data = 0
+emuFrame
+emuSaveLoadFrame
+emunetplay: %d
+fba_setFrameRender
+file_not_found_in_netdisk
+frame
+frame 
+frameBegin
+frameCnt
+fun_mameloadfrommem frame:%d
+fun_mamesavetomem midway frame:%d slot:%d b:%d e:%d
+fun_mamesavetomem ob frame:%d
+go_package
+header crc mismatch
+imgHeader
+in Json::Value::duplicateAndPrefixStringValue(): Failed to allocate string value buffer
+in Json::Value::duplicateStringValue(): Failed to allocate string value buffer
+incorrect header check
+incorrect magic number
+interframeBlending
+interframe_blending
+internalPacket->orderingChannel >= NUMBER_OF_ORDERED_STREAMS
+invalid frame/image height
+invalid frame/image width
+java_package
+lagFrame
+lastOnlineTime
+length <= 2 || buffer == 0
+m_nMyRakNetGUID %s
+m_pSharedData->emu_end frame:%d
+m_packBeginInput
+m_recvSharedData.isTargetObserver = %d && m_pSharedData->isNetplay:%d m_pSharedData->isBeforeLoad:%d
+m_recvSharedData.isTargetObserver == 1 && m_pSharedData && m_pSharedData->isNetplay > 1 return
+mame_loadFromNetbuffMem
+mame_saveToNetbuffMem
+monetary
+mutuFrame
+nRecvBufSize=%d
+nSendBufSize=%d
+needAmendPackStart
+netBuff4RW netBuffCurrect frame:%d
+netBuff4RW netBuff[loadSlot] frame:%d
+netPlayType
+netStatus
+net_mode
+net_mode_prepare
+netdisk_download
+netdrivedownload.xml
+network down
+network reset
+network unreachable
+networktcp/item
+networktype
+newestFrame
+no buffer space
+no field package.preload['%s']
+noDrawFrame
+onClickPlayerListFrame
+onFilterScanlineToggle
+onFromNetdisk
+onNetTurnLeft
+onNetTurnRight
+onRecv
+onRecvAll
+onSendGift
+onSendSms
+onSetNet
+onShowGiftFrame0
+onShowGiftFrame1
+onShowGiftFrame2
+onShowGiftFrame3
+onTripleBufferToggled
+oppoNetType
+pack
+packBegin
+packList
+package
+packed
+packet body offset=%06ld
+packet offset=%08ld prg=%d cmptno=%02d rlvlno=%02d prcno=%03d lyrno=%02d
+predict DeletePredictInput frame:%d size:%d
+predict GetLoadNetBuffSlot frame:%d size:%d
+predict afterNetBuffSave
+qt_ui\qhall_left_frame.cpp
+qt_ui\qhall_selete_game_frame.cpp
+raknetId
+recv
+recvInputData m_bWaitMidJoinFirstPacket[%d] = false
+recvInputData sendMyInputData slot:%d begin:%d size:%d
+recvKeyNoChange guid == null uid:%d
+recvObserverData guid == null uid:%d
+recvObserverDataRsp guid == null uid:%d
+recvPingReq guid == null uid:%d
+recvPingRsp guid == null uid:%d
+recvSaveData %d != %d
+recvSaveData %d < %d
+recvSaveData checksum %d != %d
+recvSaveData compressSize:%d size:%d isSaveDataCompressed:%d bitStream length:%d
+recvSaveData not expected my guid:%s from guid:%s
+recvSaveData1 frame = %d size:%d from:%s isTargetObserver:%d
+recvSaveData2 now frame = %d paired input size = %d
+recvSaveData2 sizeObInput:%d
+recvSaveData2 sizeObInput:%d from %d
+recvSaveData2 sizeObInput:%d to %d
+recvSaveData3 paired input b:%d e:%d
+recvSaveData3 paired input b:%d e:%d size:%d sizeRecv:%d
+recvSyncInputFrame frame = %d
+removeFromNetwork %d myGUId:%s
+removeFromNetwork success size = %d
+removeFromNetwork4Ping success size = %d
+replayDelayFrame
+res/games/run_speed_frame_control.xml
+res/hall/xml/text_color_cabinet.xml
+resetNetplayState2NormalOb frame: %d
+ret_Slot FrameStartCallBack 2 otherRangWei == 1 loadSlot:%d
+ret_Slot FrameStartCallBack 2 otherRangWei == 1 loadSlot:%d frame:%d
+runAfterLoadFrame
+run_frame_speed_control
+saveloadJesse001 frame:%d
+saveloadJesse002 frame:%d
+send
+send %s fail
+send %s success
+send MD5 fail md5 %s
+send MD5 success md5 %s
+send MidwayJoinGameReq TVG_MIDWAYJOIN_GAME fail
+send MidwayJoinGameReq TVG_MIDWAYJOIN_GAME success status %d
+send PROTOSUB_IM_ADD_BLACKLIST fail uid %d
+send PROTOSUB_IM_ADD_BLACKLIST success uid %d
+send PROTOSUB_IM_CHAT fail %d %s
+send PROTOSUB_IM_CHAT success %d %s
+send PROTOSUB_IM_DELBLACKLIST fail uid %d
+send PROTOSUB_IM_DELBLACKLIST success uid %d
+send PROTOSUB_IM_DELCONTACT fail uid %d
+send PROTOSUB_IM_DELCONTACT success uid %d
+send PROTOSUB_IM_FIRSTONLINE fail
+send PROTOSUB_IM_READCONTACTDATA 2 fail uid %d
+send PROTOSUB_IM_READCONTACTDATA 2 success uid %d
+send PROTOSUB_IM_READCONTACTDATA fail
+send PROTOSUB_IM_READCONTACTDATA success
+send PROTOSUB_IM_REJECTCONTACT fail uid %d %s %s
+send PROTOSUB_IM_REJECTCONTACT success uid %d %s %s
+send PROTOSUB_LS_LOGIN fail
+send PROTOSUB_LS_LOGIN success
+send TVG_ACHIEVEMENT_UPLOAD fail
+send TVG_ACHIEVEMENT_UPLOAD success achGame:%d achType:%d uid:%d
+send TVG_ACTIVITY_TASK failed
+send TVG_ACTIVITY_TASK success
+send TVG_ASK_PAUSE fail
+send TVG_ASK_PAUSE success
+send TVG_CANCEL_MATCH_PLAYER_REQ fail
+send TVG_CANCEL_MATCH_PLAYER_REQ success
+send TVG_CHECK_ALIVE fail
+send TVG_CHECK_ALIVE success
+send TVG_CHECK_EMU_SUM fail
+send TVG_CHECK_EMU_SUM success CheckEmuSum frame:%d checkSum:%d
+send TVG_CREATE_OR_ENTER_ROOM fail
+send TVG_CREATE_OR_ENTER_ROOM success %d %d %d %d pass = %s
+send TVG_DAILY_ONLINE failed
+send TVG_DAILY_ONLINE success
+send TVG_EMUROOM_ENABLE_OBSERVER fail
+send TVG_EMUROOM_ENABLE_OBSERVER success enable = %d
+send TVG_EMU_FOLLOW_GAMEPLAY fail
+send TVG_EMU_FOLLOW_GAMEPLAY success userId = %d
+send TVG_EMU_SAVE_PKT fail
+send TVG_EMU_SAVE_PKT success %d %d %d %d
+send TVG_EMU_SAVE_REQ fail
+send TVG_EMU_SAVE_REQ success
+send TVG_ENTER_EMU_ROOM fail
+send TVG_ENTER_ROOM fail
+send TVG_ENTER_ROOM success %d %d %d %d pass = %s
+send TVG_ENTER_SERVER fail
+send TVG_ENTER_SERVER success
+send TVG_FIND_MATCH_PLAYER_REQ fail
+send TVG_FIND_MATCH_PLAYER_REQ success
+send TVG_FORWARD_REQUEST fail
+send TVG_FORWARD_REQUEST success userId = %d myuid = %d
+send TVG_GAME_PAIR_MODE fail
+send TVG_GAME_PAIR_MODE success
+send TVG_INVITE_SOMEONE fail
+send TVG_INVITE_SOMEONE success
+send TVG_LEAVE_SERVER fail
+send TVG_LEAVE_SERVER success
+send TVG_LOBBY_FORWARD_GAMEPKT success to %d %d %d %d size = %d
+send TVG_PLAYER_ROOM_PASSWORD_CHECK fail
+send TVG_PLAYER_ROOM_PASSWORD_CHECK success
+send TVG_PSP_MAC_REQ fail
+send TVG_PSP_MAC_REQ success
+send TVG_PSP_MAC_UPLOAD fail
+send TVG_PSP_MAC_UPLOAD success
+send TVG_QUERY_BASE_TREE fail
+send TVG_QUERY_BASE_TREE success
+send TVG_QUERY_NUM fail
+send TVG_QUERY_USER_INFO fail uid %d
+send TVG_QUERY_USER_INFO success uid %d
+send TVG_RECONNECT_SERVER fail
+send TVG_RECONNECT_SERVER success
+send TVG_REPLAY_RECIEVED fail
+send TVG_REPLAY_RECIEVED success
+send TVG_REPLAY_REQ fail beginPack:%d
+send TVG_REPLAY_REQ success beginPack:%d
+send TVG_REPLY_PAUSE fail
+send TVG_REPLY_PAUSE success
+send TVG_RESET_GAME fail
+send TVG_RESET_GAME success
+send TVG_SAVE_DATA_REQ fail
+send TVG_SAVE_DATA_REQ success
+send TVG_SAVE_DATA_UPLOAD fail
+send TVG_SAVE_DATA_UPLOAD success
+send TVG_SERVER_OB_NUM fail
+send TVG_SERVER_OB_NUM success
+send TVG_SET_EMUROOM_SLOT_STATUS fail
+send TVG_SET_EMUROOM_SLOT_STATUS success slot:%d disable:%d
+send TVG_SIGN_ON failed
+send TVG_SIGN_ON success
+send TVG_START_GAME_READY fail
+send TVG_START_GAME_READY success status %d
+send TVG_SWITCH_SLOT_REQ fail
+send TVG_SWITCH_SLOT_REQ success
+send TVG_UI_FILE_MD5_REQ fail
+send TVG_UI_FILE_MD5_REQ success
+send TVG_USER_LOGOUT fail
+send TVG_USER_LOGOUT success
+send TVG_WIN_LOSS_UPLOAD fail
+send TVG_WIN_LOSS_UPLOAD success %d %d
+send TVG_WIN_LOSS_UPLOAD success %d %d %d %d
+send emu TVG_LEAVE_ROOM fail
+send emu TVG_LEAVE_ROOM success
+send message to gup end
+send message to gup start, g_gup_window:
+send queue msg fail %x
+send queue msg success from %x
+send small horn fail, curlCode:%d httpCode:%d errStr:%s url:%s
+send small horn fail, err:%d errStr:%s returnData:%s url:%s
+send small horn fail, horn count is 0, hornType:%d leftCount:%d
+send small horn fail, it's too fast
+send small horn fail, url not found in config file, key:%s
+send small horn preparing, url:%s data:%s
+send small horn succeed, hornType:%d leftCount:%d
+send sms count down end
+send sms count down started, threadIsRunning:%d
+send sms curl do perform failed, curlCode:%d httpCode:%d errStr:%s url:%s
+send sms result has error, err:%d errStr:%s returnData:%s url:%s
+send sms result succeed
+sendSaveData ID_EVENT_DATA guid = %s ip:%s length = %d frame = %d m_pairedInput = %d first:%d
+sendSaveData ID_EVENT_DATA guid = %s ip:%s length = %d frame = %d m_pairedInput = %d first:%d m_observerFbaInput:%d first2:%d
+sendSaveFrameData size %d guid:%s %d %s
+sendSaveFrameData uid:%d
+sendSaveFrameData2 obsize:%d
+sendSaveFrameData2 size %d inputSize %d
+sendSyncInputFrame ID_EVENT_SYNCFRAME guid = %s frame = %d
+sendTime
+send_horn_ack
+send_time
+senderNickname
+sendto
+setFrameSkip
+setUpForObserver uid = %d myFrame = %d
+setUpRemoteForMidway firstSlot:mySlot:%d slot = %d end frame = %d myFrame = %d
+setUpRemoteForMidway firstSlot:mySlot:%d slot = %dmyFrame = %d
+setUpRemoteForMidway2 mySlot:%d slot = %d myFrame = %d
+snapShotFrame
+src\NetWorkForward.cpp
+src\NetworkSystem.cpp
+src\emuNetplay.cpp
+src\game\emu_net\xz_logic_module_emu_net.cpp
+styles/cn/battle_player_list_frame_cn.qss
+styles/cn/hall_create_room_frame_cn.qss
+styles/cn/hall_create_user_room_frame_cn.qss
+styles/cn/hall_form_chazhao_room_frame_cn.qss
+styles/cn/hall_selete_game_frame_cn.qss
+styles/cn/hall_selete_game_frame_reels_show_view_cn.qss
+styles/cn/hall_selete_game_right_frame_reels_view_cn.qss
+styles/cn/hall_user_define_frame_cn.qss
+styles/cn/player_list_frame_cn.qss
+styles/en/battle_player_list_frame_en.qss
+styles/en/hall_create_room_frame_en.qss
+styles/en/hall_create_user_room_frame_en.qss
+styles/en/hall_form_chazhao_room_frame_en.qss
+styles/en/hall_selete_game_frame_en.qss
+styles/en/hall_selete_game_frame_reels_show_view_en.qss
+styles/en/hall_selete_game_right_frame_reels_view_en.qss
+styles/en/hall_user_define_frame_en.qss
+styles/en/player_list_frame_en.qss
+styles/hall_help_frame.qss
+styles/hall_left_frame.qss
+styles/hall_selete_game_frame_reels.qss
+styles/hall_selete_game_frame_reels_view.qss
+styles/hall_selete_game_left_frame_button_true.qss
+styles/hall_selete_game_right_frame_reels.qss
+styles/im_goodfriend_form_item_frame.qss
+text_header
+time=%d AddMyInput frame[%d] input=0x%04x
+time=%d AddMyInput frame[%d] input=0x%08x
+time=%d FrameStartCallBack frame:%d mode:%d
+too many results to unpack
+triplebuffer
+triplebuffercheck
+unknown header flags set
+unpack
+unpacked_load_raw()
+urn:schemas-upnp-org:device:InternetGatewayDevice:1
+userid_sender
+wrong frame!
+xzCEnterLeaveRoom::OnEnterEmuRoomAckSuccessNormal uid:%d slot:%d inputStatus:%d netStatus:%d
+xzCLogicModuleEmuNet::OnCloseBattleWindowVote is pair mode auto closing [
+xzCLogicModuleEmuNet::OnCloseBattleWindowVote is waiting save replay [

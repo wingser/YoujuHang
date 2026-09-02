@@ -1,0 +1,491 @@
+      <assemblyIdentity type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='x86' publicKeyToken='6595b64144ccf1df' language='*' />
+      <assemblyIdentity type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' publicKeyToken='6595b64144ccf1df' language='*' processorArchitecture='*' />
+    border-image: url(:/login/login/Password.png) 2 2 2 2;
+    border-image: url(:/login/login/accarrow.png);
+    border-image: url(:/login/login/btn_anniu.PNG) 43 0 43 0;
+    border-image: url(:/login/login/btn_anniu.PNG) 86 0 0 0;
+    border-image: url(:/login/login/dark.png);
+    border-image: url(:/login/login/dark2.png);
+    border-image: url(:/login/login/light.png) 0 0 0 0 repeat;
+    border-image: url(:/login/login/light2.png);
+    border-image:url(:/login/login/btn_anniu.PNG) 0  0  86 0;
+    border-image:url(:/login/login/jizhu2.png) 0 0 20 0
+   border-image:url(:/login/login/jizhu2.png) 20 0 0 0
+ Tokenizer::ParseFloat() passed text that could not have been tokenized as a float: 
+ Tokenizer::ParseStringAppend() passed text that could not have been tokenized as a string: 
+"%s": Information lost writing value (%g) as (unsigned) RATIONAL
+"Token":
+%s: EV_SIGNAL incompatible use
+%s: received signal %d, but have no base configured
+(ADD_COUPON_FAILED_FOR_ACCOUNT_TOKEN_LOST
+(SUB_COUPON_FAILED_FOR_ACCOUNT_TOKEN_LOST
+,PREDICTION_DEDUCT_OUQI_FAILED_FOR_TOKEN_LOST
+-GUILD_HOUSE_LOAD_FAILED_ON_CHECK_PLAYER_TOKEN
+-PREDICTION_DEDUCT_OUQI_FAILED_FOR_TOKEN_ERROR
+..\games\mobilegames\%s -uid:%d -token:%s -handle:%d -w:%d -h:%d -x:%d -y:%d
+.?AU?$P@V?$TSingleton@V?$Window@VQLoginForm@@@@@@@CSingletonMgr@@
+.?AU?$token_finderF@U?$is_any_ofF@D@detail@algorithm@boost@@@detail@algorithm@boost@@
+.?AV?$TSingleton@V?$Window@VQLoginForm@@@@@@
+.?AV?$Window@VQLoginForm@@@@
+.?AV?$_Binder@U_Unforced@std@@P8SystemG_Login@@AEXHV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@@ZQAV3@ABU?$_Ph@$00@2@ABU?$_Ph@$01@2@@std@@
+.?AV?$_Binder@U_Unforced@std@@P8SystemG_Login@@AEXPAVMessage@protobuf@google@@0@ZQAV3@ABU?$_Ph@$00@2@ABU?$_Ph@$01@2@@std@@
+.?AV?$_Binder@U_Unforced@std@@P8SystemG_Login@@AEXPAVMessage@protobuf@google@@@ZQAV3@ABU?$_Ph@$00@2@@std@@
+.?AV?$_CancellationTokenCallback@V<lambda_3b8ab8d2629adf61a42ee3fe177a046b>@@@details@Concurrency@@
+.?AV?$_Func_impl@V?$_Binder@U_Unforced@std@@P8SystemG_Login@@AEXHV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@@ZQAV3@ABU?$_Ph@$00@2@ABU?$_Ph@$01@2@@std@@V?$allocator@H@2@XHV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@@std@@
+.?AV?$_Func_impl@V?$_Binder@U_Unforced@std@@P8SystemG_Login@@AEXPAVMessage@protobuf@google@@0@ZQAV3@ABU?$_Ph@$00@2@ABU?$_Ph@$01@2@@std@@V?$allocator@H@2@XPAVMessage@protobuf@google@@PAV456@@std@@
+.?AV?$_Func_impl@V?$_Binder@U_Unforced@std@@P8SystemG_Login@@AEXPAVMessage@protobuf@google@@@ZQAV3@ABU?$_Ph@$00@2@@std@@V?$allocator@H@2@XPAVMessage@protobuf@google@@@std@@
+.?AVAddXzoneSignAck@Proto@@
+.?AVAddXzoneSignReq@Proto@@
+.?AVCHeartBeat@@
+.?AVCLoginAnnouncement@@
+.?AVCLoginConnect@@
+.?AVCancellationTokenRegistration_TaskProc@details@Concurrency@@
+.?AVCheckPersonalSignAck@Proto@@
+.?AVCheckPersonalSignReq@Proto@@
+.?AVCheckXzoneSignAck@Proto@@
+.?AVCheckXzoneSignReq@Proto@@
+.?AVGateLoginCMsg@Proto@@
+.?AVGateLoginSMsg@Proto@@
+.?AVGetPersonalSignAck@Proto@@
+.?AVGetPersonalSignReq@Proto@@
+.?AVGuildMemberLogInVipNtf@Proto@@
+.?AVGuildNtf_LogInOut@Proto@@
+.?AVHeartBeatCMsg@Proto@@
+.?AVHeartBeatSMsg@Proto@@
+.?AVHeartbeatAck@Proto@@
+.?AVHeartbeatReq@Proto@@
+.?AVLoginReq@@
+.?AVLsLoginCMsg@Proto@@
+.?AVLsLoginSMsg@Proto@@
+.?AVLsSteamLoginCMsg@Proto@@
+.?AVLsSteamLoginSMsg@Proto@@
+.?AVProtobufAntiDisruptInfoToInfoServerOnPlayerLoginSuccess@Proto@@
+.?AVProtobufAntiDisruptOnLoginSuccessUploadHardwareInfoAck@Proto@@
+.?AVProtobufAntiDisruptOnLoginSuccessUploadHardwareInfoReq@Proto@@
+.?AVProtobufGiftOnPlayerLogIn@Proto@@
+.?AVProtobufLoginAnnouncement@Proto@@
+.?AVProtobufOnPlayerLogInToYpahServerAck@Proto@@
+.?AVProtobufQiNiuGetDownTokenAck@Proto@@
+.?AVProtobufQiNiuGetDownTokenReq@Proto@@
+.?AVProtobufQiNiuGetUpTokenAck@Proto@@
+.?AVProtobufQiNiuGetUpTokenReq@Proto@@
+.?AVProtobufVipGetLogInInfoAck@Proto@@
+.?AVProtobufVipGetLogInInfoReq@Proto@@
+.?AVProtobufVipGetLogInInfoReqToLobby@Proto@@
+.?AVProtobufVipL2UOldOnLogIn@Proto@@
+.?AVProtobufVipOnLogInQueryAck@Proto@@
+.?AVProtobufVipOnLogInQueryLobbyNtf@Proto@@
+.?AVProtobufVipOnLogInQuerySocialNtf@Proto@@
+.?AVQLoginAccountItem@@
+.?AVQLoginForm@@
+.?AVQLoginProgress@@
+.?AVQSignInRemind@@
+.?AVSignInReq@@
+.?AV_CancellationTokenRegistration@details@Concurrency@@
+.?AVxzCSignOnComponent@@
+.?AVxzData_LoginWindow@@
+.?AVxzData_LoginWindow_Alert@@
+.?AVxzData_LoginWindow_ConnectServer@@
+.?AVxzData_LoginWindow_Misc@@
+.?AVxzData_Ping_Login@@
+.Proto.GuildNtf_LogInOut"(
+.\%s webgame -hwnd %x -user_id %s -token %s -x_pos %x -y_pos %x -width %x -height %x -url %s -ie_type %x
+1OnClick_Login()
+:/battle/battle/login_bg%1.png
+:/battle/battle/login_character%1.png
+:/battle/battle/login_characterd%1.png
+:/battle/battle/login_logo.png
+:/battle/battle/login_of%1.png
+:/battle/battle/login_ofd%1.png
+?blockSignals@QObject@@QAE_N_N@Z
+Application signalled CMS error
+Application signalled I/O error
+Application signalled an error
+Application signalled error during trace-callback
+Application signalled timing error
+AssignProcessToJobObject
+BAN_ONLY_LOGIN
+CGameLogic::OnHeartBeat received:%d lastSendTime:%d lastReceiveTime:%d
+CGameLogic::OnLogInServer 
+CGameLogic::OnYpahGetUpTokenAck protobuf unmarshal failed
+CGameLogic::ReconnectServerReq as heart beat not received force set to lastHeartbeatRecvTime == nowTime:%d [
+CGameLogic::ReconnectServerReq as tcp send failed force set to lastHeartbeatRecvTime == nowTime:%d [
+CGameLogic::SendHeartBeat failed:%d lastSendTime:%d lastReceiveTime:%d
+CGameLogic::SendHeartBeat succeed:%d lastSendTime:%d lastReceiveTime:%d
+CLoginConnect::ConnectGateServer 
+CLoginConnect::ConnectLoginServer 
+CLoginConnect::RunUpdateCycle case CONNECT_GATE_SERVER gate
+CLoginConnect::RunUpdateCycle case FIRST_TRY_CONNECT 
+CLoginConnect::RunUpdateCycle case ON_REGISTER_COMPLETE 
+CLoginConnect::RunUpdateCycle case RETRY_CONNECT 
+CLoginConnect::RunUpdateCycle case SEND_MSG_PROTOSUB_IM_FIRSTONLINE 
+CLoginConnect::RunUpdateCycle case SEND_MSG_PROTOSUB_LS_LOGIN_PLUS2 
+DAILY_SIGN_IN
+GAME_TOKEN_EMPTY
+GUILD_SIGN_IN
+GateLoginCMsg
+GateLoginSMsg
+GoGetNextSignInTime
+GoGetNextSignInTimeForLog
+GoMain::IsWaitGoServer login permitted 
+GoMain::Login2Server call login
+GoMain::Login2Server fail, go dll is not initial state
+GoMain::Login2Server fail, login is not permitted
+GuildNtf_LogInOut
+HeartBeatCMsg"(
+HeartBeatSMsg
+LOGIN_DAY_NUM
+LOGIN_NUM
+LogInOut::AfterLoginSuccess call CWindowsMgr::InitRoomWnd
+LogInOut::OnLogInSocialNtf is in vip and social server but hall window is not created
+LogInOut::OnLogInSocialNtf is in vip server:%d
+LogInOut::OnLogInVipNtf is in social server:%d
+Login.proto
+LoginForm
+LoginProgress
+LoginReq::OnHttpResult ParseFromArray failed, code:%d data:%x length:%d
+LoginReq::OnHttpResult ParseFromArray succeed, code:%d data:%x length:%d
+LoginRsp
+LsLoginCMsg
+LsLoginSMsg
+LsSteamLoginCMsg
+LsSteamLoginSMsg
+MONTH_SIGN_DAY_NUM
+OnClick_Login
+OnForwardServerLogin err = %x %s
+OnLogInVipAck
+OnLoginBasicInfo 
+OnLoginBasicInfo call process other module 
+OnLoginBasicInfo rootxml req 
+OnPlayerGuild_UserLogInAck failed, data unmarshal failed
+OnSignOnAck err = %x %s
+OnSignOnAck errId:0x%x
+OnSignOnAck errId:0x%x errStr:%s
+OnSignOnAck protocol:0x%x subType:%d
+OnUploadConfirm2 check personal sign begin
+OnUploadConfirm2 check personal sign curl post begin
+OnUploadConfirm2 check personal sign curl post end
+OnUploadConfirm2 check personal sign end
+OnUploadConfirm2 hasXzoneSign begin
+OnUploadConfirm2 hasXzoneSign curl post begin
+OnUploadConfirm2 hasXzoneSign curl post end
+OnUploadConfirm2 hasXzoneSign end
+OnUploadConfirm2 noXzoneSign begin
+OnUploadConfirm2 noXzoneSign curl post begin
+OnUploadConfirm2 noXzoneSign curl post end
+OnUploadConfirm2 noXzoneSign end
+PGA_LOGIN
+PNG unsigned integer out of range.
+Proto.AchievementEscapeUploadCMsg.gameToken
+Proto.AchievementHttpQueryFullReq.token
+Proto.AchievementHttpQueryReq.token
+Proto.AchievementQueryReq2.token
+Proto.AchievementStageStartTimeCMsg.gameToken
+Proto.AchievementUploadCMsg.gameToken
+Proto.AddXzoneSignAck
+Proto.AddXzoneSignAck.err_str
+Proto.AddXzoneSignAck.md5_ack
+Proto.AddXzoneSignAck.md5_req
+Proto.AddXzoneSignReq
+Proto.AddXzoneSignReq.md5
+Proto.AddXzoneSignReq.token
+Proto.BaseCMsg.gameToken
+Proto.ChangeRoomSettingCMsg.gameToken
+Proto.ChangeRoomSlotCMsg.gameToken
+Proto.ChatCMsg.gameToken
+Proto.CheckPersonalSignAck
+Proto.CheckPersonalSignAck.err_str
+Proto.CheckPersonalSignReq
+Proto.CheckPersonalSignReq.md5
+Proto.CheckPersonalSignReq.token
+Proto.CheckRoomPassCMsg.gameToken
+Proto.CheckSramIndexVolumeReq.token
+Proto.CheckXzoneSignAck
+Proto.CheckXzoneSignAck.err_str
+Proto.CheckXzoneSignReq
+Proto.CheckXzoneSignReq.md5
+Proto.CheckXzoneSignReq.md5_encrypt
+Proto.CheckXzoneSignReq.token
+Proto.DelMailCMsg.gameToken
+Proto.DeleteSingleFileReq.token
+Proto.EnterLobbyCMsg.gameToken
+Proto.EnterRoomCMsg.gameToken
+Proto.EnterRoomQuicklyCancelReq.token
+Proto.EnterRoomQuicklyReq.token
+Proto.EnterZoneCMsg.gameToken
+Proto.FollowPlayerCMsg.gameToken
+Proto.GameCfgQueryCMsg.gameToken
+Proto.GamePlayerInfoCMsg.gameToken
+Proto.GateLoginCMsg.gameToken
+Proto.GateLoginSMsg.errStr
+Proto.GetDownloadUrlReq.token
+Proto.GetMailListCMsg.gameToken
+Proto.GetPersonalSignAck
+Proto.GetPersonalSignAck.err_str
+Proto.GetPersonalSignAck.key_md5
+Proto.GetPersonalSignReq
+Proto.GetPersonalSignReq.token
+Proto.GetRoomSnapShotReplayCMsg.gameToken
+Proto.GetRoomSramMemCardCMsg.gameToken
+Proto.GetSramFileIndexReq.token
+Proto.GetUploadPolicyReq.token
+Proto.GetVerifyImgCMsg.gameToken
+Proto.GmCommandCMsg.gameToken
+Proto.GuildCMsg.gameToken
+Proto.GuildMemberLogInVipNtf
+Proto.GuildNtf_LogInOut.nickname
+Proto.HeartBeatSMsg.errStr
+Proto.HeartbeatAck
+Proto.HeartbeatReq
+Proto.InGameStatusChangeCMsg.gameToken
+Proto.InnerZonePresentGiftReqOld.gameToken
+Proto.InvitePlayerCMsg.gameToken
+Proto.LeaveRoomCMsg.gameToken
+Proto.LeaveZoneCMsg.gameToken
+Proto.LsLoginCMsg.account
+Proto.LsLoginCMsg.mac
+Proto.LsLoginCMsg.password
+Proto.LsLoginSMsg.errStr
+Proto.LsLoginSMsg.token
+Proto.LsSteamLoginCMsg.authTicket
+Proto.LsSteamLoginCMsg.nickName
+Proto.LsSteamLoginCMsg.steamId
+Proto.LsSteamLoginSMsg.account
+Proto.LsSteamLoginSMsg.errStr
+Proto.LsSteamLoginSMsg.passEnc
+Proto.MissionListCMsg.gameToken
+Proto.MissionSubmitCMsg.gameToken
+Proto.NetPlayingInfoCMsg.gameToken
+Proto.PlayerCheckInCMsg.gameToken
+Proto.PlayerExpAddCMsg.gameToken
+Proto.PlayerKickPlayerCMsg.gameToken
+Proto.PlayerMutePlayerCMsg.gameToken
+Proto.PlayerSocialCMsg.gameToken
+Proto.PlayerSramCMsg.gameToken
+Proto.PlayerSramCMsg.sign
+Proto.PlayerSramCMsg.signEncrypted
+Proto.PlayerSramSMsg.retSign
+Proto.PresentGift2PlayerCMsg.gameToken
+Proto.PresentGift2PlayerCMsgCopy.gameToken
+Proto.PresentGift2PlayerLobby2Vip.gameToken
+Proto.PresentGift2PlayerOldCMsg.token
+Proto.PresentGiftAllAuthenticationReq.token
+Proto.PresentGiftQueryPlayerLobby2Vip.token
+Proto.PresentGiftQueryPlayerReqOld.token
+Proto.PresentGiftQueryRankReqOld.token
+Proto.ProtobufAntiDisruptInfoToInfoServerOnPlayerLoginSuccess
+Proto.ProtobufAntiDisruptInfoToInfoServerOnPlayerLoginSuccess.bios_uuid
+Proto.ProtobufAntiDisruptInfoToInfoServerOnPlayerLoginSuccess.machine_id
+Proto.ProtobufAntiDisruptOnArrestUploadHardwareInfoReq.token
+Proto.ProtobufAntiDisruptOnLoginSuccessUploadHardwareInfoAck
+Proto.ProtobufAntiDisruptOnLoginSuccessUploadHardwareInfoAck.err_str
+Proto.ProtobufAntiDisruptOnLoginSuccessUploadHardwareInfoReq
+Proto.ProtobufAntiDisruptOnLoginSuccessUploadHardwareInfoReq.bios_uuid
+Proto.ProtobufAntiDisruptOnLoginSuccessUploadHardwareInfoReq.mac
+Proto.ProtobufAntiDisruptOnLoginSuccessUploadHardwareInfoReq.machine_id
+Proto.ProtobufAntiDisruptOnLoginSuccessUploadHardwareInfoReq.nickname
+Proto.ProtobufAntiDisruptOnLoginSuccessUploadHardwareInfoReq.token
+Proto.ProtobufGiftOnPlayerLogIn
+Proto.ProtobufGiftOnPlayerLogIn.nickname
+Proto.ProtobufLoginAnnouncement
+Proto.ProtobufLoginAnnouncement.data
+Proto.ProtobufOnPlayerLogInToYpahServerAck
+Proto.ProtobufOnPlayerLogInToYpahServerAck.http_ip
+Proto.ProtobufQiNiuGetDownTokenAck
+Proto.ProtobufQiNiuGetDownTokenAck.err_str
+Proto.ProtobufQiNiuGetDownTokenAck.url
+Proto.ProtobufQiNiuGetDownTokenReq
+Proto.ProtobufQiNiuGetDownTokenReq.file_key
+Proto.ProtobufQiNiuGetUpTokenAck
+Proto.ProtobufQiNiuGetUpTokenAck.err_str
+Proto.ProtobufQiNiuGetUpTokenAck.token
+Proto.ProtobufQiNiuGetUpTokenReq
+Proto.ProtobufQiNiuGetUpTokenReq.file_key
+Proto.ProtobufVipBecomeVipReq.token
+Proto.ProtobufVipExpireVipReq.token
+Proto.ProtobufVipGetLogInInfoAck
+Proto.ProtobufVipGetLogInInfoAck.err_str
+Proto.ProtobufVipGetLogInInfoReq
+Proto.ProtobufVipGetLogInInfoReq.token
+Proto.ProtobufVipGetLogInInfoReqToLobby
+Proto.ProtobufVipL2UOldOnLogIn
+Proto.ProtobufVipModifyVipReq.token
+Proto.ProtobufVipOnLogInQueryAck
+Proto.ProtobufVipOnLogInQueryAck.err_str
+Proto.ProtobufVipOnLogInQueryLobbyNtf
+Proto.ProtobufVipOnLogInQueryLobbyNtf.err_str
+Proto.ProtobufVipOnLogInQuerySocialNtf
+Proto.ProtobufVipOnLogInQuerySocialNtf.err_str
+Proto.ProtobufVipRefreshVipStateReq.token
+Proto.QueryAllZoneListCMsg.gameToken
+Proto.QueryGameCfgCMsg.gameToken
+Proto.QueryPlayerFacadeReq.token
+Proto.QuerySingleFileReq.token
+Proto.QueryZoneInfoCMsg.gameToken
+Proto.QueryZonePlayerListCMsg.gameToken
+Proto.QueryZoneRoomListCMsg.gameToken
+Proto.QuickGameCMsg.gameToken
+Proto.RankListCMsg.gameToken
+Proto.ReadMailCMsg.gameToken
+Proto.RefreshInfoCMsg.gameToken
+Proto.ReportPlayerCMsg.gameToken
+Proto.RingRoomCMsg.gameToken
+Proto.RoomMuteCMsg.gameToken
+Proto.RoomTvgCMsg.gameToken
+Proto.RoomVoteCMsg.gameToken
+Proto.TakeMailAttachCMsg.gameToken
+Proto.TournamentGameCfgCMsg.gameToken
+Proto.UpdateLocalStatusCMsg.gameToken
+Proto.UploadRoomReplayCMsg.gameToken
+Proto.UploadRoomSnapShotCMsg.gameToken
+Proto.UploadRoomSramMemCardCMsg.gameToken
+Proto.UploadSramFileIndexReq.add_xzone_sign_md5
+Proto.UploadSramFileIndexReq.token
+Proto.UseItemCMsg.gameToken
+Proto.UsePaidItemCMsg.gameToken
+Proto.UserInfoCMsg.gameToken
+Proto.VipCMsg.gameToken
+Proto.WinLossAndAchievementUploadCMsg.gameToken
+QHallForm::OnLogInVipAndSocialNtf but hall window is not initiated
+QHallForm::OnLogInVipAndSocialNtf but task window is not created
+QHallForm::inner_OnClickConfirm_DuplicateLogin 
+QLoginAccountItem
+QLoginForm
+QLoginForm::ExecuteLogin 
+QLoginForm::Init 
+QLoginForm::JiMiMiJi 
+QLoginForm::JiMiMiJi end, m_test_server_on=true
+QLoginForm::LoadFromLocalInfo 
+QLoginForm::QLoginForm constructor 
+QLoginForm::ShowSever 
+QLoginProgress
+QPushButton#login_btn:hover{
+QPushButton#login_btn:pressed{
+QPushButton#login_btn{
+QSignInRemind
+QTaskForm::OnLogInVipAndSocialNtf m_initiated:%d m_firstQuery:%d
+SIGN_NOT_MATCH
+Sign In Remind
+SignInRemind
+SignInRsp
+SignalObjectAndWait
+System::GetUpTokenAck StartThread failed, uploadEntityId:%d
+System::GetUpTokenAck StartThread succeed, uploadEntityId:%d
+System::GetUpTokenAck failed errId:%d errStr:%s
+System::GetUpTokenAck find upload entity failed, uploadEntityId:%d
+System::GetUpTokenAck succeed
+System::OnUploadReplayReq get upload token from server, filePath:%s
+SystemG_Login::OnGateLoginSMsg errId:%d errStr:%s
+SystemG_Login::OnLoginSMsg, req:%x rsp:%x
+SystemG_Login::OnUserInfoSMsg
+SystemG_Login::OnUserInfoSMsg(this is in main thread) fail, ret:%d
+TVG_SRAM_PERSONAL_SIGN_CHECK_REQ
+TVG_SRAM_XZONE_SIGN_CHECK_REQ
+TVG_SRAM_XZONE_SIGN_REQ
+TVG_YUN_GETUPTOKEN_KEY
+The signature is invalid
+UNASSIGNED_RAKNET_GUID
+UNASSIGNED_SYSTEM_ADDRESS
+URL_LOGIN_ADV
+Unable to parse token length
+Unexpected token.
+WRONG_GAME_TOKEN
+[DEV_LOGIN]
+[LOGIN]
+[LOGIN_TIME_COST]
+[SIGNIN]
+_tWinMain create the(WLoginForm) object 
+background-image:url(:/login/login/light.png)
+background-image:url(:/login/login/light2.png)
+bad color map signature
+border-image: url(:/login/login/Password.png);
+border-image: url(:/login/login/accarrow.png)
+border-image: url(:/login/login/accarrow.png);
+border-image: url(:/login/login/accarrow_down_background.png)
+border-image: url(:/login/login/bg_denglukuang.jpg)
+border-image: url(:/login/login/bg_denglukuang_10001.jpg)
+border-image: url(:/login/login/bg_denglukuang_10002.jpg)
+border-image: url(:/login/login/bg_denglukuang_10003.jpg)
+border-image: url(:/login/login/bg_denglukuang_10004.jpg)
+border-image: url(:/login/login/bg_denglukuang_10005.jpg)
+border-image: url(:/login/login/btn_delete.png);
+border-image: url(:/login/login/btn_denglu.png) 0 0 68 0;
+border-image: url(:/login/login/btn_denglu.png) 34 0 34 0
+border-image: url(:/login/login/btn_denglu.png) 68 0 0 0
+border-image: url(:/login/login/btn_zhuce.png) 0 0 68 0;
+border-image: url(:/login/login/btn_zhuce.png) 34 0 34 0
+border-image: url(:/login/login/btn_zhuce.png) 68 0 0 0
+border-image: url(:/login/login/closeBtn.png) 0 0 38 0
+border-image: url(:/login/login/closeBtn.png) 0 0 38 0;
+border-image: url(:/login/login/closeBtn.png) 19 0 19 0
+border-image: url(:/login/login/closeBtn.png) 38 0 0 0
+border-image: url(:/login/login/minBtn.png) 0 0 38 0
+border-image: url(:/login/login/minBtn.png) 19 0 19 0
+border-image: url(:/login/login/minBtn.png) 38 0 0 0
+border-image: url(:/login/login/versionswitch_btn.png) 0 0 48 0;
+border-image: url(:/login/login/versionswitch_btn.png) 24 0 24 0;
+border-image: url(:/login/login/versionswitch_btn.png) 48 0 0 0;
+border-image:url(:/login/login/light.png)
+border-image:url(:/login/login/shouye.png);
+check personal sign fail
+check xzone sign fail
+error: bad signature
+error: expecting signature box
+evsignal_add
+evsignal_cb
+evsignal_handler
+evsignal_init
+expecting another \u token to begin the second half of a unicode surrogate pair
+funDllSetFunAssignProcessToJobObject
+gameToken
+get xzone sign fail
+go_server\goLogin.cpp
+http://192.168.1.82:18000/login/
+http://client.gotvg.com/report/bug?token=%1&userid=%2&version=%3
+http://gamelogin3.gotvg.com:18000/login/
+http://ranking.gotvg.cn/Gf/admin_gold_finger_apply?token=%1&userid=%2&version=%3
+http://ranking.gotvg.cn/Index/denied.html?token=%1&userid=%2&version=%3
+isLastLogin
+logInOut
+login
+login to gate rsp data unmarshal fail
+login to go login server succeed
+login to go server fail, err:%d errStr:%s
+login to go server fail, rsp data protobuf unmarshal failed
+login to go server req, address:%s account:%s
+login to go server succeed
+login window handle=%x
+loginAddress
+loginLine
+loginPermitted
+loginconnect
+new_ui\task\sign_on\xz_sign_on_component.cpp
+on_refreshSignIn_clicked
+qt_ui\qlogin_form.cpp
+res/login/xml/language0/text.xml
+res/login/xml/language1/text.xml
+retSign
+send PROTOSUB_LS_LOGIN fail
+send PROTOSUB_LS_LOGIN success
+send TVG_SIGN_ON failed
+send TVG_SIGN_ON success
+sign
+signEncrypted
+signIn
+sign_on
+signal
+signed 
+src\google\protobuf\io\tokenizer.cc
+src\loginConnect.cpp
+src\loginout\xz_loginout_system.cpp
+src\moduleG\systemG\systemG_login.cpp
+styles/cn/login_progress_cn.qss
+styles/en/login_progress_en.qss
+task_sign_btn_4
+token
+unsigned 
+userid=%d&token=%s&main=%d&data=%s
+variables in assignment
+void __thiscall boost::uuids::detail::sha1::process_byte(unsigned char)
+warning: support for signed sample data requires use of nonstandard extension to PNM format
+xzDisruptTrackingSystem::OnThreadEnd_OnLoginWindowCreate hardware info=%s|%s

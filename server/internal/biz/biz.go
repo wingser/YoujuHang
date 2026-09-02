@@ -129,15 +129,58 @@ type TaskStatus struct {
 
 // UserStats 是用户等级/经验/游币状态（来自 UserInfo 514 / RefreshInfo 515）
 type UserStats struct {
-	Level     uint64 // 等级（514: 属性 id=1）
-	Exp       uint64 // 总经验（515: 属性 id=10000）
-	ExpToday  uint64 // 当日累计获得经验（程序统计：总经验-当日基线，跨天重置）
-	Gold      uint64 // 游币（515: 属性 id=15）
-	Nick      string // 昵称（514: 属性 id=20000）
-	LevelExp  uint64 // 当前等级已获得经验（514: 属性 id=10001）
-	LevelNeed uint64 // 升到下一级所需经验（514: 属性 id=10002）
-	Tasks     []TaskStatus // 个人任务（签到/在线/连续签到/礼包）
-	TeamTasks []TaskStatus // 战队任务（战盟挂机/战队捐献），仅已加入战队的账号开启
+	Level      uint64 // 等级（514: 属性 id=1）
+	Exp        uint64 // 总经验（515: 属性 id=10000）
+	ExpToday   uint64 // 当日累计获得经验（程序统计：总经验-当日基线，跨天重置）
+	Gold       uint64 // 游币（515: 属性 id=15）
+	Nick       string // 昵称（514: 属性 id=20000）
+	// LevelStart 当前等级的起始累计经验（514: 属性 id=10001）
+	// LevelNext 下一等级的起始累计经验（514: 属性 id=10002）
+	//
+	// 【重要更正 2026-09-02，抓包 + 客户端逆向实证】
+	// 这两个字段 **不是**「已获得 / 升级所需」，而是游戏内置等级经验表的
+	// **相邻两项**（X-Zone.exe 中 off=0xbd0fd0 起的 1501 项 uint32 递增数组）：
+	//
+	//	10001 = 表[等级-1]（当前等级起始）
+	//	10002 = 表[等级]  （下一等级起始）
+	//
+	// 三个账号交叉验证，表索引完全吻合：
+	//	赛博大善人 Lv9  → 10001=1040(表[8])      10002=1260(表[9])
+	//	chouyoku  Lv178 → 10001=1971612(表[177]) 10002=1994496(表[178])
+	//	wingser   Lv184 → 10001=2110896(表[183]) 10002=2134572(表[184])
+	//
+	// 因此它们是**静态值**，本就不随经验增长而变化（不是服务器"不刷新"）。
+	// 真正的升级进度必须用总经验 Exp(10000) 推算，见 LevelGot / LevelTotal。
+	// 旧实现直接用 10001/10002 当分子分母，导致百分比数值错误且长期不变。
+	LevelStart uint64 // 当前等级的起始累计经验（514: 属性 id=10001）
+	LevelNext  uint64 // 下一等级的起始累计经验（514: 属性 id=10002）
+	Tasks      []TaskStatus // 个人任务（签到/在线/连续签到/礼包）
+	TeamTasks  []TaskStatus // 战队任务（战盟挂机/战队捐献），仅已加入战队的账号开启
+}
+
+// expScale 总经验字段（10000）相对等级体系经验的倍率。
+//
+// 实证：赛博大善人总经验 120527、10001=1040 → (120527-104000)/100 = 165，
+// 与客户端显示的 165 完全一致，故倍率为 100。
+const expScale = 100
+
+// LevelGot 返回当前等级内**已获得**的经验（等级体系单位）。
+//
+// 见 LevelStart 的字段说明：进度必须由总经验推算，不能用 10001 自身。
+func (s UserStats) LevelGot() uint64 {
+	base := s.LevelStart * expScale
+	if s.Exp <= base {
+		return 0
+	}
+	return (s.Exp - base) / expScale
+}
+
+// LevelTotal 返回升到下一级所需的**总**经验（等级体系单位），即 10002-10001。
+func (s UserStats) LevelTotal() uint64 {
+	if s.LevelNext <= s.LevelStart {
+		return 0
+	}
+	return s.LevelNext - s.LevelStart
 }
 
 // StatsObserver 是用户状态变化回调（供 UI 展示）
@@ -510,16 +553,21 @@ func (w *Worker) refresh(ctx context.Context) error {
 
 // queryUserInfo 查询 UserInfo(514) 并更新等级/昵称/升级进度，供主循环周期性调用。
 //
-// 属性 id 对照（2026-08-31 真机实测确认，chouyoku Lv.178 / wingser Lv.184 交叉验证）：
+// 属性 id 对照（2026-09-02 抓包 + 客户端逆向修正，详见 UserStats 字段说明）：
 //   id=1     等级（值在 f2）
 //   id=20000 昵称（值在 f4）
-//   id=10000 累计总经验（值在 f3；此处不写入 Exp——
+//   id=10000 累计总经验（值在 f3；不直接写入 Exp——
 //            Exp 与当日经验基线由 RefreshInfo(515) 的 parseStats 统一维护，
 //            在此覆盖会污染「当日累计经验」的计算，故只取升级进度相关字段）
-//   id=10001 当前等级已获得经验（值在 f3）
-//   id=10002 升到下一级所需经验（值在 f3）
-// 实测样例：Lv.178 → 10001=1971612 / 10002=1994496（98.85%）；
-//           Lv.184 → 10001=2110896 / 10002=2134572（98.89%）。
+//   id=10001 当前等级起始累计经验（值在 f3）
+//   id=10002 下一等级起始累计经验（值在 f3）
+//
+// 实测样例：
+//	赛博大善人 Lv9  → 10001=1040    / 10002=1260    ；总经验 120527
+//	                  → 已获得 (120527-1040*100)/100 = 165，总需 1260-1040 = 220
+//	                  （与游戏客户端显示的 165/220 完全一致）
+//	chouyoku  Lv178 → 10001=1971612 / 10002=1994496
+//	wingser   Lv184 → 10001=2110896 / 10002=2134572
 func (w *Worker) queryUserInfo(ctx context.Context) error {
 	body := protocol.FieldsWithAuth(w.sess.UID, w.sess.Token)
 	resp, err := w.sess.Gate.Game(ctx, w.sess.GateAddr, protocol.UserInfoCMsg, body)
@@ -551,11 +599,11 @@ func (w *Worker) queryUserInfo(ctx context.Context) error {
 				w.statsMu.Unlock()
 			case 10001:
 				w.statsMu.Lock()
-				w.stats.LevelExp = proto.GetVarint(ap, 3)
+				w.stats.LevelStart = proto.GetVarint(ap, 3)
 				w.statsMu.Unlock()
 			case 10002:
 				w.statsMu.Lock()
-				w.stats.LevelNeed = proto.GetVarint(ap, 3)
+				w.stats.LevelNext = proto.GetVarint(ap, 3)
 				w.statsMu.Unlock()
 			case 10000:
 				// 累计总经验（值在 f3）。514 也携带此字段，但 Exp 与「当日经验基线」
@@ -588,7 +636,7 @@ func (w *Worker) queryAndLogStats(ctx context.Context) error {
 	w.log.Info("用户信息",
 		"nick", s.Nick, "level", s.Level,
 		"exp", s.Exp, "gold", s.Gold,
-		"lv_exp", s.LevelExp, "lv_need", s.LevelNeed)
+		"lv_got", s.LevelGot(), "lv_need", s.LevelTotal())
 	return nil
 }
 

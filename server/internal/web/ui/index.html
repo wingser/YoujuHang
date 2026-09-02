@@ -358,10 +358,12 @@ function opsButtons(a) {
     '<button class="red" onclick="removeAccount(\'' + n + '\')">删除</button></div>';
 }
 
-// 渲染升级进度（后端提供 level_exp / level_need；缺失时不展示）
+// 渲染升级进度（后端提供 level_got / level_need；缺失时不展示）
+// level_got = 当前等级内已获得经验（由总经验推算，随挂机实时变化）
+// level_need = 升到下一级所需总经验（10002-10001）
 function levelProgress(a) {
   if (!a.level_need || a.level_need <= 0) return "";
-  var cur = a.level_exp || 0;
+  var cur = a.level_got || 0;
   var need = a.level_need;
   var pct = Math.round(cur * 10000 / need) / 100; // 保留 2 位小数，区分 98.85% vs 98.89%
   if (pct > 100) pct = 100;

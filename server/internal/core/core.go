@@ -55,8 +55,10 @@ type AccountState struct {
 	Exp              uint64  `json:"exp"`
 	ExpToday         uint64          `json:"exp_today"`
 	Gold             uint64          `json:"gold"`
-	LevelExp         uint64          `json:"level_exp"`  // 当前等级已获得经验（514 属性 10001）
-	LevelNeed        uint64          `json:"level_need"` // 升到下一级所需经验（514 属性 10002）
+	// LevelGot 当前等级内**已获得**经验，由总经验推算（见 biz.UserStats.LevelGot）
+	LevelGot uint64 `json:"level_got"`
+	// LevelNeed 升到下一级所需**总**经验 = 10002-10001
+	LevelNeed uint64 `json:"level_need"`
 	LastActive       string          `json:"last_active,omitempty"`
 	Tasks            []biz.TaskStatus `json:"tasks"`
 	TeamTasks        []biz.TaskStatus `json:"team_tasks"`
@@ -733,8 +735,8 @@ func (rt *accountRuntime) updateStats(s biz.UserStats) {
 	rt.st.Exp = s.Exp
 	rt.st.ExpToday = s.ExpToday
 	rt.st.Gold = s.Gold
-	rt.st.LevelExp = s.LevelExp
-	rt.st.LevelNeed = s.LevelNeed
+	rt.st.LevelGot = s.LevelGot()
+	rt.st.LevelNeed = s.LevelTotal()
 	rt.st.Tasks = append([]biz.TaskStatus(nil), s.Tasks...)
 	rt.st.TeamTasks = append([]biz.TaskStatus(nil), s.TeamTasks...)
 	rt.st.LastActive = time.Now().Format("2006-01-02 15:04:05")

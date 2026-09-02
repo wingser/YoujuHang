@@ -6,8 +6,10 @@ package main
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"flag"
 	"fmt"
+	"io/fs"
 	"log/slog"
 	"net"
 	"os"
@@ -24,6 +26,13 @@ import (
 	"youjuhang/internal/tray"
 	"youjuhang/internal/web"
 )
+
+// version 程序版本号，由构建脚本通过
+//
+//	-ldflags "-X main.version=1.0.0"
+//
+// 注入。直接 go build / go run 未注入时为 "dev"（开发版，非正式发布）。
+var version = "dev"
 
 func main() {
 	// 必须最先执行：把进程级标准错误重定向到 logs/stderr.log。
@@ -46,7 +55,15 @@ func main() {
 	noBrowser := flag.Bool("no-browser", false, "启动时不自动打开浏览器")
 	console := flag.Bool("console", false, "日志输出到控制台（调试用），默认写入 logs/youjuhang.log")
 	checkRNG := flag.Bool("check-rng", false, "只检查 crypto/rand 依赖（ProcessPrng 可用性 + RtlGenRandom 兜底）后退出；不启动挂机")
+	showVersion := flag.Bool("version", false, "打印版本号后退出")
 	flag.Parse()
+
+	if *showVersion {
+		// 注：-H windowsgui 构建无控制台，Windows 上本输出不可见；
+		// 该参数主要面向 Linux / -console 场景，版本号同时也会写入启动日志。
+		fmt.Printf("youjuhang %s (%s/%s, %s)\n", version, runtime.GOOS, runtime.GOARCH, runtime.Version())
+		return
+	}
 
 	if *checkRNG {
 		// 诊断模式：仅探测随机源并把结论写盘，不启动任何后台逻辑。
@@ -80,18 +97,36 @@ func main() {
 	// 结果同时写入日志与 startup_error.txt，保证下次排查有据可依。
 	reportAbnormalExit()
 
-	cfg, err := config.Load(resolveConfigPath(*cfgPath))
+	// 统一用解析后的路径：加载与后续保存必须指向同一文件，
+	// 否则"双击 exe 启动（工作目录≠exe 目录）"时配置会被写到别处。
+	resolvedCfg := resolveConfigPath(*cfgPath)
+
+	cfg, err := config.Load(resolvedCfg)
 	if err != nil {
-		slog.Error("配置加载失败", "path", *cfgPath, "err", err)
-		showStartupError("配置加载失败：" + err.Error())
-		os.Exit(1)
+		// 文件不存在（首次运行 / 只发布了主程序）：用内置缺省配置启动，
+		// 而不是直接退出——windowsgui 下"闪退且无任何提示"对用户极不友好。
+		if errors.Is(err, fs.ErrNotExist) {
+			cfg = config.DefaultConfig()
+			slog.Warn("配置文件不存在，已使用内置缺省配置启动；在 Web 控制台添加账号后会自动生成",
+				"path", resolvedCfg)
+			if saveErr := cfg.Save(resolvedCfg); saveErr != nil {
+				// 写盘失败（如装在 Program Files 无写权限）不影响运行，
+				// 只是配置无法持久化，用户可手动指定 -config 到可写目录。
+				slog.Warn("生成默认配置文件失败（不影响运行，但配置无法持久化）",
+					"path", resolvedCfg, "err", saveErr)
+			}
+		} else {
+			slog.Error("配置加载失败", "path", resolvedCfg, "err", err)
+			showStartupError("配置加载失败：" + err.Error())
+			os.Exit(1)
+		}
 	}
 	trace("config loaded")
 
 	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
 	defer stop()
 
-	mgr := core.NewManager(*cfgPath, cfg)
+	mgr := core.NewManager(resolvedCfg, cfg)
 
 	webAddr := resolveWebAddr(*webFlag, cfg.WebAddr)
 	if !isLoopbackAddr(webAddr) {
@@ -124,7 +159,7 @@ func main() {
 	}
 	trace("browser opened")
 
-	slog.Info("youjuhang 启动", "accounts", len(cfg.Accounts), "web", srv.Addr())
+	slog.Info("youjuhang 启动", "version", version, "accounts", len(cfg.Accounts), "web", srv.Addr())
 
 	// 存活心跳：每分钟刷新一次。既是崩溃取证依据，也是守护程序的监视信号。
 	// 必须在拉起守护程序**之前**写好，否则守护程序首次检查读不到文件。

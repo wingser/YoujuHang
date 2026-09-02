@@ -26,6 +26,11 @@ echo 使用 Go: %GO%
 cd /d "%~dp0"
 if not exist dist mkdir dist
 
+REM 发布版本号：通过 -X main.version 注入到程序（启动日志与 -version 参数可读）。
+REM 发新版时只需改这一行。
+set "VERSION=1.0.0"
+echo 版本: %VERSION%
+
 echo.
 echo == 生成资源文件（manifest）==
 set "RSRC="
@@ -53,13 +58,13 @@ set "GOOS=windows"
 echo.
 echo == 构建 64 位版本 ==
 set "GOARCH=amd64"
-%GO% build -trimpath -ldflags "-s -w -H windowsgui" -o dist\youjuhang-win64.exe ./cmd\youjuhang
+%GO% build -trimpath -ldflags "-s -w -H windowsgui -X main.version=%VERSION%" -o dist\youjuhang-win64.exe ./cmd/youjuhang
 if errorlevel 1 goto :err
 
 echo.
 echo == 构建 32 位版本 ==
 set "GOARCH=386"
-%GO% build -trimpath -ldflags "-s -w -H windowsgui" -o dist\youjuhang-win32.exe ./cmd\youjuhang
+%GO% build -trimpath -ldflags "-s -w -H windowsgui -X main.version=%VERSION%" -o dist\youjuhang-win32.exe ./cmd/youjuhang
 if errorlevel 1 goto :err
 
 echo.
@@ -75,7 +80,7 @@ if "%GUARD_BUILD%"=="0" (
 ) else (
     echo 源码有变化，重新构建守护进程...
     set "GOARCH=amd64"
-    %GO% build -trimpath -ldflags "-s -w -H windowsgui" -o dist\youjuhang-guard.exe ./cmd\guard
+    %GO% build -trimpath -ldflags "-s -w -H windowsgui" -o dist\youjuhang-guard.exe ./cmd/guard
     if errorlevel 1 goto :err
     echo dist\youjuhang-guard.exe（64 位；32 位主程序不支持守护，缺失时主程序独立运行）
 )
@@ -96,6 +101,7 @@ if "%COPY_CFG%"=="1" (
 
 echo.
 echo 构建完成：
+echo   版本: %VERSION%
 echo   dist\youjuhang-win64.exe   64 位（Win7 x64 / Win10 x64，GUI 无控制台窗口）
 echo   dist\youjuhang-win32.exe   32 位（Win7 x86 / x64 均可运行，GUI 无控制台窗口）
 echo   dist\youjuhang-guard.exe   守护进程（32 位主程序尚不支持守护，缺失时主程序独立运行）

@@ -138,6 +138,33 @@ func IsExpired(expireDate string, now time.Time) bool {
 	return today.After(exp)
 }
 
+// DefaultConfig 返回程序内置缺省配置。
+//
+// 为什么需要（2026-09-02，为"只发布主程序"场景）：
+// 发布时可能只带 exe 不带 accounts.yaml。此前 Load 读不到文件即返回错误、
+// main 直接 os.Exit(1)，而 -H windowsgui 无控制台，用户双击只看到"闪退"、
+// 没有任何提示，体验极差。改为用缺省配置启动：Web 控制台照常可用，
+// 用户在页面上添加账号后配置会自动写盘生成。
+//
+// 缺省原则：
+//   - 自动化功能**默认开启**（签到/领奖/商城/挂机/捐献），这是本程序的核心价值；
+//   - 网络与监听取最安全值：LoginAddr/WebAddr 留空，
+//     由 gate.New 与 main.resolveWebAddr 兜底为官方登录服与 127.0.0.1:29090（仅本机）。
+func DefaultConfig() *Config {
+	return &Config{
+		RefreshMinutes:       10,   // biz 侧还有兜底（<=0 时按 10 分钟）
+		CheckInEnabled:       true, // 每日签到
+		AutoClaim:            true, // 任务奖励自动领取
+		MallEnabled:          true, // 商城礼包（每月 1-7 日）
+		RoomHangEnabled:      true, // 战盟房间挂机（仅已加入战队的账号生效）
+		ContributeEnabled:    true, // 战队捐献
+		ContributeDaily:      3000,
+		ContributeMinBalance: 3000,
+		ContributeStep:       1000,
+		// LoginAddr / WebAddr / LogDir 留空，由下游兜底
+	}
+}
+
 // Load 从文件加载配置并校验
 func Load(path string) (*Config, error) {
 	raw, err := os.ReadFile(path)

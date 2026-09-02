@@ -84,9 +84,18 @@ if defined SYSO_MOVED (
 )
 
 echo.
-echo == 复制配置文件到 dist ==
-copy /y configs\accounts.yaml dist\accounts.yaml >nul
-echo dist\accounts.yaml
+echo == 复制配置样例到 dist ==
+REM 仅当 dist 下尚无配置时才复制样例。
+REM 否则会拿脱敏样例覆盖掉用户已配好的真实账号（含密码）——2026-09-02 修正。
+set "COPY_CFG=1"
+if exist dist\accounts.yaml set "COPY_CFG=0"
+if "%COPY_CFG%"=="1" (
+    copy configs\accounts.yaml dist\accounts.yaml >nul
+    if errorlevel 1 goto :err
+    echo dist\accounts.yaml（已由样例生成，请改成你的真实账号）
+) else (
+    echo dist\accounts.yaml 已存在，保留现有配置不覆盖
+)
 
 if "%BUILD_ERR%"=="1" goto :err
 

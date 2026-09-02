@@ -175,7 +175,7 @@ contribute_min_balance: 3000  # 余额低于此值不捐
 contribute_step: 1000       # 单次捐献量
 
 accounts:
-  - name: chouyoku
+  - name: youname
     password: "xxxxx"
     mac: "2E-4A-62-F7-D7-F3"   # 硬件信息上报
     enabled: true
@@ -238,8 +238,8 @@ logs/<账号名>.log     每个账号的独立日志
 账号日志示例：
 
 ```
-用户信息 nick=wingser level=184 exp=... gold=...
-任务领取成功 id=2153
+用户信息 nick=name level=184 exp=... gold=...
+任务领取成功 id=2111
 签到响应 ret=1
 商城礼包领取成功 pkg=1
 检测到账号已加入战队，开启战队任务（挂机/捐献）

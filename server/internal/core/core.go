@@ -815,6 +815,55 @@ func (m *Manager) noteLoginRejected(ctx context.Context, name string, rt *accoun
 	return true
 }
 
+// loginStagger 多账号错峰登录的最小间隔。
+//
+// 为什么要错峰（2026-09-04）：程序启动或「全部启动」时，所有账号会在同一时刻
+// 发起登录，表现为同一 IP 的批量登录请求，容易被风控判定为异常行为。
+// 让各账号排队、相邻两次登录至少间隔 loginStagger，可显著降低该风险。
+//
+// 实现要点：节流**不能**放在 StartAll 的循环里——那里持有 m.mu，
+// sleep 会阻塞所有 Web API 与状态查询（甚至表现为卡死）。
+// 必须放在各账号自己的协程内、登录之前，见 runAccount。
+const loginStagger = 10 * time.Second
+
+// 进程级登录节流（预占位模式）：
+// 每个协程算出自己的登录时刻后**立即**把 nextLoginAt 往后推一个间隔，
+// 后来的协程自动排到它后面；实际等待在锁外进行，不阻塞其他协程调度。
+var (
+	loginMu     sync.Mutex
+	nextLoginAt time.Time
+)
+
+// waitLoginTurn 等待属于自己的登录时隙，保证与上一次登录至少间隔 interval。
+//
+// 返回 false 表示 ctx 已取消，调用方应直接返回而不再登录。
+// interval 作为参数传入是为了可测试（测试用毫秒级，避免真等 10 秒）。
+func waitLoginTurn(ctx context.Context, log *slog.Logger, name string, interval time.Duration) bool {
+	loginMu.Lock()
+	now := time.Now()
+	if nextLoginAt.IsZero() || nextLoginAt.Before(now) {
+		// 首次登录，或上次排的时隙已过期：立即可用
+		nextLoginAt = now
+	}
+	startAt := nextLoginAt
+	nextLoginAt = startAt.Add(interval)
+	loginMu.Unlock()
+
+	wait := time.Until(startAt)
+	if wait <= 0 {
+		return true // 本协程是队首，无需等待
+	}
+	if log != nil {
+		log.Info("错峰登录：排队等待", "account", name, "wait", wait.Round(time.Second))
+	}
+	select {
+	case <-time.After(wait):
+		return true
+	case <-ctx.Done():
+		return false
+	}
+}
+
 // runAccount 单账号运行循环：登录 → 业务 → 失效重登
 func (m *Manager) runAccount(ctx context.Context, name string, rt *accountRuntime) {
 	m.ensureMAC(name, rt)
@@ -834,6 +883,12 @@ func (m *Manager) runAccount(ctx context.Context, name string, rt *accountRuntim
 	backoff := 5 * time.Second
 	for {
 		if ctx.Err() != nil {
+			return
+		}
+		// 多账号错峰登录：与上一次登录（可能是其他账号）至少间隔 loginStagger。
+		// 覆盖首次启动、全部启动，以及被踢后的重新登录；队首无需等待，
+		// ctx 取消时立即返回（不拖慢停止/退出）。
+		if !waitLoginTurn(ctx, lg, name, loginStagger) {
 			return
 		}
 		rt.setStatus(StatusLoginFail, "")

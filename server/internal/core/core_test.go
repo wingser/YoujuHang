@@ -7,7 +7,9 @@ import (
 	"log/slog"
 	"os"
 	"path/filepath"
+	"sort"
 	"strings"
+	"sync"
 	"testing"
 	"time"
 
@@ -635,5 +637,75 @@ func TestAddAccountSetsExpireDate(t *testing.T) {
 	m2.mu.Unlock()
 	if got2 != "" {
 		t.Errorf("days=0 应为永久（空），实际 %q", got2)
+	}
+}
+
+// TestWaitLoginTurnStaggers 多账号并发登录必须排队：相邻两次登录间隔 >= interval。
+//
+// 背景（2026-09-04 需求）：程序启动或「全部启动」时所有账号会同时发起登录，
+// 表现为同一 IP 的批量登录，易被风控判定异常。
+// 这里用毫秒级 interval 验证排队逻辑本身（真机等 10 秒太慢）。
+func TestWaitLoginTurnStaggers(t *testing.T) {
+	// 重置进程级节流状态，避免受其他用例影响
+	loginMu.Lock()
+	nextLoginAt = time.Time{}
+	loginMu.Unlock()
+
+	const interval = 100 * time.Millisecond
+	const n = 4
+	// 容差说明：Windows 系统时钟精度约 15ms，叠加 goroutine 调度抖动，
+	// 实测单次间隔可能低于 interval。故取 interval 的 70% 作为下限——
+	// 既能确认「确实错峰了」，又不会因计时抖动误报（生产环境 10s 间隔下这点偏差无意义）。
+	minGap := interval * 7 / 10
+
+	var wg sync.WaitGroup
+	stamps := make([]time.Time, n)
+	start := time.Now()
+	for i := 0; i < n; i++ {
+		wg.Add(1)
+		go func(idx int) {
+			defer wg.Done()
+			if waitLoginTurn(context.Background(), nil, "acc", interval) {
+				stamps[idx] = time.Now()
+			}
+		}(i)
+	}
+	wg.Wait()
+
+	sort.Slice(stamps, func(a, b int) bool { return stamps[a].Before(stamps[b]) })
+	for i := 1; i < n; i++ {
+		gap := stamps[i].Sub(stamps[i-1])
+		if gap < minGap {
+			t.Errorf("第 %d 与第 %d 次登录间隔 %v，小于下限 %v（未有效错峰）",
+				i, i+1, gap, minGap)
+		}
+	}
+	// 队首不应被无谓推迟（允许少量调度抖动）
+	if d := stamps[0].Sub(start); d > interval {
+		t.Errorf("首个登录者被不必要地推迟了 %v", d)
+	}
+}
+
+// TestWaitLoginTurnCanceled ctx 取消时应立即返回 false，不拖慢停止/退出流程。
+func TestWaitLoginTurnCanceled(t *testing.T) {
+	loginMu.Lock()
+	nextLoginAt = time.Now().Add(5 * time.Second) // 人为制造较长等待
+	loginMu.Unlock()
+
+	ctx, cancel := context.WithTimeout(context.Background(), 50*time.Millisecond)
+	defer cancel()
+
+	done := make(chan bool, 1)
+	go func() {
+		done <- waitLoginTurn(ctx, nil, "acc", time.Second)
+	}()
+
+	select {
+	case ok := <-done:
+		if ok {
+			t.Error("ctx 取消时应返回 false")
+		}
+	case <-time.After(2 * time.Second):
+		t.Fatal("ctx 取消后 waitLoginTurn 未及时返回")
 	}
 }

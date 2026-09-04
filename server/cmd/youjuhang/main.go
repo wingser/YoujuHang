@@ -48,7 +48,7 @@ func main() {
 	defer recoverPanic()
 	// 清空上次启动的跟踪记录，重新开始分阶段留痕。
 	// 只要进程开始执行就会创建此文件，用于判断程序被拦截/崩溃时执行到了哪一步。
-	_ = os.Remove(filepath.Join(exeDir(), "startup_error.txt"))
+	_ = os.Remove(startupErrPath())
 	trace("program start")
 	cfgPath := flag.String("config", "accounts.yaml", "配置文件路径")
 	webFlag := flag.String("web", "", "Web 控制台监听地址（覆盖配置文件 web_addr；默认 127.0.0.1:29090 仅本机可访问）")
@@ -158,6 +158,17 @@ func main() {
 		openBrowser(url)
 	}
 	trace("browser opened")
+
+	// 启动阶段全部走完 → 说明启动成功，清掉跟踪文件。
+	//
+	// 为什么成功后要删（2026-09-04 用户反馈）：该文件名为 startup_error.txt，
+	// 正常启动后仍留在 exe 目录，容易被误认为"启动报错"（实际只是分阶段留痕，
+	// 真正的错误会带 "======== ERROR ========" 标记）。
+	// 保留它的唯一意义是**启动中途崩溃**时定位卡在第几步，成功后即无用。
+	//
+	// 安全性：删除不影响后续取证——运行中若真发生崩溃，
+	// writeStartupError() 会重新创建该文件并写入 ERROR 段落。
+	_ = os.Remove(startupErrPath())
 
 	slog.Info("youjuhang 启动", "version", version, "accounts", len(cfg.Accounts), "web", srv.Addr())
 
@@ -503,10 +514,20 @@ func recoverPanic() {
 	}
 }
 
+// startupErrPath 启动跟踪/错误文件路径（exe 同目录）。
+//
+// 生命周期（2026-09-04 修正）：
+//   - 启动时先删除，再逐阶段留痕，用于定位"启动到一半无声崩溃"卡在第几步；
+//   - 启动全部成功后删除，避免用户误认为"启动报错"（文件名含 error 易误导）；
+//   - 运行中崩溃时由 writeStartupError 重新创建并写入 ERROR 段落。
+func startupErrPath() string {
+	return filepath.Join(exeDir(), "startup_error.txt")
+}
+
 // trace 追加一行启动跟踪到 exe 目录 startup_error.txt。
 // 不依赖 slog（日志文件可能未初始化），用于定位 GUI 模式下程序执行到哪一步崩溃。
 func trace(step string) {
-	f, err := os.OpenFile(filepath.Join(exeDir(), "startup_error.txt"),
+	f, err := os.OpenFile(startupErrPath(),
 		os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0644)
 	if err != nil {
 		return
@@ -516,8 +537,9 @@ func trace(step string) {
 }
 
 // writeStartupError 把错误信息追加写入 exe 目录下的 startup_error.txt，便于排查。
+// 文件已存在时追加（保留此前的阶段留痕），不存在时自动创建（运行中崩溃的场景）。
 func writeStartupError(msg string) {
-	f, err := os.OpenFile(filepath.Join(exeDir(), "startup_error.txt"),
+	f, err := os.OpenFile(startupErrPath(),
 		os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0644)
 	if err != nil {
 		return

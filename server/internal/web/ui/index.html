@@ -40,6 +40,10 @@
 
   /* --- 第 1 列：账号名 + 状态 --- */
   .acc-name { font-weight:bold; font-size:13.5px; color:#1a2332; display:block; }
+  .acc-nick {
+    font-size:11.5px; color:#5a6675; margin-top:1px;
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+  }
   .acc-status {
     display:inline-flex; align-items:center; gap:3px; margin-top:3px;
     padding:1px 8px; border-radius:10px; font-size:11px; font-weight:bold; white-space:nowrap;
@@ -527,6 +531,10 @@ function renderStatus(list) {
     // --- 列 1：账号名 + 状态 + 挂机到期日 + 当日经验 ---
     html += '<td class="c-name">';
     html += '<span class="acc-name">' + escapeHtml(a.name) + '</span>';
+    // 角色昵称显示在账号 ID 下一行
+    if (a.nick) {
+      html += '<div class="acc-nick" title="角色昵称：' + escapeHtml(a.nick) + '">' + escapeHtml(a.nick) + '</div>';
+    }
     html += '<span class="acc-status ' + stClass + '"' + errTip + '>' + escapeHtml(stText) + '</span>';
     html += expireHtml(a);
     // 当日经验仅在今日确有进账时展示，避免未运行账号出现无意义的 +0
@@ -538,12 +546,11 @@ function renderStatus(list) {
 
     // --- 列 2：基础信息 ---
     html += '<td class="c-info">';
-    if (a.nick || a.level) {
-      html += '<div class="acc-meta" title="' + escapeHtml(a.nick || "") + ' · Lv.' + (a.level || 0) + '">' +
-              '<b>' + escapeHtml(a.nick || "-") + '</b> · Lv.<b>' + (a.level || "-") + '</b></div>';
+    if (a.level) {
+      html += '<div class="acc-meta">Lv.<b>' + (a.level || "-") + '</b></div>';
       html += '<div class="acc-meta">经验 <b>' + fmtNum(a.exp) + '</b> · 币 <b>' + fmtNum(a.gold) + '</b></div>';
     } else {
-      html += '<div class="acc-meta"><span class="dim">— · Lv.-</span></div>';
+      html += '<div class="acc-meta"><span class="dim">Lv.-</span></div>';
       html += '<div class="acc-meta"><span class="dim">经验 - · 币 -</span></div>';
     }
     html += levelProgress(a);

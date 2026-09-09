@@ -20,6 +20,9 @@ const (
 	ClaimPath = "/index.php?m=index&a=ajax_get_package"
 	// WechatPackageID 微信绑定礼包 ID（每月 1-7 日可领）
 	WechatPackageID = 1
+	// userAgent 伪装成游聚客户端内嵌浏览器（IE7 兼容模式）。
+	// 实测服务端会按 UA 返回不同页面模板，改错会导致列表 HTML 结构变化、解析失败。
+	userAgent = "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.2; WOW64; Trident/7.0)"
 )
 
 // Result 是领取接口的 JSON 响应
@@ -49,7 +52,7 @@ func (c *Client) Claim(ctx context.Context, uid uint32, token string, pkgID int)
 	if err != nil {
 		return nil, err
 	}
-	req.Header.Set("User-Agent", "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.2; WOW64; Trident/7.0)")
+	req.Header.Set("User-Agent", userAgent)
 	resp, err := c.hc.Do(req)
 	if err != nil {
 		return nil, fmt.Errorf("mall home: %w", err)
@@ -70,7 +73,7 @@ func (c *Client) Claim(ctx context.Context, uid uint32, token string, pkgID int)
 	req2.Header.Set("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8")
 	req2.Header.Set("Referer", home)
 	req2.Header.Set("X-Requested-With", "XMLHttpRequest")
-	req2.Header.Set("User-Agent", "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.2; WOW64; Trident/7.0)")
+	req2.Header.Set("User-Agent", userAgent)
 	for _, ck := range cookies {
 		req2.AddCookie(ck)
 	}

@@ -62,6 +62,8 @@ type AccountState struct {
 	LastActive       string          `json:"last_active,omitempty"`
 	Tasks            []biz.TaskStatus `json:"tasks"`
 	TeamTasks        []biz.TaskStatus `json:"team_tasks"`
+	// Avatar 经验头像状态（基础信息列展示；nil=尚未获取）。见 biz.AvatarInfo。
+	Avatar *biz.AvatarInfo `json:"avatar,omitempty"`
 	ExpireDate       string          `json:"expire_date,omitempty"` // 挂机到期日 YYYY-MM-DD，空=永久
 	Expired          bool            `json:"expired"`               // 是否已过期（后端按日期计算）
 }
@@ -739,6 +741,8 @@ func (rt *accountRuntime) updateStats(s biz.UserStats) {
 	rt.st.LevelNeed = s.LevelTotal()
 	rt.st.Tasks = append([]biz.TaskStatus(nil), s.Tasks...)
 	rt.st.TeamTasks = append([]biz.TaskStatus(nil), s.TeamTasks...)
+	avatar := s.Avatar
+	rt.st.Avatar = &avatar
 	rt.st.LastActive = time.Now().Format("2006-01-02 15:04:05")
 	rt.mu.Unlock()
 }

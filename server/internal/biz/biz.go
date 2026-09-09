@@ -54,6 +54,9 @@ func (w *Worker) rolloverIfNeeded() {
 	w.checkInKey = 0
 	w.checkInOK = false
 	w.mallKey = 0
+	// 经验头像：每天重新检查。头像有效期通常 30 天且会过期，
+	// 不清则第二天起不再检查，过期后加成丢失且无人察觉。
+	w.avatarKey = 0
 	w.statsMu.Unlock()
 
 	// 任务领取记录：新一天的任务可以重新领取
@@ -156,6 +159,18 @@ type UserStats struct {
 	LevelNext  uint64 // 下一等级的起始累计经验（514: 属性 id=10002）
 	Tasks      []TaskStatus // 个人任务（签到/在线/连续签到/礼包）
 	TeamTasks  []TaskStatus // 战队任务（战盟挂机/战队捐献），仅已加入战队的账号开启
+	// Avatar 经验头像状态（2026-09-09 起**不再作为任务**展示——佩戴头像不是"做任务"，
+	// 放在任务徽章里语义错误；改为随状态推送，由前端渲染在「基础信息」列）。
+	Avatar AvatarInfo
+}
+
+// AvatarInfo 经验头像的当前状态（基础信息列展示用）
+type AvatarInfo struct {
+	Worn bool    `json:"worn"`           // 是否已佩戴加成头像
+	Name string  `json:"name,omitempty"` // 头像名称，如「铁血士兵」
+	Exp  float64 `json:"exp,omitempty"`  // 经验加成倍数，如 1.4
+	Left int     `json:"left,omitempty"` // 剩余天数；mall.LeftDaysForever(9999) 表示永久
+	Note string  `json:"note,omitempty"` // 未佩戴时的说明（功能未启用/无可用/失败原因）
 }
 
 // expScale 总经验字段（10000）相对等级体系经验的倍率。
@@ -209,6 +224,15 @@ type Worker struct {
 	checkInOK    bool      // 最近一次签到是否成功（ret==1）
 	mallKey      int       // 最近一次处理商城领取的日期 key
 	mallOKKey    int       // 最近一次商城领取成功的月份 key（年*100+月）
+
+	// 头像装扮：自动佩戴经验加成最高的头像，详见 avatar.go。
+	// 字段均由 statsMu 保护（buildTasks 会在挂机 goroutine 中读取）。
+	avatarKey    int     // 最近一次处理头像的日期 key（当天只处理一次）
+	avatarGoodID int     // 当前佩戴的头像商品 ID（0=未知/未佩戴）
+	avatarExp    float64 // 当前佩戴头像的经验加成倍数（0=未知）
+	avatarLeft   int     // 当前佩戴头像剩余天数（mall.LeftDaysForever=永久）
+	avatarName   string  // 当前佩戴头像名称
+	avatarMsg    string  // 最近一次处理结果的说明（UI 展示用）
 	claimedDay   int       // claimedToday 对应的日期
 	claimedToday map[uint64]bool
 
@@ -299,6 +323,9 @@ func (w *Worker) Run(ctx context.Context) error {
 	}
 	if err := w.maybeMallClaim(ctx); err != nil && !errors.Is(err, ErrSessionExpired) {
 		w.log.Warn("商城领取异常", "err", err)
+	}
+	if err := w.maybeDressAvatar(ctx); err != nil && !errors.Is(err, ErrSessionExpired) {
+		w.log.Warn("头像佩戴异常", "err", err)
 	}
 	if err := w.maybeContribute(ctx); err != nil && !errors.Is(err, ErrSessionExpired) {
 		w.log.Warn("贡献捐献异常", "err", err)
@@ -1024,6 +1051,12 @@ func (w *Worker) buildTasks() {
 	checkInKey := w.checkInKey
 	checkInOK := w.checkInOK
 	mallOKKey := w.mallOKKey
+	// 头像装扮（由 avatar.go 的 maybeDressAvatar 写入）
+	avatarID := w.avatarGoodID
+	avatarExp := w.avatarExp
+	avatarLeft := w.avatarLeft
+	avatarName := w.avatarName
+	avatarMsg := w.avatarMsg
 	w.statsMu.Unlock()
 
 	// 每日签到
@@ -1101,6 +1134,19 @@ func (w *Worker) buildTasks() {
 			Detail: "不可领取（如未绑定微信）"})
 	default:
 		tasks = append(tasks, TaskStatus{ID: 100000, Name: "月度礼包", State: TaskPending})
+	}
+
+	// 经验头像（2026-09-09 调整）：佩戴头像不是"做任务"，不再放进任务徽章；
+	// 状态随 UserStats.Avatar 推送，由前端渲染在「基础信息」列。
+	var avatar AvatarInfo
+	switch {
+	case !w.cfg.AvatarEnabled:
+		avatar = AvatarInfo{Note: "未启用"}
+	case avatarID == 0:
+		// 未佩戴：无可用加成头像，或佩戴失败（avatarMsg 记录具体原因）
+		avatar = AvatarInfo{Note: avatarMsg}
+	default:
+		avatar = AvatarInfo{Worn: true, Name: avatarName, Exp: avatarExp, Left: avatarLeft}
 	}
 
 	// 战队任务：1172 响应同时返回个人任务（2150-2155 在线档位、2140-2142 连续签到）
@@ -1208,6 +1254,7 @@ func (w *Worker) buildTasks() {
 	w.statsMu.Lock()
 	w.stats.Tasks = tasks
 	w.stats.TeamTasks = teamTasks
+	w.stats.Avatar = avatar
 	w.statsMu.Unlock()
 }
 

@@ -98,6 +98,11 @@
 
   /* --- 第 5 列：操作按钮（纵向排列，宽度撑满） --- */
   .c-ops { text-align:center; }
+  /* --- 基础信息列：经验头像行 --- */
+  .acc-avatar { font-size:11px; color:#3a4657; }
+  .acc-avatar b { color:#1a7a3c; }
+  .acc-avatar.none { color:#98a3b1; }
+
   .ops { display:flex; flex-direction:column; gap:4px; }
   .ops button { display:block; width:100%; padding:3px 0; font-size:11.5px; border-radius:3px; }
 
@@ -130,6 +135,10 @@
       <li>在线时长保持：自动维持在线状态，持续累计在线时长与经验</li>
       <li>任务奖励自动领取：在线时长、连续签到（7/14/21 天）、日常达标等奖励到达即可自动领取</li>
       <li>月度礼包：每月 1-7 日自动领取微信绑定礼包</li>
+      <li>经验头像：每天检查一次，保证佩戴经验加成最高（如 1.4 倍）且未过期的头像——
+        <b>已佩戴有效加成头像时不做任何操作</b>，仅在未佩戴 / 无加成 / 已过期时自动改戴；
+        当前头像与剩余天数显示在「基础信息」列；加成型头像多绑定具体页游角色，
+        账号在该页游无角色或等级不足时会改戴失败，鼠标悬停头像行可看原因</li>
       <li>被踢自动重登：会话被其他设备顶下线后，自动检测账号离线状态并重新登录</li>
       <li>多账号并行：一台电脑可同时挂多个账号，设备标识自动分配，无需手动配置</li>
     </ul>
@@ -309,6 +318,25 @@ function shortDetail(d) {
   m = d.match(/(\d+)\s*分钟\s*\/\s*(\d+)\s*分钟/);
   if (m) return m[1] + "/" + m[2] + "分";
   return d;
+}
+
+// 经验头像行（「基础信息」列）。佩戴头像不是"做任务"，因此不进任务徽章。
+// worn=true  → 「头像 铁血士兵 1.4倍·剩24天」，悬停看完整信息；
+// worn=false → 灰色显示说明（未启用 / 无可用加成头像 / 失败原因）。
+function avatarHtml(a) {
+  var av = a.avatar;
+  if (!av) return ""; // 尚未获取（未启动/首轮未完成）：不显示，避免一行无意义的空态
+  if (av.worn) {
+    var left = av.left >= 9999 ? "永久" : "剩" + av.left + "天";
+    var tip = "经验加成头像：" + av.name + " · " + av.exp + "倍 " + left;
+    return '<div class="acc-avatar" title="' + escapeHtml(tip) + '">头像 <b>' +
+      escapeHtml(av.name) + '</b> ' + av.exp + '倍·' + left + '</div>';
+  }
+  if (av.note) {
+    return '<div class="acc-avatar none" title="' + escapeHtml(av.note) + '">头像 ' +
+      escapeHtml(av.note) + '</div>';
+  }
+  return "";
 }
 
 // 任务徽章：短名称 + 精简状态文本（done 显示绿色 ✓）
@@ -554,6 +582,7 @@ function renderStatus(list) {
       html += '<div class="acc-meta"><span class="dim">经验 - · 币 -</span></div>';
     }
     html += levelProgress(a);
+    html += avatarHtml(a);
     if (st === "disabled") {
       // 连续登录被拒而自动禁用：给中文原因，原始 errStr 放 title 供排查。
       html += '<div class="acc-sub warn" title="服务器返回：' + escapeHtml(a.err || "") + '">' +

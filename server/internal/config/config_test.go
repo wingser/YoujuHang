@@ -1,6 +1,8 @@
 package config
 
 import (
+	"os"
+	"path/filepath"
 	"testing"
 	"time"
 )
@@ -187,5 +189,40 @@ func TestExtendExpiredAccountBecomesUsable(t *testing.T) {
 	}
 	if IsExpired(got0, today) {
 		t.Errorf("填 0 拉回今天后仍被判为过期：%q", got0)
+	}
+}
+
+// TestLoadMissingBoolFieldsGetDefaults 旧配置文件缺少新 bool 字段时必须取默认值。
+//
+// 回归背景（2026-09-09 线上事故）：Load 曾直接 Unmarshal 到零值结构，
+// 旧文件里没有的 avatar_enabled 被解析成 false → 功能静默禁用，
+// 且日志一条记录都没有（maybeDressAvatar 第一行就 return），极难排查。
+func TestLoadMissingBoolFieldsGetDefaults(t *testing.T) {
+	dir := t.TempDir()
+	path := filepath.Join(dir, "accounts.yaml")
+	// 模拟旧版真实配置：只有账号与地址，不含任何 bool 开关
+	content := `web_addr: 127.0.0.1:29090
+accounts:
+    - name: someone
+      password: secret
+`
+	if err := os.WriteFile(path, []byte(content), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	cfg, err := Load(path)
+	if err != nil {
+		t.Fatalf("Load: %v", err)
+	}
+	for name, got := range map[string]bool{
+		"check_in_enabled":   cfg.CheckInEnabled,
+		"auto_claim":         cfg.AutoClaim,
+		"mall_enabled":       cfg.MallEnabled,
+		"avatar_enabled":     cfg.AvatarEnabled,
+		"room_hang_enabled":  cfg.RoomHangEnabled,
+		"contribute_enabled": cfg.ContributeEnabled,
+	} {
+		if !got {
+			t.Errorf("配置文件未写 %s 时应默认 true，实际 false（新功能被静默禁用）", name)
+		}
 	}
 }

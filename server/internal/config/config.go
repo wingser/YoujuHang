@@ -27,6 +27,14 @@ type Config struct {
 	AutoClaim bool `yaml:"auto_claim"`
 	// MallEnabled 是否启用商城礼包领取（每月 1-7 日微信绑定礼包）
 	MallEnabled bool `yaml:"mall_enabled"`
+	// AvatarEnabled 是否自动佩戴「经验加成最高」的头像装扮。
+	//
+	// 每天检查一次：拉取个人空间装扮列表，选出加成最高（additional_exp）且未过期的
+	// 头像佩戴；已经戴着最优头像时不再重复请求。协议见 internal/mall/dress.go。
+	//
+	// 注意：加成型头像多绑定具体页游角色（如「维京传奇 144服 420级」），
+	// 账号在该页游无角色/等级不足时会佩戴失败，日志会记录原因。
+	AvatarEnabled bool `yaml:"avatar_enabled"`
 	// RoomHangEnabled 是否启用房间挂机（进入自由区音乐房保持在线，累计房间在线时长）。
 	// 挂机区 ID 固定为 room.HangZoneID（=1 自由区），已写死在代码里，不提供 room_hang_zone 配置项。
 	RoomHangEnabled bool `yaml:"room_hang_enabled"`
@@ -156,6 +164,7 @@ func DefaultConfig() *Config {
 		CheckInEnabled:       true, // 每日签到
 		AutoClaim:            true, // 任务奖励自动领取
 		MallEnabled:          true, // 商城礼包（每月 1-7 日）
+		AvatarEnabled:        true, // 自动佩戴最高经验加成头像
 		RoomHangEnabled:      true, // 战盟房间挂机（仅已加入战队的账号生效）
 		ContributeEnabled:    true, // 战队捐献
 		ContributeDaily:      3000,
@@ -171,8 +180,15 @@ func Load(path string) (*Config, error) {
 	if err != nil {
 		return nil, fmt.Errorf("read config: %w", err)
 	}
-	var cfg Config
-	if err := yaml.Unmarshal(raw, &cfg); err != nil {
+	// 必须以 DefaultConfig() 打底再 Unmarshal（2026-09-09 修复）：
+	// yaml.Unmarshal 只覆盖文件中**出现**的字段，缺失字段保留原值。
+	// 此前直接 Unmarshal 到零值结构，bool 字段（check_in_enabled 等）全变 false——
+	// 旧配置文件里恰好显式写了 true 才一直没暴露；新增的 avatar_enabled 不在
+	// 旧文件里 → 被解析成 false → 功能静默禁用，日志一条记录都没有。
+	// 另注意：web 控制台 Save 会把内存中的（错误）值写回文件，
+	// 因此带 bug 版本保存过的配置里可能存在显式 avatar_enabled: false，需手动删除该行。
+	cfg := DefaultConfig()
+	if err := yaml.Unmarshal(raw, cfg); err != nil {
 		return nil, fmt.Errorf("parse config: %w", err)
 	}
 	if len(cfg.Accounts) == 0 {
@@ -202,7 +218,7 @@ func Load(path string) (*Config, error) {
 	if cfg.ContributeStep <= 0 {
 		cfg.ContributeStep = 1000
 	}
-	return &cfg, nil
+	return cfg, nil
 }
 
 // Save 将配置序列化写回文件（供 UI 动态修改账号后持久化）

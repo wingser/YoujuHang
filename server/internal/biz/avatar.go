@@ -27,6 +27,50 @@ import (
 //
 // 频率：主循环每轮调用但按 avatarKey（日期）去重 → 每天一次；
 // 常态下每天只有一个 GET 请求（space 页），只有需要更换时才翻页拉全量列表。
+// startAvatarCheck 异步执行一次头像检查（不阻塞业务主循环）。
+//
+// 为什么异步（2026-09-10）：头像检查要访问商城（space 页 + 可能的翻页拉全量列表），
+// 实测需要 3~4 秒（服务器日志 wingser 15:27:09 → 15:27:12，count=49）。
+// 原先同步放在首轮业务里，会连带推迟战队捐献、**房间挂机启动**，
+// 以及最关键的 notifyStats（状态推送到 UI），表现为「登录后账号数据加载很慢」。
+//
+// 改为异步后：
+//   - 主循环立即继续：捐献、挂机启动、状态推送都不再等头像；
+//   - 头像结果出来后单独再推一次状态，UI 的头像行随后填充（其余数据早已显示）；
+//   - 头像未出结果前，前端不显示该行（avatar 为 nil 时 avatarHtml 返回空）。
+func (w *Worker) startAvatarCheck(ctx context.Context) {
+	if !w.cfg.AvatarEnabled {
+		return
+	}
+	// 两个条件都在 statsMu 下判断并置位，保证原子性：
+	//  1. 当天已处理过（avatarKey == 今天）→ 不起；
+	//  2. 已有检查在跑（avatarChecking）→ 不起，避免并发导致重复佩戴/状态抖动。
+	w.statsMu.Lock()
+	if w.avatarChecking || w.avatarKey == dayKey(time.Now()) {
+		w.statsMu.Unlock()
+		return
+	}
+	w.avatarChecking = true
+	w.statsMu.Unlock()
+
+	go func() {
+		// 子 goroutine 必须挂 recover：这里的 panic 不会被 main 的 defer 捕获，
+		// 会直接终结整个进程（2026-08-31 事故教训）。
+		defer recoverGoroutine(w.log, "经验头像检查")
+		// 无论成功、失败还是 panic，都要清标志，否则头像检查会被永久卡死。
+		defer func() {
+			w.statsMu.Lock()
+			w.avatarChecking = false
+			w.statsMu.Unlock()
+		}()
+		w.maybeDressAvatar(ctx)
+		// 头像状态变化（佩戴成功 / 失败 / 无可用）后推送一次，UI 随即展示
+		w.notifyStats()
+	}()
+}
+
+// maybeDressAvatar 执行一次头像检查（同步，供 startAvatarCheck 在 goroutine 中调用）。
+// 函数内部已按日期去重，并有 30 秒总超时，返回错误仅用于记录。
 func (w *Worker) maybeDressAvatar(ctx context.Context) error {
 	if !w.cfg.AvatarEnabled {
 		return nil
@@ -52,6 +96,17 @@ func (w *Worker) maybeDressAvatar(ctx context.Context) error {
 	sp, err := w.mall.GetSpace(dressCtx, w.sess.UID, w.sess.Token)
 	if err != nil {
 		w.log.Warn("个人空间获取失败", "err", err)
+		return nil
+	}
+	// 状态一致性保护（2026-09-10）：拿不到「当前佩戴」就绝不执行佩戴决策。
+	//
+	// 页面异常时（限流页 / 未登录跳转 / 解析不到 userAvatar）WornURL 为空，
+	// 此时若照常走「选最优佩戴」，等于在完全不知道用户当前戴了什么的情况下
+	// 覆盖它——很可能把用户手动选的头像换掉。宁可本次不处理（每天都有机会），
+	// 也不能在信息不全时误覆盖。
+	if sp.WornURL == "" {
+		w.log.Warn("个人空间未返回当前佩戴头像（页面异常？），放弃本次处理以避免误覆盖",
+			"count", len(sp.Items))
 		return nil
 	}
 	w.log.Info("个人空间获取完成", "count", len(sp.Items), "worn_url", sp.WornURL)

@@ -227,7 +227,13 @@ type Worker struct {
 
 	// 头像装扮：自动佩戴经验加成最高的头像，详见 avatar.go。
 	// 字段均由 statsMu 保护（buildTasks 会在挂机 goroutine 中读取）。
-	avatarKey    int     // 最近一次处理头像的日期 key（当天只处理一次）
+	avatarKey      int  // 最近一次处理头像的日期 key（当天只处理一次）
+	// avatarChecking 是否正在异步检查头像（2026-09-10 并发防护）。
+	// 异步后存在这样的竞态：goroutine 仍在跑（慢网络）时跨天，
+	// rolloverIfNeeded 把 avatarKey 清零 → 主循环以为"今天没查过"又起一个
+	// goroutine，两个并发执行可能先后佩戴不同头像，导致状态抖动。
+	// 用本标志确保同一时刻只有一个检查在跑。
+	avatarChecking bool
 	avatarGoodID int     // 当前佩戴的头像商品 ID（0=未知/未佩戴）
 	avatarExp    float64 // 当前佩戴头像的经验加成倍数（0=未知）
 	avatarLeft   int     // 当前佩戴头像剩余天数（mall.LeftDaysForever=永久）
@@ -324,9 +330,10 @@ func (w *Worker) Run(ctx context.Context) error {
 	if err := w.maybeMallClaim(ctx); err != nil && !errors.Is(err, ErrSessionExpired) {
 		w.log.Warn("商城领取异常", "err", err)
 	}
-	if err := w.maybeDressAvatar(ctx); err != nil && !errors.Is(err, ErrSessionExpired) {
-		w.log.Warn("头像佩戴异常", "err", err)
-	}
+	// 头像检查异步执行：它要访问商城（慢网络下 3~4 秒），同步会推迟后面的
+	// 捐献、房间挂机启动与状态推送，表现为「登录后数据加载慢」。
+	// 结果出来后由 goroutine 内部单独推送状态，UI 头像行随后填充。
+	w.startAvatarCheck(ctx)
 	if err := w.maybeContribute(ctx); err != nil && !errors.Is(err, ErrSessionExpired) {
 		w.log.Warn("贡献捐献异常", "err", err)
 	}

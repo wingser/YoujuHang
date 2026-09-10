@@ -8,6 +8,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"log/slog"
 	"net/http"
 	"net/url"
 	"os"
@@ -44,6 +45,9 @@ func New(addr string, mgr *core.Manager) *Server {
 		Addr:              addr,
 		Handler:           mux,
 		ReadHeaderTimeout: 10 * time.Second,
+		// WriteTimeout（2026-09-10 加固）：此前缺失。若客户端建立连接后不读响应，
+		// handler 的 Write 会永久阻塞、goroutine 泄漏。加上后最多挂 30 秒。
+		WriteTimeout: 30 * time.Second,
 	}
 	return s
 }
@@ -73,7 +77,14 @@ func (s *Server) handleIndex(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
-	_, _ = w.Write(indexHTML)
+	// 记录写入结果（2026-09-10 加固）：服务器日志显示程序健康但浏览器偶发白屏
+	// （标题可见、body 空白，疑似响应未完整到达）。若 Write 出错（客户端提前断开/
+	// 连接重置），这里会留下日志证据；正常完成不打日志避免刷屏。
+	n, err := w.Write(indexHTML)
+	if err != nil || n != len(indexHTML) {
+		slog.Warn("控制台页面响应未完整", "written", n, "total", len(indexHTML), "err", err,
+			"remote", r.RemoteAddr)
+	}
 }
 
 func (s *Server) handleStatus(w http.ResponseWriter, r *http.Request) {

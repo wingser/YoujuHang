@@ -720,8 +720,23 @@ LoadLibraryEx(name, 0, LOAD_LIBRARY_SEARCH_SYSTEM32)   // 只搜 System32
 - **实现位置**：协议 `internal/mall/dress.go`（`GetSpace` / `ListDress` / `DressUp`），
   业务 `internal/biz/avatar.go`，配置 `avatar_enabled`（默认开）。
   协议细节见 [avatar_api.md](avatar_api.md)。
-- **执行时机**：`Worker.Run` 首轮 + 每轮主循环调用 `maybeDressAvatar`，
+- **执行时机**：`Worker.Run` 首轮 + 每轮主循环调用 `startAvatarCheck`，
   内部按 `avatarKey`（日期）去重，跨天由 `rolloverIfNeeded` 清零 → **每天一次**。
+- **异步执行**（2026-09-10）：`startAvatarCheck` 起独立 goroutine（挂 `recoverGoroutine`），
+  **不阻塞主循环**。原因：检查要访问商城（space 页 + 可能翻页拉全量列表），
+  实测 3~4 秒（wingser 15:27:09→15:27:12，count=49），同步执行会推迟战队捐献、
+  房间挂机启动与状态推送，表现为「登录后账号数据加载很慢」。
+  头像结果出来后由该 goroutine 单独推一次状态，UI 头像行随后填充（其余数据早已显示）。
+- **异步后的两项状态一致性防护**（2026-09-10 安全审查，均有单测锁定）：
+  1. **`avatarChecking` 并发标志**：跨天时 `rolloverIfNeeded` 会清零 `avatarKey`，
+     若上一轮 goroutine 仍在跑（慢网络），主循环会误判"今天没查过"再起一个，
+     两个 goroutine 并发佩戴 → 状态抖动。启动条件改为
+     `!avatarChecking && avatarKey != 今天`，两者在 `statsMu` 下**原子判断并置位**；
+     goroutine 结束（含 panic 路径）时清标志，避免永久卡死。
+  2. **`WornURL` 为空即放弃决策**：space 页异常（限流页 / 未登录跳转 /
+     解析不到 `userAvatar`）时 `WornURL` 为空，此时若照常"选最优佩戴"，
+     等于在**不知道用户当前戴了什么**的情况下覆盖它（可能换掉用户手动选的头像）。
+     故拿不到当前佩戴就**什么都不做**——每天都有机会，不必急于这一次。
 - **决策以服务端查询为唯一事实**（2026-09-09 按用户需求重写）：
   先 `GET /?token=..&userid=..&space=1`（个人空间初始化页，一个请求同时返回
   「当前佩戴」`userAvatar` 与「拥有列表」），按 URL 匹配出当前佩戴的条目：
@@ -747,6 +762,35 @@ LoadLibraryEx(name, 0, LOAD_LIBRARY_SEARCH_SYSTEM32)   // 只搜 System32
 > UI（2026-09-09 调整）：佩戴头像**不是任务**，不进任务徽章；状态随
 > `UserStats.Avatar`（`biz.AvatarInfo`）推送，由前端渲染在「基础信息」列：
 > 已佩戴显示 `头像 铁血士兵 1.4倍·剩24天`（绿色），未佩戴灰显原因（未启用/无可用/失败原因）。
+
+---
+
+### 5.18 Web UI 假死：XHR 无超时占满浏览器连接池（2026-09-10）
+
+**现象**：控制台打开一段时间后点击「刷新」无反应，必须整页刷新（F5）才恢复。
+用户反馈自 1.1（头像功能）后开始出现。
+
+**根因**：前端 `api()` 只处理 `readyState===4`，**没有 `timeout` / `onerror` / `ontimeout`**。
+请求一旦挂起（网络抖动、后端偶发慢），回调永不触发、连接一直占用。
+浏览器对同一域只有 **6 个并发连接**（HTTP/1.1），挂起请求累积几个即占满连接池，
+之后所有请求（含点击「刷新」）全部排队 → 表现为 UI 假死。
+**整页刷新会中止挂起请求并释放连接，所以 F5 就能恢复**——这是判断该问题的关键特征。
+
+自动刷新 10 分钟一次，故长时间运行后必然爆发。与头像功能无因果关系，属既有缺陷，
+1.1 后运行时间更长才暴露（不要被"刚好在新版本后出现"误导）。
+
+**排查过程（同类问题可复用）**：
+
+1. 后端健康：主日志 goroutines 稳定（13~17）、无 panic → 排除崩溃/死锁；
+2. `/api/status` 只做 `Snapshot()`（短暂持锁），主循环不持 `m.mu` → 排除被业务阻塞；
+3. `tailLines` 是倒序分块读（≤1MB）且前端未调用 `/api/logs` → 排除 64MB 日志拖慢；
+4. 前端 `api()` 无超时与错误回调 → **定位**。
+
+**修复**：
+
+- `api()` 加 `xhr.timeout = 15s` 与 `ontimeout / onerror / onabort`，保证任何情况都有回调；
+- `done` 标志保证回调只触发一次（超时与响应可能竞争）；
+- `loadStatus()` 加防重入 `statusLoading`，上一次未返回前不再发新请求。
 
 ---
 

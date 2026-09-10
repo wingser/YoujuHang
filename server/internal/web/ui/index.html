@@ -99,7 +99,7 @@
   /* --- 第 5 列：操作按钮（纵向排列，宽度撑满） --- */
   .c-ops { text-align:center; }
   /* --- 基础信息列：经验头像行 --- */
-  .acc-avatar { font-size:11px; color:#3a4657; }
+  .acc-avatar { font-size:11px; color:#3a4657; white-space:nowrap; }
   .acc-avatar b { color:#1a7a3c; }
   .acc-avatar.none { color:#98a3b1; }
 
@@ -165,9 +165,9 @@
   <table class="acc">
     <colgroup>
       <col style="width:165px">  <!-- 1 账号名 + 状态 + 今日经验 -->
-      <col style="width:170px">  <!-- 2 基础信息 -->
-      <col style="width:31%">    <!-- 3 每日任务 -->
-      <col style="width:37%">    <!-- 4 战队任务（任务更多，给更宽） -->
+      <col style="width:195px">  <!-- 2 基础信息（含头像行，加宽避免「剩23天」被挤换行） -->
+      <col style="width:33%">    <!-- 3 每日任务 -->
+      <col style="width:33%">    <!-- 4 战队任务（徽章内容不满列宽、右侧留白大，收窄让给基础信息） -->
       <col style="width:110px">  <!-- 5 操作 -->
     </colgroup>
     <thead>
@@ -216,24 +216,50 @@ function escapeHtml(s) {
                   .replace(/"/g,"&quot;").replace(/'/g,"&#39;");
 }
 
+// apiTimeoutMs 请求超时（毫秒）。
+//
+// 【2026-09-10 Web UI 假死修复】此前 api() 既无超时也无 onerror/ontimeout：
+// 请求一旦挂起（网络抖动、后端偶发慢），回调永不触发，连接被一直占用。
+// 浏览器对同一域只有 6 个并发连接（HTTP/1.1），挂起请求累积几个就占满连接池，
+// 之后所有请求（包括点击「刷新」）全部排队 → 表现为「UI 假死、点击无反应」，
+// 只有整页刷新才恢复（页面卸载会中止挂起请求、释放连接）。
+// 自动刷新 10 分钟一次，因此长时间运行后必然爆发。
+var apiTimeoutMs = 15000;
+
 function api(method, path, body, cb) {
   var xhr = new XMLHttpRequest();
   xhr.open(method, path, true);
   xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+  xhr.timeout = apiTimeoutMs;
+
+  // done 保证回调只触发一次：超时/错误/正常可能竞争，重复回调会让调用方
+  // 重复渲染或重复提示。
+  var done = false;
+  function finish(err, resp, raw) {
+    if (done) return;
+    done = true;
+    if (cb) cb(err, resp, raw);
+  }
+
   xhr.onreadystatechange = function () {
     if (xhr.readyState !== 4) return;
     var resp = null;
     try { resp = JSON.parse(xhr.responseText); } catch (e) { resp = null; }
     if (xhr.status >= 200 && xhr.status < 300) {
-      if (cb) cb(null, resp);
+      finish(null, resp);
     } else {
       var msg = "HTTP " + xhr.status;
       if (resp && resp.error) msg = resp.error;
       // 第三个参数回传原始响应体，供调用方读取业务标记（如 expired=true）。
       // 老回调只声明前两个参数，多传不影响。
-      if (cb) cb(msg, null, resp);
+      finish(msg, null, resp);
     }
   };
+  // 超时/网络错误/中止：必须回调，否则调用方的"加载中"状态永远结束不了
+  xhr.ontimeout = function () { finish("请求超时（" + (apiTimeoutMs / 1000) + "秒）", null, null); };
+  xhr.onerror = function () { finish("网络错误，请检查程序是否在运行", null, null); };
+  xhr.onabort = function () { finish("请求已取消", null, null); };
+
   xhr.send(body ? JSON.stringify(body) : null);
 }
 
@@ -617,8 +643,15 @@ function renderStatus(list) {
   tbody.innerHTML = html;
 }
 
+// statusLoading 防重入：上一次状态请求未返回前不再发新的。
+// 与 api() 的超时配合，确保任何情况下都不会堆积挂起请求占满浏览器连接池
+//（2026-09-10 Web UI 假死修复）。
+var statusLoading = false;
 function loadStatus() {
+  if (statusLoading) return;
+  statusLoading = true;
   api("GET", "/api/status", null, function (err, resp) {
+    statusLoading = false;
     if (err) { setMsg("状态获取失败: " + err, true); return; }
     renderStatus(resp || []);
   });

@@ -225,4 +225,9 @@ accounts:
 			t.Errorf("配置文件未写 %s 时应默认 true，实际 false（新功能被静默禁用）", name)
 		}
 	}
+	// int 类默认值同样必须生效（Load 以 DefaultConfig 打底）
+	if cfg.AvatarRenewBeforeDays != 1 {
+		t.Errorf("avatar_renew_before_days 未配置时应默认 1（剩余≤1天提前换），实际 %d",
+			cfg.AvatarRenewBeforeDays)
+	}
 }

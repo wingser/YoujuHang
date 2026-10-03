@@ -111,16 +111,30 @@ func (w *Worker) maybeDressAvatar(ctx context.Context) error {
 	}
 	w.log.Info("个人空间获取完成", "count", len(sp.Items), "worn_url", sp.WornURL)
 
-	// 第二步：当前佩戴的加成头像仍有效 → 不做任何动作（用户明确要求：
+	// 提前更换阈值（2026-10-03 需求，方案 A）：剩余 ≤ renewBefore 天时主动换新，
+	// 避免头像到期后被服务端摘下、要等下次检查才换上（实测最长空档约 1 天）。
+	// 默认 1；配置为 0 则恢复"只在彻底过期后才换"的旧行为。
+	renewBefore := w.cfg.AvatarRenewBeforeDays
+	if renewBefore < 0 {
+		renewBefore = 0
+	}
+
+	// 第二步：当前佩戴的加成头像"仍然够用" → 不做任何动作（用户明确要求：
 	// 不要每次登录就执行佩戴；是否需要换，以服务端数据为准）。
 	//
-	// 注意判据是 Exp > 1：**加成系数 = 1（无加成头像）与已过期一样视为"需要更换"**，
-	// 用户 2026-09-09 确认——戴着无加成头像时应当检查并改戴加成头像。
-	// 不要把它放宽成 >= 1，否则戴无加成头像将永远不会被换掉。
-	if worn := sp.MatchWorn(); worn != nil && worn.Exp > 1 && worn.LeftDays > 0 {
+	// 两条判据缺一不可：
+	//  1. Exp > 1           —— 加成系数 = 1（无加成头像）与已过期一样视为"需要更换"
+	//                         （用户 2026-09-09 确认）。不要放宽成 >= 1，
+	//                         否则戴着无加成头像将永远不会被换掉。
+	//  2. LeftDays > renewBefore —— 剩余不足阈值时提前换（默认剩余 ≤1 天即换）。
+	// worn 记录"当前佩戴且加成有效"的条目（来源可能是 space 首页或全量列表），
+	// 后面判断"提前更换是否值得"要用到它。
+	worn := sp.MatchWorn()
+	if worn != nil && worn.Exp > 1 && worn.LeftDays > renewBefore {
 		w.setAvatarInfo(worn.GoodID, worn.Exp, worn.LeftDays, worn.Title, "")
-		w.log.Info("当前佩戴的加成头像仍有效，无需更换", "good_id", worn.GoodID,
-			"title", worn.Title, "exp", worn.Exp, "left", avatarLeftText(worn.LeftDays))
+		w.log.Info("当前佩戴的加成头像仍够用，无需更换", "good_id", worn.GoodID,
+			"title", worn.Title, "exp", worn.Exp, "left", avatarLeftText(worn.LeftDays),
+			"renew_before_days", renewBefore)
 		return nil
 	}
 
@@ -147,13 +161,16 @@ func (w *Worker) maybeDressAvatar(ctx context.Context) error {
 	w.log.Info("装扮列表获取完成", "count", len(items))
 
 	// 全量列表里再核对一次佩戴状态（佩戴条目可能不在空间首页那一页）。
-	// 判据同上：Exp > 1 才算"加成有效"，系数 = 1 视为需要更换。
-	if worn := mall.FindByURL(items, sp.WornURL); worn != nil && worn.Exp > 1 && worn.LeftDays > 0 {
-		w.setAvatarInfo(worn.GoodID, worn.Exp, worn.LeftDays, worn.Title, "")
-		w.log.Info("当前佩戴的加成头像仍有效（全量列表核对），无需更换",
-			"good_id", worn.GoodID, "title", worn.Title, "exp", worn.Exp,
-			"left", avatarLeftText(worn.LeftDays))
-		return nil
+	// 判据同上：Exp > 1 且剩余超过阈值才算"仍然够用"。
+	if full := mall.FindByURL(items, sp.WornURL); full != nil {
+		worn = full // 以全量列表的数据为准（剩余天数/名称更完整）
+		if full.Exp > 1 && full.LeftDays > renewBefore {
+			w.setAvatarInfo(full.GoodID, full.Exp, full.LeftDays, full.Title, "")
+			w.log.Info("当前佩戴的加成头像仍够用（全量列表核对），无需更换",
+				"good_id", full.GoodID, "title", full.Title, "exp", full.Exp,
+				"left", avatarLeftText(full.LeftDays))
+			return nil
+		}
 	}
 
 	// 确实需要更换：选最优佩戴
@@ -169,6 +186,35 @@ func (w *Worker) maybeDressAvatar(ctx context.Context) error {
 		}
 		w.log.Info("未找到可用的经验加成头像（无加成头像或均已过期），跳过", "count", len(items))
 		w.setAvatarInfo(0, 0, 0, "", "无可用加成头像")
+		return nil
+	}
+
+	// 边界 1（2026-10-03）：若"最优"就是当前正戴着的那个——典型情况是它即将到期，
+	// 但列表里并没有更好的替代品——就不要重复佩戴。否则每次检查都会白戴一次，
+	// 服务端还照常返回"装备成功"，日志看着像换了头像，实际毫无变化。
+	if worn != nil && worn.GoodID == best.GoodID {
+		w.setAvatarInfo(best.GoodID, best.Exp, best.LeftDays, best.Title, "")
+		w.log.Info("当前头像即将到期但已是可用选项中最佳的，保持不动",
+			"good_id", best.GoodID, "title", best.Title,
+			"exp", best.Exp, "left", avatarLeftText(best.LeftDays))
+		return nil
+	}
+
+	// 边界 2（2026-10-03 补充，用户要求）：**提前更换的条件更严格**——
+	// 只有当候选「有效期更长」**且**「加成不低于当前」时才换；
+	// 否则宁可把当前头像用到过期再换，避免"为了提前续期反而降了加成"
+	// （例：为换成 30 天的 1.2 倍，而放弃还剩 1 天的 1.4 倍）。
+	//
+	// 仅约束"提前更换"这一种情形；已过期 / 未佩戴 / 无加成（worn 无效）不受此限，
+	// 仍按最优直接更换——那时当前头像已无加成可言，换什么都不亏。
+	earlyRenew := worn != nil && worn.Exp > 1 && worn.LeftDays > 0 && worn.LeftDays <= renewBefore
+	if earlyRenew && !earlyRenewWorth(worn, best) {
+		w.setAvatarInfo(worn.GoodID, worn.Exp, worn.LeftDays, worn.Title, "")
+		w.log.Info("提前更换条件不满足（候选加成更低或有效期更短），暂不更换，等当前头像过期后再换",
+			"current_good_id", worn.GoodID, "current_exp", worn.Exp,
+			"current_left", avatarLeftText(worn.LeftDays),
+			"candidate_good_id", best.GoodID, "candidate_exp", best.Exp,
+			"candidate_left", avatarLeftText(best.LeftDays))
 		return nil
 	}
 
@@ -201,6 +247,21 @@ func (w *Worker) setAvatarInfo(goodID int, exp float64, left int, name, msg stri
 	w.avatarName = name
 	w.avatarMsg = msg
 	w.statsMu.Unlock()
+}
+
+// earlyRenewWorth 判断候选头像是否值得用来"提前更换"当前头像。
+//
+// 用户要求（2026-10-03）：提前换必须**同时**满足两条，缺一不可——
+//  1. 候选有效期更长（best.LeftDays > worn.LeftDays）；
+//  2. 候选加成不低于当前（best.Exp >= worn.Exp）。
+//
+// 否则宁可把当前头像用到过期再换，避免"为了提前续期反而降了加成"
+// （典型：为换成 30 天的 1.2 倍，而放弃还剩 1 天的 1.4 倍）。
+func earlyRenewWorth(worn, best *mall.DressItem) bool {
+	if worn == nil || best == nil {
+		return false
+	}
+	return best.Exp >= worn.Exp && best.LeftDays > worn.LeftDays
 }
 
 // avatarLeftText 剩余天数的展示文本（永久显示为「永久」）

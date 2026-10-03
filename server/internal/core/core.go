@@ -1011,8 +1011,17 @@ func (m *Manager) probeWaitRelogin(ctx context.Context, lg *slog.Logger, rt *acc
 	probeAcc := probe
 	accName := probeName
 	failed := make(map[string]bool) // 本轮已失效、不再选中的侦查账号
+
+	// 等待起点与进度日志节流（2026-09-20 可观测性修复）：
+	// 此前「查询成功且结果为在线」时完全静默，用户无法判断程序是在等待还是已死。
+	// 实测有账号因游聚侧残留会话（isOnline 恒为 1）静默等待 14 小时不恢复。
+	waitStart := time.Now()
+	lastProgress := time.Now()
+	const progressInterval = 30 * time.Minute
+
 	for {
-		msg := "检测到账号在线（可能您在游戏中），挂机暂停，离线后自动恢复挂机"
+		waited := time.Since(waitStart).Round(time.Minute)
+		msg := fmt.Sprintf("检测到账号在线（可能您在游戏中），已等待 %s，挂机暂停，离线后自动恢复挂机", waited)
 		if lastCheck != "" {
 			msg += "；最近检查 " + lastCheck
 		}
@@ -1061,6 +1070,21 @@ func (m *Manager) probeWaitRelogin(ctx context.Context, lg *slog.Logger, rt *acc
 			return true
 		}
 		// 目标在线（用户在游戏中）：继续等待，绝不抢占。
+		// 但必须让用户看得见（2026-09-20）：每 30 分钟输出一条进度日志，
+		// 否则长时间等待在日志里与"程序卡死"无法区分。
+		if time.Since(lastProgress) >= progressInterval {
+			lg.Info("仍在等待用户游戏结束，暂不抢占（离线后自动恢复）",
+				"account", name, "waited", waited.String(), "probe", accName,
+				"hint", "若您已退出游戏但状态未变，多为游聚侧会话残留，可在控制台点【恢复挂机】")
+			lastProgress = time.Now()
+		}
+		// 可配置的等待上限：>0 时超时即判定为会话残留，强制重登恢复挂机。
+		// 默认 0 = 永不强制抢占，完整保留"用户玩多久都不该被顶"的设计。
+		if h := m.cfg.ReloginForceAfterHours; h > 0 && time.Since(waitStart) >= time.Duration(h)*time.Hour {
+			lg.Warn("等待用户游戏结束已超过配置上限，判定为会话残留，强制重登恢复挂机",
+				"account", name, "waited", waited.String(), "limit_hours", h)
+			return true
+		}
 		select {
 		case <-time.After(probeInterval):
 		case <-ctx.Done():

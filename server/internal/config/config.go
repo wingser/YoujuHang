@@ -27,6 +27,23 @@ type Config struct {
 	AutoClaim bool `yaml:"auto_claim"`
 	// MallEnabled 是否启用商城礼包领取（每月 1-7 日微信绑定礼包）
 	MallEnabled bool `yaml:"mall_enabled"`
+	// ReloginForceAfterHours 被其他设备顶下线后，"等待用户游戏结束"的最长小时数。
+	//
+	// 0（默认）= 永不强制抢占，完整保留「用户玩多久都不该被顶」的设计。
+	// >0        = 超过该时长仍侦查到"在线"时，判定为服务端残留会话（僵尸 session）
+	//             并强制重登恢复挂机。
+	//
+	// 为什么需要（2026-09-20）：实测用户手动登录玩过游戏后退出，游聚侧会话未清理
+	// （isOnline 恒为 1），程序按"绝不抢占"原则静默等待了 14 小时都不恢复，
+	// 且期间无任何日志，用户无法判断程序是在等待还是已死。
+	ReloginForceAfterHours int `yaml:"relogin_force_after_hours"`
+	// AvatarRenewBeforeDays 提前多少天更换「即将到期」的加成头像。默认 1。
+	//
+	// 1（默认）= 剩余 ≤1 天时就换成新的，避免头像到期后出现加成空档
+	//            （实测：58 到期后服务端会把它摘下、佩戴位变默认头像，
+	//             要等下一次检查才换上新的，中间最长空档约 1 天）。
+	// 0        = 只在彻底过期后才换（旧行为）。
+	AvatarRenewBeforeDays int `yaml:"avatar_renew_before_days"`
 	// AvatarEnabled 是否自动佩戴「经验加成最高」的头像装扮。
 	//
 	// 每天检查一次：拉取个人空间装扮列表，选出加成最高（additional_exp）且未过期的
@@ -165,6 +182,7 @@ func DefaultConfig() *Config {
 		AutoClaim:            true, // 任务奖励自动领取
 		MallEnabled:          true, // 商城礼包（每月 1-7 日）
 		AvatarEnabled:        true, // 自动佩戴最高经验加成头像
+		AvatarRenewBeforeDays: 1,   // 剩余 ≤1 天时提前换，避免到期空档
 		RoomHangEnabled:      true, // 战盟房间挂机（仅已加入战队的账号生效）
 		ContributeEnabled:    true, // 战队捐献
 		ContributeDaily:      3000,

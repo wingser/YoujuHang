@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"youjuhang/internal/config"
+	"youjuhang/internal/mall"
 )
 
 // TestStartAvatarCheckSkipConditions 头像异步检查的启动条件（2026-09-10 并发防护）。
@@ -38,5 +39,38 @@ func TestStartAvatarCheckSkipConditions(t *testing.T) {
 	w3.startAvatarCheck(context.Background())
 	if !w3.avatarChecking {
 		t.Error("检查进行中时标志应保持 true（不得被重置后再起一个）")
+	}
+}
+
+// TestEarlyRenewWorth 提前更换的判定（2026-10-03 用户要求）：
+// 候选必须**有效期更长**且**加成不低于当前**，才值得提前换；
+// 否则宁可把当前头像用到过期，避免为了续期反而降了加成。
+func TestEarlyRenewWorth(t *testing.T) {
+	// 当前：1.4 倍，还剩 1 天（进入提前更换窗口）
+	worn := &mall.DressItem{GoodID: 58, Title: "铁血士兵", Exp: 1.4, LeftDays: 1}
+
+	cases := []struct {
+		name string
+		best *mall.DressItem
+		want bool
+		note string
+	}{
+		{"加成更高且有效期更长", &mall.DressItem{GoodID: 127, Exp: 1.5, LeftDays: 25}, true, "加成升级"},
+		{"加成相同且有效期更长", &mall.DressItem{GoodID: 127, Exp: 1.4, LeftDays: 25}, true, "同等加成续期"},
+		{"加成更低（核心场景：不换）", &mall.DressItem{GoodID: 200, Exp: 1.2, LeftDays: 30}, false,
+			"不能为了 30 天的 1.2 倍放弃还剩 1 天的 1.4 倍"},
+		{"加成更高但有效期更短", &mall.DressItem{GoodID: 201, Exp: 1.5, LeftDays: 1}, false,
+			"没有延长期限的意义"},
+		{"有效期相同", &mall.DressItem{GoodID: 202, Exp: 1.4, LeftDays: 1}, false, ""},
+		{"候选为永久", &mall.DressItem{GoodID: 203, Exp: 1.4, LeftDays: mall.LeftDaysForever}, true, ""},
+		{"候选为空", nil, false, ""},
+	}
+	for _, c := range cases {
+		if got := earlyRenewWorth(worn, c.best); got != c.want {
+			t.Errorf("%s: earlyRenewWorth() = %v, 期望 %v（%s）", c.name, got, c.want, c.note)
+		}
+	}
+	if earlyRenewWorth(nil, &mall.DressItem{Exp: 2, LeftDays: 9}) {
+		t.Error("当前头像为 nil 时应返回 false")
 	}
 }

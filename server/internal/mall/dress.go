@@ -378,6 +378,45 @@ func parseDressItems(html string) []DressItem {
 	return items
 }
 
+// MergeDressItems 合并两个来源的装扮条目，按 GoodID 去重。
+//
+// 为什么需要（2026-10-07 事故修复）：装扮信息有两个不同来源，内容互补——
+//
+//	space 页（GetSpace）  → **我拥有的装扮**，带真实「剩余N天/永久」，
+//	                        但只含首页若干条；
+//	列表页（ListDress）   → **可购买的商品目录**，条目多，
+//	                        但未拥有的商品没有有效期（LeftDays 恒为 0）。
+//
+// 此前选候选时只用列表页，导致「明明拥有 1.4 倍剩 21 天的头像（good_id=127）
+// 却报告无可用加成头像」。合并时若同一 GoodID 两边都有，优先保留 primary
+// （space 页）的数据，并用 extra 补全 primary 缺失的剩余天数。
+func MergeDressItems(primary, extra []DressItem) []DressItem {
+	out := make([]DressItem, 0, len(primary)+len(extra))
+	idx := make(map[int]int, len(primary)+len(extra))
+	for _, it := range primary {
+		if it.GoodID <= 0 {
+			continue
+		}
+		idx[it.GoodID] = len(out)
+		out = append(out, it)
+	}
+	for _, it := range extra {
+		if it.GoodID <= 0 {
+			continue
+		}
+		if i, ok := idx[it.GoodID]; ok {
+			// 已存在：仅在 primary 没拿到有效期时用 extra 补全
+			if out[i].LeftDays == 0 && it.LeftDays != 0 {
+				out[i].LeftDays = it.LeftDays
+			}
+			continue
+		}
+		idx[it.GoodID] = len(out)
+		out = append(out, it)
+	}
+	return out
+}
+
 // PickBestDress 从列表中挑选最值得佩戴的头像。
 //
 // 策略（经验加成最大化）：

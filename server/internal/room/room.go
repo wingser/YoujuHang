@@ -27,10 +27,10 @@ const HangZoneID uint32 = 1
 
 // 挂机区建房默认参数（实测）
 const (
-	HangRoomName    = "大家一起玩"          // 默认房间名
-	HangVersionName = "fc_8bit"          // 建房使用的游戏版本
+	HangRoomName    = "大家一起玩"                            // 默认房间名
+	HangVersionName = "fc_8bit"                          // 建房使用的游戏版本
 	HangRom1MD5     = "dc06babfb280c32ae895a020c86b69fb" // fc_8bit Rom1Md5（抓包实测）
-	HangRetryAfter = time.Hour // 进区/拉房间列表等基础设施失败后的重试间隔
+	HangRetryAfter  = time.Hour                          // 进区/拉房间列表等基础设施失败后的重试间隔
 	// HangPickRetry 建房与进房都失败后的重试间隔。
 	// 这不是基础设施故障，只是候选房间号被别人抢先占用，很快就会空出来，
 	// 因此不必等 1 小时（历史实现在盲猜失败后等 1 小时，白白浪费一整轮）。
@@ -521,6 +521,35 @@ func (c *Client) enterZoneAny(ctx context.Context, addr string, uid uint32, toke
 	return nil, lastErr
 }
 
+// nonOKTracker 对「非 ok 返回码」做日志节流。
+//
+// 背景（2026-10-07 排查）：1028 心跳 / 1042 在线上报的非 ok 返回码原先只记 Debug，
+// 默认不输出，导致「服务端不再累计游戏时长」这类问题在日志里完全不可见——
+// chouyoku 10/7 的战队游戏时长卡在 807 秒后再不增长、白挂 18 小时，
+// 程序侧日志却显示一切正常（建房 ret=1、无一条失败告警），无从定位。
+//
+// 但不能直接改成 Warn：这两条消息约每秒发送一次，若返回码持续异常会刷爆日志
+// （实测 1092 状态轮询就常态返回 -142，正因如此它是唯一保留 Debug 的）。
+// 策略：返回码变化时立即记录，持续相同时每 60 次记一条。
+type nonOKTracker struct {
+	ret   uint32
+	count int
+}
+
+func (t *nonOKTracker) log(lg *slog.Logger, msg string, ret uint32, kv ...any) {
+	if ret == retOK {
+		t.ret, t.count = 0, 0
+		return
+	}
+	if ret != t.ret {
+		t.ret, t.count = ret, 0
+	}
+	t.count++
+	if t.count == 1 || t.count%60 == 0 {
+		lg.Warn(msg, append([]any{"ret", ret, "times", t.count}, kv...)...)
+	}
+}
+
 // Hang 持续房间挂机：517 进区 → 1025 拉房间列表 → 1026 建房/进房 → 挂机循环。
 //
 // 本函数是「每账号独立」的：由 biz.Worker 在账号自己的 goroutine 里调用（core.runAccount
@@ -613,6 +642,8 @@ func (c *Client) Hang(ctx context.Context, addr string, uid uint32, token string
 		// onlineTick 为 1042 上报的递增计数器；初值取较大常数以匹配真实客户端量级，
 		// 服务器仅校验递增与频率。每发送一次约 +56（真实客户端实测 52~60 均值）。
 		onlineTick := uint32(1124000)
+		// 非 ok 返回码的节流记录器（详见 nonOKTracker 注释）
+		var hbNonOK, onlineNonOK nonOKTracker
 		hbT := time.NewTicker(time.Second)
 		stT := time.NewTicker(1600 * time.Millisecond)
 		snapT := time.NewTicker(1600 * time.Millisecond)
@@ -649,16 +680,14 @@ func (c *Client) Hang(ctx context.Context, addr string, uid uint32, token string
 					broken = true
 					break loop
 				} else {
-					if ret != retOK {
-						c.log.Debug("room: heartbeat non-ok ret", "seq", hbSeq, "ret", ret)
-					}
+					hbNonOK.log(c.log, "room: heartbeat non-ok ret", ret, "seq", hbSeq)
 					hbFail = 0
 					// 与心跳同步发送 1042 在线时长上报（房主身份保活/战队任务时长累计）
 					onlineTick += 56
 					if ret, err := c.OnlineReport(ctx, addr, uid, token, onlineTick); err != nil {
 						c.log.Warn("room: online report failed", "tick", onlineTick, "err", err)
-					} else if ret != retOK {
-						c.log.Debug("room: online report non-ok ret", "tick", onlineTick, "ret", ret)
+					} else {
+						onlineNonOK.log(c.log, "room: online report non-ok ret", ret, "tick", onlineTick)
 					}
 				}
 			case <-snapT.C:

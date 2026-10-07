@@ -173,18 +173,26 @@ func (w *Worker) maybeDressAvatar(ctx context.Context) error {
 		}
 	}
 
-	// 确实需要更换：选最优佩戴
-	best := mall.PickBestDress(items)
+	// 确实需要更换：选最优佩戴。
+	//
+	// 【2026-10-07 事故修复】候选必须把 space 页的「我拥有的装扮」（sp.Items）算进去：
+	// ListDress（POST /）返回的是**可购买的商品目录**，未拥有的条目没有有效期
+	// （实测目录里 22 个加成头像的剩余天数全为 0），只用它做候选时，
+	// 明明拥有 1.4 倍剩 21 天的头像（good_id=127）也会被判成"无可用加成头像"。
+	// 合并两个来源并按 good_id 去重（同 ID 保留带剩余天数的那份）。
+	candidates := mall.MergeDressItems(sp.Items, items)
+	best := mall.PickBestDress(candidates)
 	if best == nil {
 		// 列出所有加成条目辅助诊断：是确实没有，还是有但已过期/条件不满足
-		for _, it := range items {
+		for _, it := range candidates {
 			if it.Exp > 1 {
 				w.log.Info("加成头像明细", "good_id", it.GoodID, "title", it.Title,
 					"exp", it.Exp, "left", avatarLeftText(it.LeftDays),
 					"game", it.GameName, "level", it.Level)
 			}
 		}
-		w.log.Info("未找到可用的经验加成头像（无加成头像或均已过期），跳过", "count", len(items))
+		w.log.Info("未找到可用的经验加成头像（无加成头像或均已过期），跳过",
+			"owned", len(sp.Items), "catalog", len(items), "merged", len(candidates))
 		w.setAvatarInfo(0, 0, 0, "", "无可用加成头像")
 		return nil
 	}

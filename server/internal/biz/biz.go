@@ -75,6 +75,9 @@ func (w *Worker) rolloverIfNeeded() {
 	// 不清的话 maybeStartRoomHang 会一直跳过，第二天整天不挂机。
 	w.roomMu.Lock()
 	w.hangDoneKey = 0
+	// 重建计数同样按日归零：新的一天重新获得"重建自救"的机会额度
+	w.hangRebuilds = 0
+	w.hangRebuildDay = 0
 	w.roomMu.Unlock()
 
 	// 战队捐献：清空当日已捐量，并让持久化 store 跨天作废昨日记录
@@ -126,17 +129,17 @@ type TaskStatus struct {
 	ID       uint64 `json:"id"`
 	Name     string `json:"name"`
 	State    string `json:"state"`
-	Progress uint64 `json:"progress"`          // 进度（任务 f2，单位视任务而定）
-	Detail   string `json:"detail,omitempty"`  // 展示用进度文本，如 "19/21 天"
+	Progress uint64 `json:"progress"`         // 进度（任务 f2，单位视任务而定）
+	Detail   string `json:"detail,omitempty"` // 展示用进度文本，如 "19/21 天"
 }
 
 // UserStats 是用户等级/经验/游币状态（来自 UserInfo 514 / RefreshInfo 515）
 type UserStats struct {
-	Level      uint64 // 等级（514: 属性 id=1）
-	Exp        uint64 // 总经验（515: 属性 id=10000）
-	ExpToday   uint64 // 当日累计获得经验（程序统计：总经验-当日基线，跨天重置）
-	Gold       uint64 // 游币（515: 属性 id=15）
-	Nick       string // 昵称（514: 属性 id=20000）
+	Level    uint64 // 等级（514: 属性 id=1）
+	Exp      uint64 // 总经验（515: 属性 id=10000）
+	ExpToday uint64 // 当日累计获得经验（程序统计：总经验-当日基线，跨天重置）
+	Gold     uint64 // 游币（515: 属性 id=15）
+	Nick     string // 昵称（514: 属性 id=20000）
 	// LevelStart 当前等级的起始累计经验（514: 属性 id=10001）
 	// LevelNext 下一等级的起始累计经验（514: 属性 id=10002）
 	//
@@ -155,8 +158,8 @@ type UserStats struct {
 	// 因此它们是**静态值**，本就不随经验增长而变化（不是服务器"不刷新"）。
 	// 真正的升级进度必须用总经验 Exp(10000) 推算，见 LevelGot / LevelTotal。
 	// 旧实现直接用 10001/10002 当分子分母，导致百分比数值错误且长期不变。
-	LevelStart uint64 // 当前等级的起始累计经验（514: 属性 id=10001）
-	LevelNext  uint64 // 下一等级的起始累计经验（514: 属性 id=10002）
+	LevelStart uint64       // 当前等级的起始累计经验（514: 属性 id=10001）
+	LevelNext  uint64       // 下一等级的起始累计经验（514: 属性 id=10002）
 	Tasks      []TaskStatus // 个人任务（签到/在线/连续签到/礼包）
 	TeamTasks  []TaskStatus // 战队任务（战盟挂机/战队捐献），仅已加入战队的账号开启
 	// Avatar 经验头像状态（2026-09-09 起**不再作为任务**展示——佩戴头像不是"做任务"，
@@ -207,40 +210,40 @@ type Worker struct {
 	cfg  *config.Config
 	log  *slog.Logger
 
-	mall      *mall.Client
-	room      *room.Client
+	mall *mall.Client
+	room *room.Client
 
 	// stateStore 统一持久化：当日捐献量 + 月度礼包领取状态（按 uid 区分）。
 	// 单实例互斥锁保护并发写，详见 state_store.go。
 	stateStore *StateStore
 
-	stats        UserStats // 最近一次查询的用户状态
-	expBase      uint64    // 当日经验基线（当天第一次刷新时的总经验）
-	expBaseDay   string    // 基线对应的日期（2006-01-02），空表示未初始化
-	onStats      StatsObserver
+	stats      UserStats // 最近一次查询的用户状态
+	expBase    uint64    // 当日经验基线（当天第一次刷新时的总经验）
+	expBaseDay string    // 基线对应的日期（2006-01-02），空表示未初始化
+	onStats    StatsObserver
 
-	tasks        []Mission // 最近一次任务列表快照（任务状态展示用）
-	checkInKey   int       // 最近一次执行签到的日期 key（年*10000+月*100+日）
-	checkInOK    bool      // 最近一次签到是否成功（ret==1）
-	mallKey      int       // 最近一次处理商城领取的日期 key
-	mallOKKey    int       // 最近一次商城领取成功的月份 key（年*100+月）
+	tasks      []Mission // 最近一次任务列表快照（任务状态展示用）
+	checkInKey int       // 最近一次执行签到的日期 key（年*10000+月*100+日）
+	checkInOK  bool      // 最近一次签到是否成功（ret==1）
+	mallKey    int       // 最近一次处理商城领取的日期 key
+	mallOKKey  int       // 最近一次商城领取成功的月份 key（年*100+月）
 
 	// 头像装扮：自动佩戴经验加成最高的头像，详见 avatar.go。
 	// 字段均由 statsMu 保护（buildTasks 会在挂机 goroutine 中读取）。
-	avatarKey      int  // 最近一次处理头像的日期 key（当天只处理一次）
+	avatarKey int // 最近一次处理头像的日期 key（当天只处理一次）
 	// avatarChecking 是否正在异步检查头像（2026-09-10 并发防护）。
 	// 异步后存在这样的竞态：goroutine 仍在跑（慢网络）时跨天，
 	// rolloverIfNeeded 把 avatarKey 清零 → 主循环以为"今天没查过"又起一个
 	// goroutine，两个并发执行可能先后佩戴不同头像，导致状态抖动。
 	// 用本标志确保同一时刻只有一个检查在跑。
 	avatarChecking bool
-	avatarGoodID int     // 当前佩戴的头像商品 ID（0=未知/未佩戴）
-	avatarExp    float64 // 当前佩戴头像的经验加成倍数（0=未知）
-	avatarLeft   int     // 当前佩戴头像剩余天数（mall.LeftDaysForever=永久）
-	avatarName   string  // 当前佩戴头像名称
-	avatarMsg    string  // 最近一次处理结果的说明（UI 展示用）
-	claimedDay   int       // claimedToday 对应的日期
-	claimedToday map[uint64]bool
+	avatarGoodID   int     // 当前佩戴的头像商品 ID（0=未知/未佩戴）
+	avatarExp      float64 // 当前佩戴头像的经验加成倍数（0=未知）
+	avatarLeft     int     // 当前佩戴头像剩余天数（mall.LeftDaysForever=永久）
+	avatarName     string  // 当前佩戴头像名称
+	avatarMsg      string  // 最近一次处理结果的说明（UI 展示用）
+	claimedDay     int     // claimedToday 对应的日期
+	claimedToday   map[uint64]bool
 
 	// statsMu 保护 tasks 与 stats。
 	//
@@ -253,14 +256,17 @@ type Worker struct {
 	// 表现为「进程无声消失」。故必须用锁消除竞争，并为子 goroutine 加 recover。
 	statsMu sync.Mutex
 
-	roomMu      sync.Mutex          // 房间挂机状态锁
-	roomOn      bool                // 房间挂机是否运行中
-	roomSince   time.Time           // 本次挂机会话开始时间
-	roomErr     error               // 最近一次挂机错误（nil=正常）
-	roomZone    uint32              // 挂机区 ID
-	roomCancel  context.CancelFunc  // 挂机监督主动退出：取消挂机子上下文
-	hangDoneKey int                 // 挂机目标完成日期 key（年*10000+月*100+日），当日不再启动挂机
-	claimMu     sync.Mutex          // 任务领取串行化（主循环与挂机监督共用）
+	roomMu      sync.Mutex         // 房间挂机状态锁
+	roomOn      bool               // 房间挂机是否运行中
+	roomSince   time.Time          // 本次挂机会话开始时间
+	roomErr     error              // 最近一次挂机错误（nil=正常）
+	roomZone    uint32             // 挂机区 ID
+	roomCancel  context.CancelFunc // 挂机监督主动退出：取消挂机子上下文
+	hangDoneKey int                // 挂机目标完成日期 key（年*10000+月*100+日），当日不再启动挂机
+	// 挂机会话重建计数（2026-10-07，见 hangSupervisor / tryRebuildHang），roomMu 保护
+	hangRebuilds   int        // 当日已重建次数
+	hangRebuildDay int        // 计数所属日期 key
+	claimMu        sync.Mutex // 任务领取串行化（主循环与挂机监督共用）
 
 	gangMu         sync.Mutex // 战队状态缓存锁
 	gangOK         bool       // 账号是否已加入战队（由 596/f3=3 战队详情查询判定，当天缓存）
@@ -446,8 +452,16 @@ func (w *Worker) hangSupervisor(hangCtx context.Context) {
 		goal      = 3 * time.Hour
 		checkFast = 5 * time.Minute
 		checkSlow = 10 * time.Minute
+		// rebuildAfter（2026-10-07）：超过目标这么久仍未达标 → 判定挂机会话卡死并重建。
+		//
+		// 事故背景：chouyoku 10/7 的战队「游戏时长」在 00:14 卡在 807 秒后再不增长
+		// （服务端侧行为；程序侧建房 ret=1、心跳与在线上报都没有任何告警），
+		// 而挂机监督只在达标时退出，于是白挂 18 小时。重建会话（重新进区/建房）
+		// 是成本最低、有机会让服务端重新开始计时的动作；重建次数有当日上限，
+		// 避免服务端持续限制时演变成无意义的反复重连。
+		rebuildAfter = 45 * time.Minute
 	)
-	w.log.Info("挂机监督启动", "goal", goal.String())
+	w.log.Info("挂机监督启动", "goal", goal.String(), "rebuild_after", rebuildAfter.String())
 	t := time.NewTimer(checkFast)
 	defer t.Stop()
 	for {
@@ -484,11 +498,25 @@ func (w *Worker) hangSupervisor(hangCtx context.Context) {
 		w.roomMu.Lock()
 		since := w.roomSince
 		w.roomMu.Unlock()
-		if time.Since(since) >= goal {
-			t.Reset(checkSlow) // 超过 3 小时：每 10 分钟复查
-		} else {
+		elapsed := time.Since(since)
+		if elapsed < goal {
 			t.Reset(checkFast)
+			continue
 		}
+		// 超过 3 小时仍未达标：若已远超目标（极可能是会话卡死，而非服务器结算延迟），
+		// 主动重建挂机会话尝试恢复；超出当日重建上限则退回等待复查。
+		if elapsed >= goal+rebuildAfter {
+			if !w.tryRebuildHang() {
+				t.Reset(checkSlow)
+				continue
+			}
+			w.log.Warn("挂机超过目标仍远未达标，重建挂机会话以尝试恢复",
+				"elapsed", elapsed.Round(time.Minute).String(),
+				"game_seconds_hint", "见战队任务 2002/2003/2004 的 f2")
+			w.cancelHang() // 不设置 hangDoneKey，主循环会自动重新启动挂机
+			return
+		}
+		t.Reset(checkSlow) // 超过 3 小时：每 10 分钟复查
 	}
 }
 
@@ -507,6 +535,29 @@ func (w *Worker) cancelHang() {
 		w.roomCancel()
 		w.roomCancel = nil
 	}
+}
+
+// maxHangRebuildsPerDay 每日挂机会话重建次数上限。
+//
+// 单次重建需要会话已运行满 goal+rebuildAfter（3h45m），所以 3 次上限意味着
+// 一天最多因此重连 3 次；若服务端是持续性限制（重建也恢复不了），不至于
+// 演变成"每 45 分钟断一次"的无意义循环，同时保留恢复到次日重新尝试的机会。
+const maxHangRebuildsPerDay = 3
+
+// tryRebuildHang 登记一次「挂机会话重建」，超出当日上限时返回 false。
+func (w *Worker) tryRebuildHang() bool {
+	today := dayKey(time.Now())
+	w.roomMu.Lock()
+	defer w.roomMu.Unlock()
+	if w.hangRebuildDay != today {
+		w.hangRebuildDay = today
+		w.hangRebuilds = 0
+	}
+	if w.hangRebuilds >= maxHangRebuildsPerDay {
+		return false
+	}
+	w.hangRebuilds++
+	return true
 }
 
 // hangGoalDone 判定 3 小时在线奖励是否已达成（挂机自动退出条件）。
@@ -972,8 +1023,8 @@ func (w *Worker) maybeMallClaim(ctx context.Context) error {
 	case mallUnavailable(res.Info):
 		// 未绑定微信等硬性不可领：本月内不再尝试，避免每天一次无效请求。
 		if w.stateStore != nil {
-				_ = w.stateStore.MallMarkUnavailable(w.sess.UID, month, res.Info)
-			}
+			_ = w.stateStore.MallMarkUnavailable(w.sess.UID, month, res.Info)
+		}
 		w.log.Info("商城礼包本月不可领取，标记跳过",
 			"pkg", mall.WechatPackageID, "info", res.Info)
 
@@ -1105,9 +1156,9 @@ func (w *Worker) buildTasks() {
 			}
 			target := dayTarget(id)
 			tasks = append(tasks, TaskStatus{
-				ID:    m.ID,
-				Name:  fmt.Sprintf("连续签到 %d 天", target),
-				State: missionState(m),
+				ID:     m.ID,
+				Name:   fmt.Sprintf("连续签到 %d 天", target),
+				State:  missionState(m),
 				Detail: fmt.Sprintf("%d/%d 天", m.Field2, target),
 			})
 			break
@@ -1243,16 +1294,16 @@ func (w *Worker) buildTasks() {
 		teamTasks = append(teamTasks, TaskStatus{ID: 300000, Name: "战队捐献", State: TaskPending, Detail: "检测战队状态中"})
 	case contributed >= w.cfg.ContributeDaily:
 		teamTasks = append(teamTasks, TaskStatus{
-			ID:    300000,
-			Name:  "战队捐献",
-			State: TaskDone,
+			ID:     300000,
+			Name:   "战队捐献",
+			State:  TaskDone,
 			Detail: fmt.Sprintf("%d/%d 已捐", contributed, w.cfg.ContributeDaily),
 		})
 	default:
 		teamTasks = append(teamTasks, TaskStatus{
-			ID:    300000,
-			Name:  "战队捐献",
-			State: TaskDoing,
+			ID:     300000,
+			Name:   "战队捐献",
+			State:  TaskDoing,
 			Detail: fmt.Sprintf("已捐 %d/%d", w.contributeToday, w.cfg.ContributeDaily),
 		})
 	}
@@ -1448,10 +1499,10 @@ func monthKey(t time.Time) int { return t.Year()*100 + int(t.Month()) }
 
 // SubmitResult 是单任务提交结果
 type SubmitResult struct {
-	Success      bool
+	Success       bool
 	AlreadyFinish bool
-	Ret          uint64
-	Msg          string
+	Ret           uint64
+	Msg           string
 }
 
 // submitOne 提交单个任务领取 MissionSubmitCMsg(1174)

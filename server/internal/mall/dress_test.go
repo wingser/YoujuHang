@@ -202,6 +202,52 @@ const spacePageHTML = `
     </div>
 `
 
+// TestMergeDressItems 候选来源合并（2026-10-07 事故回归）。
+//
+// 事故：chouyoku 拥有 good_id=127（1.4 倍，剩余 21 天），但它只出现在
+// space 页的「我拥有的装扮」里；列表页（POST /）返回的是**可购买的商品目录**，
+// 其中该条目的剩余天数为 0。此前只用列表页做候选，于是 PickBestDress 返回 nil，
+// UI 显示"无可用加成头像"，明明有可用头像却不换。
+func TestMergeDressItems(t *testing.T) {
+	owned := []DressItem{
+		{GoodID: 127, Title: "教练", Exp: 1.4, LeftDays: 21, URL: "Public/Mall/20250421/20250421606035.jpg"},
+		{GoodID: 7, Title: "草稚", Exp: 1.2, LeftDays: LeftDaysForever},
+		{GoodID: 12, Title: "已过期头像", Exp: 1.4, LeftDays: 0},
+	}
+	catalog := []DressItem{
+		{GoodID: 127, Title: "教练", Exp: 1.4, LeftDays: 0}, // 目录里没有有效期
+		{GoodID: 7, Title: "草稚", Exp: 1.2, LeftDays: 0},
+		{GoodID: 62, Title: "小铃铛", Exp: 1.4, LeftDays: 0}, // 未拥有
+	}
+
+	got := MergeDressItems(owned, catalog)
+	if len(got) != 4 {
+		t.Fatalf("合并后应去重为 4 条，实际 %d: %+v", len(got), got)
+	}
+	byID := map[int]DressItem{}
+	for _, it := range got {
+		byID[it.GoodID] = it
+	}
+	if it := byID[127]; it.LeftDays != 21 {
+		t.Errorf("127 应保留 space 页的剩余 21 天，实际 %d（若为 0 说明被目录数据覆盖了）", it.LeftDays)
+	}
+	if it := byID[7]; it.LeftDays != LeftDaysForever {
+		t.Errorf("7 应保留永久（%d），实际 %d", LeftDaysForever, it.LeftDays)
+	}
+	if _, ok := byID[62]; !ok {
+		t.Error("目录里独有的条目应被并入")
+	}
+
+	// 合并后应能选出 127（1.4 倍、剩余最长）
+	best := PickBestDress(got)
+	if best == nil {
+		t.Fatal("合并后应能选出可用头像，实际 nil（这正是本次事故的现象）")
+	}
+	if best.GoodID != 127 {
+		t.Errorf("应选中 127（1.4 倍剩 21 天），实际 good_id=%d", best.GoodID)
+	}
+}
+
 // TestParseSpacePage space 页解析：当前佩戴提取 + 与拥有列表按 URL 匹配。
 func TestParseSpacePage(t *testing.T) {
 	page := parseSpacePage(spacePageHTML)

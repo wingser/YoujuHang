@@ -41,31 +41,31 @@ const loginRejectLimit = 5
 
 // AccountState 是账号运行时状态快照（UI 展示用）
 type AccountState struct {
-	Name             string  `json:"name"`
-	Password         string  `json:"-"`
-	MAC              string  `json:"mac"`
-	Enabled          bool    `json:"enabled"`
-	Running          bool    `json:"running"`
-	Status           string  `json:"status"`
-	Err              string  `json:"err,omitempty"`
-	UID              uint32  `json:"uid"`
-	Gate             string  `json:"gate"`
-	Nick             string  `json:"nick"`
-	Level            uint64  `json:"level"`
-	Exp              uint64  `json:"exp"`
-	ExpToday         uint64          `json:"exp_today"`
-	Gold             uint64          `json:"gold"`
+	Name     string `json:"name"`
+	Password string `json:"-"`
+	MAC      string `json:"mac"`
+	Enabled  bool   `json:"enabled"`
+	Running  bool   `json:"running"`
+	Status   string `json:"status"`
+	Err      string `json:"err,omitempty"`
+	UID      uint32 `json:"uid"`
+	Gate     string `json:"gate"`
+	Nick     string `json:"nick"`
+	Level    uint64 `json:"level"`
+	Exp      uint64 `json:"exp"`
+	ExpToday uint64 `json:"exp_today"`
+	Gold     uint64 `json:"gold"`
 	// LevelGot 当前等级内**已获得**经验，由总经验推算（见 biz.UserStats.LevelGot）
 	LevelGot uint64 `json:"level_got"`
 	// LevelNeed 升到下一级所需**总**经验 = 10002-10001
-	LevelNeed uint64 `json:"level_need"`
-	LastActive       string          `json:"last_active,omitempty"`
-	Tasks            []biz.TaskStatus `json:"tasks"`
-	TeamTasks        []biz.TaskStatus `json:"team_tasks"`
+	LevelNeed  uint64           `json:"level_need"`
+	LastActive string           `json:"last_active,omitempty"`
+	Tasks      []biz.TaskStatus `json:"tasks"`
+	TeamTasks  []biz.TaskStatus `json:"team_tasks"`
 	// Avatar 经验头像状态（基础信息列展示；nil=尚未获取）。见 biz.AvatarInfo。
-	Avatar *biz.AvatarInfo `json:"avatar,omitempty"`
-	ExpireDate       string          `json:"expire_date,omitempty"` // 挂机到期日 YYYY-MM-DD，空=永久
-	Expired          bool            `json:"expired"`               // 是否已过期（后端按日期计算）
+	Avatar     *biz.AvatarInfo `json:"avatar,omitempty"`
+	ExpireDate string          `json:"expire_date,omitempty"` // 挂机到期日 YYYY-MM-DD，空=永久
+	Expired    bool            `json:"expired"`               // 是否已过期（后端按日期计算）
 }
 
 // Manager 是账号动态管理器
@@ -958,6 +958,13 @@ func (m *Manager) runAccount(ctx context.Context, name string, rt *accountRuntim
 				rt.setStatus(StatusOnline, "")
 			}
 		})
+		// 记录会话建立时刻：失效时据此报告真实存活时长，用于确认服务端会话周期。
+		//
+		// 背景（2026-10-08）：当天两次失效序列都与登录时刻相差约 3 小时，一度据此
+		// 加入"2h50m 主动续期"。但 10/7 19:32:47 的会话活到了 10/8 12:53（**17 小时**），
+		// 说明 3 小时并非固定周期，主动续期会变成"每 2h50m 无谓断挂一次"，已回退。
+		// 现在改为**观测**：把真实存活时长记进日志，积累几天数据再决定是否需要续期。
+		loginAt := time.Now()
 		err = w.Run(ctx)
 		if ctx.Err() != nil {
 			// 账号被主动停止（用户点停止 / 进程优雅退出 / StopAll）：主动登出(534)释放会话，
@@ -965,13 +972,15 @@ func (m *Manager) runAccount(ctx context.Context, name string, rt *accountRuntim
 			sess.Release()
 			return
 		}
+		rt.setSession(nil)
+		lg.Info("会话失效，准备重新登录",
+			"session_age", time.Since(loginAt).Round(time.Second).String())
 		// 会话失效：通常是被其他设备（用户客户端）登录踢下线。
 		// 实测确认：登录服务器总是允许新登录并使旧会话立即失效，登录响应无任何
 		// "账号已在线"信息；社交协议(1176 action=1)查询在线状态对**好友与非好友都准确**
 		// （2026-09-01 tools/probe_social.py 真机验证：非好友也能查到 isOnline）。
 		// 因此优先用其他在线账号只读侦查本账号在线状态：在线则不重登（避免抢占用户），
 		// 离线则自动重登；无可用侦查账号时回退到定时/手动等待。
-		rt.setSession(nil)
 		if !m.waitAfterKick(ctx, lg, rt, name, err) {
 			return
 		}
@@ -979,10 +988,10 @@ func (m *Manager) runAccount(ctx context.Context, name string, rt *accountRuntim
 }
 
 // waitAfterKick 被顶下线后的等待策略，返回是否继续主循环重登。
-// 1. 有其他在线账号 → 在线侦查：目标账号离线后自动重登恢复挂机
-// 2. 否则           → 兜底探测：每 fallbackInterval 随机挑一个账号试登，
-//                      登录成功即说明服务器可用，再用它侦查目标在线状态
-//                      （用于服务器维护/整机断网后的自动恢复）
+//  1. 有其他在线账号 → 在线侦查：目标账号离线后自动重登恢复挂机
+//  2. 否则           → 兜底探测：每 fallbackInterval 随机挑一个账号试登，
+//     登录成功即说明服务器可用，再用它侦查目标在线状态
+//     （用于服务器维护/整机断网后的自动恢复）
 func (m *Manager) waitAfterKick(ctx context.Context, lg *slog.Logger, rt *accountRuntime, name string, err error) bool {
 	if probe, probeName := m.pickProbeSession(name, nil); probe != nil {
 		lg.Info("使用在线账号侦查目标在线状态", "account", name, "probe", probeName)
@@ -1137,9 +1146,25 @@ func (m *Manager) pickProbeSession(exclude string, failed map[string]bool) (*ses
 	return sessions[idx], names[idx]
 }
 
-// fallbackInterval 无可用在线侦查账号（如全部账号同时被踢下线）时的兜底探测间隔。
-// 用户认可此节奏：全掉线时每 10 分钟尝试一次重新登录是合理的（给服务器恢复留足时间）。
-const fallbackInterval = 10 * time.Minute
+// fallbackInterval 无可用在线侦查账号（如全部账号同时失效）时的兜底探测间隔。
+//
+// 2026-10-08 由 10 分钟改为 **2 分钟**。当天三账号在 3 分钟内**相继**会话失效
+// （15:50:07 / 15:51:13 / 15:53:16），最后一个（chouyoku）失效时已无在线账号可侦查，
+// 只能走兜底——原来首次就要等满 10 分钟，用户 15:58 仍未恢复、最后手动启动。
+//
+// 【为什么是 2 分钟而不是更短】兜底重登与"只读侦查"有**本质区别**：
+// 侦查（probeWaitRelogin）会先查询目标是否在线，用户在游戏客户端时**绝不抢占**；
+// 而兜底**没有可用会话去查询**，只能直接重登，因此**理论上会顶掉正在玩游戏的用户**。
+// 它只在"所有账号同时失效"时才触发（用户登录单个账号时，其余账号仍在线，
+// 会走零风险的只读侦查），但 2 分钟缓冲能给其他账号留出重新上线做侦查的时间，
+// 把误抢概率进一步压低。安全优先于恢复速度。
+//
+// 安全性还有一层保障：账号重启后若登录失败，runAccount 自身有 5s→10min 的
+// **指数退避**，所以服务器维护、整机断网时不会变成高频重试。
+//
+// 历史：10 分钟是 2026-09-01 的取值（当时担心"服务器刚重启需要缓冲"），
+// 实测结论是恢复太慢；30 秒虽快但抢占窗口过激进，故折中为 2 分钟。
+const fallbackInterval = 2 * time.Minute
 
 // fallbackWaitRelogin 兜底探测：无可用在线侦查账号时的自动恢复策略。
 //
@@ -1188,7 +1213,6 @@ func (m *Manager) fallbackWaitRelogin(ctx context.Context, lg *slog.Logger, rt *
 		return ctx.Err() == nil
 	}
 }
-
 
 func (rt *accountRuntime) updateUID(sess *session.Session) {
 	rt.mu.Lock()

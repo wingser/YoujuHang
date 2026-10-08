@@ -416,6 +416,19 @@ func fatalRet(ret uint32) bool {
 	return ret != retOK && (ret == retWrongGameToken || ret == retRoomNotFound)
 }
 
+// heartbeatDeadAfter 心跳「非 ok 返回码」连续出现多少次后，判定会话已死、需要重建。
+//
+// 为什么需要（2026-10-07 实测事故）：服务端会用一个不在 fatalRet 列表里的返回码
+// 持续拒绝心跳与上报——实测是 **-23**（`point not meet`，房间上下文里即"上报不被接受"）。
+// 此前这类码被当作"正常但暂无数据"，程序照旧在**已失效的会话**上挂机：心跳每秒一次、
+// 全部被拒，房间在线时长与游戏时长一秒都不再累计，而日志里没有任何失败告警。
+// chouyoku 因此白挂 4.8 小时（20:21:50 → 次日 01:08），最后靠 biz 层"超目标 3h45m
+// 重建"才恢复。
+//
+// 取值 300：心跳与上报同步约 1.5 秒一次，300 次 ≈ 7.5 分钟。
+// 既能避开网络抖动造成的偶发非 ok，又能让这类卡死在一刻钟内自愈。
+const heartbeatDeadAfter = 300
+
 // callZone 发送 /zone/2/ 消息并返回服务器返回码。
 // err 仅表示传输层失败（HTTP/网络）；协议层返回码通过 ret 返回。
 func (c *Client) callZone(ctx context.Context, addr string, msgID uint16, body []byte) (uint32, error) {
@@ -648,6 +661,8 @@ func (c *Client) Hang(ctx context.Context, addr string, uid uint32, token string
 		stT := time.NewTicker(1600 * time.Millisecond)
 		snapT := time.NewTicker(1600 * time.Millisecond)
 		hbFail, stFail, snapFail := 0, 0, 0
+		// hbDead 统计心跳"非 ok 返回码"的连续次数，达到 heartbeatDeadAfter 判定会话已死
+		hbDead := 0
 		broken := false
 	loop:
 		for {
@@ -682,6 +697,20 @@ func (c *Client) Hang(ctx context.Context, addr string, uid uint32, token string
 				} else {
 					hbNonOK.log(c.log, "room: heartbeat non-ok ret", ret, "seq", hbSeq)
 					hbFail = 0
+					// 非 ok 返回码持续累积 → 判定会话已死（见 heartbeatDeadAfter 注释）。
+					// 这是 2026-10-07 事故的核心修复：-23 这类码不在 fatalRet 里，
+					// 不累积判定就会在失效会话上无限挂机、时长一秒不涨。
+					if ret != retOK {
+						hbDead++
+						if hbDead >= heartbeatDeadAfter {
+							c.log.Warn("room: heartbeat rejected repeatedly, session dead, recreate",
+								"ret", ret, "count", hbDead)
+							broken = true
+							break loop
+						}
+					} else {
+						hbDead = 0
+					}
 					// 与心跳同步发送 1042 在线时长上报（房主身份保活/战队任务时长累计）
 					onlineTick += 56
 					if ret, err := c.OnlineReport(ctx, addr, uid, token, onlineTick); err != nil {

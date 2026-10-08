@@ -40,9 +40,12 @@ const (
 	// "PID 已消失"等事件——15s 是兼顾开销与感知速度的折中（每小时约 240 次读）。
 	defaultCheckInterval = 15 * time.Second
 	// defaultStaleAfter 主程序心跳超过该时长判定为失活。
-	// 5 分钟：容忍系统休眠/睡眠、磁盘 IO 卡顿、日志轮转等抖动，
-	// 避免误判导致"杀掉健康进程再重启"这种比崩溃更糟的后果。
-	defaultStaleAfter = 5 * time.Minute
+	//
+	// 2026-10-08 由 5 分钟放宽到 10 分钟：实测机器睡眠 8.5 分钟就会超过 5 分钟阈值，
+	// 使守护在醒来后把健康的进程当假死强杀（见 run 中的"自身被挂起"识别）。
+	// 现在已有更可靠的判据兜底，这里再放宽阈值做双保险——真正的假死（进程活着但
+	// 业务停摆）多等 5 分钟代价很小，而误杀健康进程会中断全部账号的挂机。
+	defaultStaleAfter = 10 * time.Minute
 	// relaunchGrace 拉起后等待主程序就绪（写入新心跳）的宽限期
 	relaunchGrace = 90 * time.Second
 	// guardLogName 守护进程日志文件名（落在主程序 logs 目录下）
@@ -122,7 +125,7 @@ func decide(st *runState, lastAlive time.Time, now time.Time, suspiciousIn guard
 type guardAction int
 
 const (
-	actionWait        guardAction = iota
+	actionWait guardAction = iota
 	actionSuspectHang
 	actionConfirmHang
 	actionCrash
@@ -132,8 +135,32 @@ const (
 func run(ctx context.Context, statePath string) {
 	// 当前轮决策结果（同时充当下一轮的 suspicious 输入；actionWait 表示无需确认）
 	suspicious := actionWait
+	// lastCheck 本轮检查的开始时刻，用于识别"守护进程自身也被挂起过"。
+	lastCheck := time.Now()
 
 	for {
+		// 系统休眠/睡眠识别（2026-10-08 修复）。
+		//
+		// 实测事故（2026-10-03）：机器睡眠约 8.5 分钟（心跳最后 15:10:40，
+		// 守护 15:19:17 才恢复运行）。醒来后守护看到心跳已过期 8m37s，
+		// 超过 staleAfter(5m) 阈值 → 二次确认 → **强杀并重启了本来健康的进程**，
+		// 三个账号的挂机被迫中断。
+		//
+		// 判据：守护自身每 checkInterval（默认 15s）跑一轮，若本轮距上轮远超该间隔，
+		// 说明**连守护自己都被挂起**了——此时"心跳过期"是共同现象（进程被一起冻结），
+		// 而非主程序假死。这是比 staleAfter 阈值更可靠的信号：无论睡眠多久都能识别。
+		now := time.Now()
+		if gap := now.Sub(lastCheck); gap > checkInterval*3 {
+			log.Info("检测到守护进程自身被挂起（系统休眠/睡眠？），跳过本轮假死判定",
+				"gap", gap.Round(time.Second).String(),
+				"check_interval", checkInterval.String())
+			suspicious = actionWait
+			lastCheck = now
+			waitNext(ctx)
+			continue
+		}
+		lastCheck = now
+
 		st, err := loadState(statePath)
 		if err != nil {
 			// 文件不存在 = 主程序优雅退出（退出前会删除该文件）

@@ -18,6 +18,7 @@ import (
 	"path/filepath"
 	"runtime"
 	"strings"
+	"sync/atomic"
 	"syscall"
 	"time"
 
@@ -175,6 +176,8 @@ func main() {
 	// 存活心跳：每分钟刷新一次。既是崩溃取证依据，也是守护程序的监视信号。
 	// 必须在拉起守护程序**之前**写好，否则守护程序首次检查读不到文件。
 	startLivenessBeat(ctx, time.Now())
+	// 卡死看门狗：主流程停摆超时即导出 goroutine 快照并退出（见其注释）
+	startStallWatchdog(ctx)
 
 	// 拉起守护程序（可选；缺失时自动以独立模式运行）
 	startGuard()
@@ -363,6 +366,9 @@ func startLivenessBeat(ctx context.Context, started time.Time) {
 	}
 	write := func() {
 		st.LastAlive = time.Now().Format("2006-01-02 15:04:05")
+		// 同时更新内存心跳：卡死看门狗据此判断主流程是否停摆。
+		// 刻意用内存而非读文件——主流程卡死时文件 IO 本身也可能阻塞。
+		lastBeatNano.Store(time.Now().UnixNano())
 		raw, err := json.Marshal(st)
 		if err != nil {
 			return
@@ -387,6 +393,67 @@ func startLivenessBeat(ctx context.Context, started time.Time) {
 			case <-t.C:
 				write()
 			}
+		}
+	}()
+}
+
+// lastBeatNano 主流程最后一次刷新心跳的时刻（UnixNano），供卡死看门狗判定。
+// 用原子内存变量而非读文件：主流程卡死时文件 IO 本身也可能阻塞。
+var lastBeatNano atomic.Int64
+
+// startStallWatchdog 检测主流程卡死，导出 goroutine 快照后主动退出（2026-10-08）。
+//
+// 背景：10/3 15:10:40 起，主程序在**没有任何日志**的情况下一动不动约 8.5 分钟——
+// 心跳与三个账号的日志同时停止，**进程却仍然存在**（守护进程据此判定假死并强杀重启）。
+// 该部署机是 24 小时运行的云服务器，不存在系统休眠，因此更像**进程内部卡死**
+// （Go 最常见的成因是死锁：进程活着，但所有干活的活动全部停摆）。
+// 问题在于卡死现场不留任何痕迹，事后无从定位。
+//
+// 做法：主流程每分钟刷新心跳（见 startLivenessBeat）。本看门狗独立运行，
+// 一旦发现心跳超过 stallTimeout 未刷新，即判定主流程已停摆，立刻把**全部
+// goroutine 栈**写入 logs/stall_<时间>.txt，然后主动退出交守护进程拉起。
+// 选择主动退出而不是继续卡着：此时业务已经停止，早退出能尽早上报诊断文件、
+// 并让挂机尽快恢复（守护进程 15 秒内就会拉起新进程）。
+//
+// 注意：看门狗靠 Go 调度器运行，因此仅在「主流程卡死、调度器仍健康」的场景下有效
+// （死锁、无限等待等，正是我们怀疑的情形）。若整个进程被外部暂停（云主机迁移等），
+// 看门狗与主流程会一起暂停，此时由 cmd/guard 的「守护自身被挂起」判据兜底。
+func startStallWatchdog(ctx context.Context) {
+	const (
+		checkEvery   = 15 * time.Second
+		stallTimeout = 5 * time.Minute
+	)
+	go func() {
+		defer func() {
+			if r := recover(); r != nil {
+				slog.Error("卡死看门狗 panic", "panic", r)
+			}
+		}()
+		t := time.NewTicker(checkEvery)
+		defer t.Stop()
+		for {
+			select {
+			case <-ctx.Done():
+				return
+			case <-t.C:
+			}
+			last := lastBeatNano.Load()
+			if last == 0 {
+				continue // 心跳尚未开始
+			}
+			idle := time.Since(time.Unix(0, last))
+			if idle < stallTimeout {
+				continue
+			}
+			buf := make([]byte, 4<<20)
+			n := runtime.Stack(buf, true) // true = 所有 goroutine
+			path := filepath.Join(logDir(),
+				"stall_"+time.Now().Format("20060102_150405")+".txt")
+			_ = os.WriteFile(path, buf[:n], 0644)
+			slog.Error("主流程卡死，已导出 goroutine 快照并退出（等待守护进程拉起）",
+				"idle", idle.Round(time.Second).String(),
+				"goroutine_dump", path)
+			os.Exit(3)
 		}
 	}()
 }

@@ -264,9 +264,12 @@ type Worker struct {
 	roomCancel  context.CancelFunc // 挂机监督主动退出：取消挂机子上下文
 	hangDoneKey int                // 挂机目标完成日期 key（年*10000+月*100+日），当日不再启动挂机
 	// 挂机会话重建计数（2026-10-07，见 hangSupervisor / tryRebuildHang），roomMu 保护
-	hangRebuilds   int        // 当日已重建次数
-	hangRebuildDay int        // 计数所属日期 key
-	claimMu        sync.Mutex // 任务领取串行化（主循环与挂机监督共用）
+	hangRebuilds   int // 当日已重建次数
+	hangRebuildDay int // 计数所属日期 key
+	// missionDigest 上次任务列表的「ID+完成状态」摘要，用于抑制重复明细日志
+	// （明细占账号日志 93%~95%，见 logMissionList）。由 statsMu 保护。
+	missionDigest string
+	claimMu       sync.Mutex // 任务领取串行化（主循环与挂机监督共用）
 
 	gangMu         sync.Mutex // 战队状态缓存锁
 	gangOK         bool       // 账号是否已加入战队（由 596/f3=3 战队详情查询判定，当天缓存）
@@ -639,15 +642,17 @@ func (w *Worker) refresh(ctx context.Context) error {
 // queryUserInfo 查询 UserInfo(514) 并更新等级/昵称/升级进度，供主循环周期性调用。
 //
 // 属性 id 对照（2026-09-02 抓包 + 客户端逆向修正，详见 UserStats 字段说明）：
-//   id=1     等级（值在 f2）
-//   id=20000 昵称（值在 f4）
-//   id=10000 累计总经验（值在 f3；不直接写入 Exp——
-//            Exp 与当日经验基线由 RefreshInfo(515) 的 parseStats 统一维护，
-//            在此覆盖会污染「当日累计经验」的计算，故只取升级进度相关字段）
-//   id=10001 当前等级起始累计经验（值在 f3）
-//   id=10002 下一等级起始累计经验（值在 f3）
+//
+//	id=1     等级（值在 f2）
+//	id=20000 昵称（值在 f4）
+//	id=10000 累计总经验（值在 f3；不直接写入 Exp——
+//	         Exp 与当日经验基线由 RefreshInfo(515) 的 parseStats 统一维护，
+//	         在此覆盖会污染「当日累计经验」的计算，故只取升级进度相关字段）
+//	id=10001 当前等级起始累计经验（值在 f3）
+//	id=10002 下一等级起始累计经验（值在 f3）
 //
 // 实测样例：
+//
 //	赛博大善人 Lv9  → 10001=1040    / 10002=1260    ；总经验 120527
 //	                  → 已获得 (120527-1040*100)/100 = 165，总需 1260-1040 = 220
 //	                  （与游戏客户端显示的 165/220 完全一致）
@@ -893,11 +898,35 @@ func (w *Worker) checkAndClaim(ctx context.Context) error {
 }
 
 // logMissionList 记录任务列表（便于对照游戏界面确认战队任务 ID→名称映射）
+// logMissionList 打印任务列表：**逐条明细只在「完成状态」发生变化时打印**。
+//
+// 为什么（2026-10-08 排查发现）：明细每分钟 52 行，实测占账号日志的 93%~95%
+// （chouyoku 93.6% / wingser 95.4% / youjugua 95.3%），每天每账号产生约 6MB
+// 纯明细。长期挂机下会持续吃磁盘，而磁盘写满会让日志写入**静默失败**
+// （主程序日志 youjuhang.log 为空正是这种表现），一旦发生就完全失去诊断能力。
+//
+// 摘要刻意**只取任务 ID + 完成状态(f3)，不含进度值 f2**：时长类任务
+// （2000/2002/2003/2004）的 f2 每分钟都在增长，若纳入摘要则每分钟都判定
+// 为"有变化"，降噪就失效了。这样既把重复明细压掉，又不丢失任何状态变化。
 func (w *Worker) logMissionList(missions []Mission) {
 	if len(missions) == 0 {
 		return
 	}
-	w.log.Info("任务列表刷新", "count", len(missions))
+	var sb strings.Builder
+	for _, m := range missions {
+		fmt.Fprintf(&sb, "%d:%d;", m.ID, m.Field3)
+	}
+	digest := sb.String()
+
+	w.statsMu.Lock()
+	changed := w.missionDigest != digest
+	w.missionDigest = digest
+	w.statsMu.Unlock()
+
+	w.log.Info("任务列表刷新", "count", len(missions), "changed", changed)
+	if !changed {
+		return // 完成状态无变化：跳过逐条明细
+	}
 	for _, m := range missions {
 		w.log.Info("  任务", "id", m.ID, "f2", m.Field2, "f3", m.Field3, "f5", m.Field5, "extra", m.Extra)
 	}

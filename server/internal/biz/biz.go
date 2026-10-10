@@ -56,7 +56,12 @@ func (w *Worker) rolloverIfNeeded() {
 	w.mallKey = 0
 	// 经验头像：每天重新检查。头像有效期通常 30 天且会过期，
 	// 不清则第二天起不再检查，过期后加成丢失且无人察觉。
+	// 注意：清零只在这里发生是不够的——主循环必须每轮调用 startAvatarCheck
+	// 才能真正触发重查（2026-10-10 修复，见 Run 循环体内注释）。
 	w.avatarKey = 0
+	// 退避状态一并清零：新的一天应立刻获得一次检查机会，不背上昨天的退避。
+	w.avatarRetryAt = time.Time{}
+	w.avatarRetryBackoff = 0
 	w.statsMu.Unlock()
 
 	// 任务领取记录：新一天的任务可以重新领取
@@ -237,6 +242,14 @@ type Worker struct {
 	// goroutine，两个并发执行可能先后佩戴不同头像，导致状态抖动。
 	// 用本标志确保同一时刻只有一个检查在跑。
 	avatarChecking bool
+	// avatarRetryAt / avatarRetryBackoff 瞬态失败后的重试退避（2026-10-10 事故修复）。
+	// 背景：avatarKey 一旦写成今天，本进程内就不会再重新检查；而主循环此前只在
+	// 「首轮」调用 startAvatarCheck，跨天清零后无人再触发。若首次检查恰好遇到
+	// 商城超时，头像行会空白一整天、甚至整个会话周期（实测 chouyoku/wingser
+	// 自 10-08 16:54 起空白两天，且到期也不会自动续期）。
+	// 现在：瞬态失败回滚 avatarKey 并按退避重试，退避翻倍递增、上限 2 小时。
+	avatarRetryAt      time.Time
+	avatarRetryBackoff time.Duration
 	avatarGoodID   int     // 当前佩戴的头像商品 ID（0=未知/未佩戴）
 	avatarExp      float64 // 当前佩戴头像的经验加成倍数（0=未知）
 	avatarLeft     int     // 当前佩戴头像剩余天数（mall.LeftDaysForever=永久）
@@ -374,6 +387,12 @@ func (w *Worker) Run(ctx context.Context) error {
 		if err := w.maybeMallClaim(ctx); err != nil && !errors.Is(err, ErrSessionExpired) {
 			w.log.Warn("商城领取异常", "err", err)
 		}
+		// 头像检查必须**每轮**都尝试（2026-10-10 修复）：此前只在上面的首轮调用，
+		// 于是 rolloverIfNeeded 每天把 avatarKey 清零后无人再触发，
+		// 长期挂机的会话（数天不重登，实测 chouyoku/wingser）永远不会重新检查头像
+		// → 头像行空白、到期也不会自动续期（正是本函数注释里要避免的"加成丢失无人察觉"）。
+		// 内部按日期去重 + 失败退避，常态下每天仍只有一次商城请求。
+		w.startAvatarCheck(ctx)
 		if err := w.maybeContribute(ctx); err != nil && !errors.Is(err, ErrSessionExpired) {
 			w.log.Warn("贡献捐献异常", "err", err)
 		}
